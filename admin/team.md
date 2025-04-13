@@ -13,49 +13,49 @@ Our theme is about winning it all and our logo will be a pixel art trophy.
 - Collaborate and grow together
 - Share our knowledge and help others when needed
 
-# Our Roster
+## Our Roster
 
-## Meruzhan Sargsyan 
+### Meruzhan Sargsyan 
 🫅Team Leader  
 👨‍🏭Software Product Design  
 Visit My [Page](https://merujsargsyan.github.io/CSE110_L1/)
 
-## Ali Alsadah
+### Ali Alsadah
 👨‍💻Front-End Design  
 Visit My [Page](https://aalsadah.github.io/GitHub-Pages-Project/)  
 
-## Arman Nurbalin
+### Arman Nurbalin
 🖼️Art and Assets  
 Visit My [Page](https://arulster17.github.io/about-me/)  
 
-## Arul Mathur
+### Arul Mathur
 ⚙️Backend Design   
 Visit My [Page](https://arulster17.github.io/about-me/)  
 
-## Eric Nguyen
+### Eric Nguyen
 ⚙️Backend Design  
 Visit My [Page](https://ericyti.github.io/Lab-Week-1/)  
 
-## Eve Nguyen
+### Eve Nguyen
 👩‍🎨UX UI Design  
 Visit My [Page](https://arulster17.github.io/about-me/)  
 
-## Kyle Long
+### Kyle Long
 👨‍🏭Software Product Design  
 Visit My [Page]( https://kylel1015.github.io/CSE110Lab1/)  
 
-## Jude Gamba
+### Jude Gamba
 👨‍💻Front-end Design  
 Visit My [Page](https://judergamba.github.io/profile/)  
 
-## Mohamed Hamdi
+### Mohamed Hamdi
 🕵️‍♂️Dev Ops/ Code Reviewer  
 Visit My [Page](https://mazen-hamdi.github.io/)  
 
-## Richard James
+### Richard James
 👨‍🔧Testing/ Implementation Design  
 Visit My [Page](https://richardj1.github.io/110/#hello)  
 
-## Xiao Chen
+### Xiao Chen
 👨‍💻Front-end Design  
 Visit My [Page](https://xiaojian1202.github.io/cse110_projects/)  
