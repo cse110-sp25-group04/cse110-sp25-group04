@@ -38,7 +38,7 @@ Visit My [Page](https://ericyti.github.io/Lab-Week-1/)
 
 ### Eve Nguyen
 👩‍🎨UX UI Design  
-Visit My [Page](https://arulster17.github.io/about-me/)  
+Visit My [Page](https://ejnguyen1.github.io/CSE110/)  
 
 ### Kyle Long
 👨‍🏭Software Product Design  
