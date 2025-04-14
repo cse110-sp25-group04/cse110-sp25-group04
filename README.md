@@ -1,4 +1,4 @@
-# GROUP 4 - THE WIN (temporary)
+# GROUP 4 - THE WIN
 
 ### Check out team.md:
 
