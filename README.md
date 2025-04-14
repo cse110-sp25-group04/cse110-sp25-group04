@@ -1,3 +1,5 @@
 # GROUP 4 - THE WIN (temporary)
 
-### This will be our landing page
+### Check out team.md:
+
+https://github.com/cse110-sp25-group04/cse110-sp25-group04/blob/main/admin/team.md
