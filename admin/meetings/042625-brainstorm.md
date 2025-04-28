@@ -22,4 +22,4 @@ We had our second meeting after everyone had the opportunity to share their idea
 
 We also spent time discussing how we would approach creating our starting pitch document now that we have a clear direction. Together, we outlined what key points need to be included, how to organize the information, and made sure everyone is aligned on next steps.
 
-You can view the full image of our Miro document [here](/specs/brainstorm/brainstorm.jpg)
+You can view the full image of our Miro document [here](../specs/brainstorm/brainstorm.jpg)
