@@ -10,7 +10,7 @@
 ## Team Values:
 
 - **Responsibility** in our work
-- **Punctuality** in communcation
+- **Punctuality** in communication
 - **Transparency** with issues
 - **Respect** each other's work, time and differences
 - **Adapt** to changes as they come
@@ -40,7 +40,13 @@
 - Meruj may not be available past 9 pm, so questions and issues must be reported before then
 - In the case of an emergency submission Arman will step in, and if unavailable
 - Meruj will do the submission past 9 pm only in the case of severe emergencies
-- Absence and other problems must be reported in the "All Excuses" slack channel
+- Absence and other problems must be reported in the **#All Excuses** slack channel
+
+## Meetings:
+
+There will be meetings every Tu/Th where required attendees will be 
+made clear in the **#announcements** channel
+
 
 ## Issues & Resolution:
 
@@ -49,7 +55,7 @@
     - Someone with less work will take over the issue to the best of their ability
     - If no one else is able to do so, the team will have to do more work
     - If not a team role, someone else will be assigned
-    - If everyone else has been assigned a lot fo work,
+    - If everyone else has been assigned a lot of work,
         Meruj will step in and try to catch things up
 
 - If someone is constantly unavailable to the team when needed, 
