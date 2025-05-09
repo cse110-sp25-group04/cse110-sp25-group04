@@ -120,7 +120,14 @@ Good:
    
 ## JavaScript:
 1. Use **only** let and const
-2. Use Strict Mode:
+2. End every line with a ;
+```js
+Bad:
+let num = 10
+Good:
+let num = 10;
+```
+3. Use Strict Mode:
 ```js
 "use strict" // top of file
 /* rest of file */
@@ -135,21 +142,21 @@ Good:
 let theNum = a + b;
 const GLOBAL_ARRAY = [a, b, c, d];
 ```
-8. Parentheses: No spacing between start and end
+9. Parentheses: No spacing between start and end
 ```js
 Good:
 console.log("The output");
 Bad:
 theFunction( param1, param2 );
 ```
-9. Function Structure: Follow exactly
+10. Function Structure: Follow exactly
 ```js
 Good:
 function theFunction(param1, param2, param3) {
     return output;
 }
 ```
-10. Callback Functions: **NO ARRAOW FUNCTIONS**
+11. Callback Functions: **NO ARRAOW FUNCTIONS**
 ```js
 Good:
 theObj.addEventListener('click', function (param1, param2) {
@@ -160,14 +167,14 @@ theObj.addEventListener('click', (param1, param2) => {
     // operation
 });
 ```
-11. Quotations: single quotes outside, double inside
+12. Quotations: single quotes outside, double inside
 ```js
 Good:
 console.log('some person said "Hello World"');
 Also Good:
 console.log(`some person said ${textVar}`);
 ```
-12. Line overflow: Insert one more tab than scope level
+13. Line overflow: Insert one more tab than scope level
 ```js
 Good:
 let theVar = a + b
@@ -179,7 +186,7 @@ Also Bad:
 let theBad Var = a + b
                  +c // too far
 ```
-13. Limit functions to less than 100 lines of code
+14. Limit functions to less than 50 lines of code
 
 ## Documentation: JSDoc
 1. Label core API functions like so:
