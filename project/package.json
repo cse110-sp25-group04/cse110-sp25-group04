@@ -5,7 +5,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint . && htmlhint .",
-    "doc": "jsdoc scripts/ -d docs"
+    "doc": "jsdoc sources/scripts/ -d docs"
   },
   "keywords": [],
   "author": "Meruj Sargsyan",
@@ -16,6 +16,7 @@
     "@typescript-eslint/parser": "^8.32.0",
     "eslint": "^9.26.0",
     "globals": "^16.1.0",
-    "htmlhint": "^1.1.4"
+    "htmlhint": "^1.1.4",
+    "jsdoc": "^4.0.4"
   }
 }
