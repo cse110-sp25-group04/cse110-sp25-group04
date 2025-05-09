@@ -6,6 +6,11 @@ We will use *Jest* for our testing framework since it is the tool taught in clas
 familiarity with the tool and it is likely to be one of the most simple and widely used since Prof. Powell
 is a very practical man.
 
+## Documentation:
+
+We will use **JSDoc** since it's the most commonly used one and the format is shared accross many languages
+so people will be used to it.
+
 ## Linting:
 
 #### HTML:
