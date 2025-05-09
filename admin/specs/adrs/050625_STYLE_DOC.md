@@ -180,6 +180,7 @@ let theBad Var = a + b
                  +c // too far
 ```
 13. Limit functions to less than 100 lines of code
+
 ## Documentation: JSDoc
 1. Label core API functions like so:
 ```js
