@@ -1,0 +1,13 @@
+{
+    'doctype-first': true,
+    'style-disabled': true,
+    'script-disabled': true,
+    'title-require': true,
+    'attr-lowercase': true,
+    'attr-no-unnecessary-whitespace': true,
+    'attr-value-not-empty': true,
+    'tag-pair': true,
+    'id-class-value': dash,
+    'inline-script-disabled': true,
+    'inline-style-disabled': true,
+}
