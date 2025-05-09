@@ -4,7 +4,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "eslint . && htmlhint ."
+    "lint": "eslint . && htmlhint .",
+    "doc": "jsdoc scripts/ -d docs"
   },
   "keywords": [],
   "author": "Meruj Sargsyan",
