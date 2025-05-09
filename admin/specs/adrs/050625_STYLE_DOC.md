@@ -1,5 +1,16 @@
 # Team 4 The Win Style Doc
 
+## Reasoning:
+
+We tried to follow some ususal standards of html, css and js, but also added some of our 
+changes such as 4 space indent instead of the usual 2. This is because we prefer readability
+and understanding of the code rather than compactness or ease of writing.
+
+Our most contravertial requirement may be the use of **NO ARROW FUNCTIONS**
+This is because arrow functions are hard to understand for people who are just now learning
+javascript, and even for other people who are familiar with them, the word **function** is
+easier to find in a codebase than **()** when searching and looking over.
+
 ## File Names:
 
 All files will have the naming format: <b>lower_snake_case</b>
