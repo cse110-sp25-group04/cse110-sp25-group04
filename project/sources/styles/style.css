@@ -38,18 +38,27 @@ body {
 }
 
 .player-section {
-    background-color: red;
-    display: grid;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     padding: 2vh 0;
-    /* height: 20vh; */
 }
 .hand-grid{
     display: grid;
-    grid
+    grid-template-columns: repeat(6, 1fr);
+    gap:0.5rem;
+    border: 2px black;
+    padding: 1rem;
+    border-radius: 20px;
+    background-color: white;
 }
 .hand-card-slot{
-    /*aspect-ratio: 3/5;*/
-    background-color: red;
-    border: 1px solid #aaa;
+    aspect-ratio: 3/5;
+    background-color: lightcoral;
+    border: 2px black;
+    border-radius: 10%;
     display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
 }
