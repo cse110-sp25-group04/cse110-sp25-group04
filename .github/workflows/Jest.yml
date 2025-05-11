@@ -1,10 +1,8 @@
+
 name: Jest Tests
 
 on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+  push:        
 
 jobs:
   test:
@@ -12,16 +10,16 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-      
+
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18' # Consider using a more recent LTS like '20' if compatible
-          
+          node-version: '18' # Consider upgrading to '20' if compatible
+
       - name: Install dependencies
         run: npm install
         working-directory: ./project 
-      
+
       - name: Run Jest tests
         run: npm test
-        working-directory: ./project 
+        working-directory: ./project
