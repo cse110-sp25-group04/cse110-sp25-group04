@@ -1,7 +1,10 @@
 body {
     display: grid;
-    grid-template-rows: auto 2fr 1fr;
-    height: 100vh;
+    /* grid-template-rows: auto 2fr 1fr; */
+    grid-template-rows: 10% 60% 30%;
+    min-height: 100vh;
+    position: relative;
+    margin: 0;
 }
 
 .title-bar {
@@ -9,6 +12,8 @@ body {
     padding: 10px;
     text-align: center;
     font-size: 2em;
+    display: flex;
+    justify-content: center;
 }
 
 .game-field {
@@ -41,7 +46,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 2vh 0;
+    background-color: brown;
 }
 .hand-grid{
     display: grid;
@@ -50,7 +55,7 @@ body {
     border: 2px black;
     padding: 1rem;
     border-radius: 20px;
-    background-color: white;
+    background-color: grey;
 }
 .hand-card-slot{
     aspect-ratio: 3/5;
