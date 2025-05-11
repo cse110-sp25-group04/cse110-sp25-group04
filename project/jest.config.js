@@ -2,7 +2,7 @@ module.exports = {
   testEnvironment: 'node',
   collectCoverage: true,
   coverageReporters: ['text', 'lcov', 'html'],
-  testMatch: ['**/tests/**/*.test.js'],
+  testMatch: ['<rootDir>/tests/**/*.test.js'],
   verbose: true,
   coverageThreshold: {
     global: {
