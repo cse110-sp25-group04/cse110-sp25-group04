@@ -1,0 +1,25 @@
+
+name: Jest Tests
+
+on:
+  push:        
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18' # Consider upgrading to '20' if compatible
+
+      - name: Install dependencies
+        run: npm install
+        working-directory: ./project 
+
+      - name: Run Jest tests
+        run: npm test
+        working-directory: ./project
