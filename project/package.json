@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest || (echo 'Warning: Jest tests failed, or no tests were found by Jest.' && exit 1)",
     "lint": "eslint . && htmlhint .",
     "doc": "jsdoc sources/scripts/ -d docs"
   },
