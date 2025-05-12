@@ -34,7 +34,7 @@ class TestClass {
     }
 
     method1() {
-        return "this method has no label";
+        return 'this method has no label';
     }
 
     /**
@@ -43,6 +43,6 @@ class TestClass {
      * @returns {string} placeholder
      */
     method2() {
-        return "this method has a label";
+        return 'this method has a label';
     }
 }
