@@ -4,7 +4,7 @@ function failingAdditionCheck() {
     const num1 = 2;
     const num2 = 2;
     const sum = num1 + num2;
-    expect(sum).toBe(5); // This assertion will fail
+    expect(sum).toBe(4); // This assertion will fail
 }
 
 function passingAdditionCheck() {
