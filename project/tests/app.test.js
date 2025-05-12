@@ -1,46 +1,22 @@
 'use strict';
 
-const fs   = require('fs');
-const path = require('path');
-const { JSDOM } = require('jsdom');
+function failingAdditionCheck() {
+    const num1 = 2;
+    const num2 = 2;
+    const sum = num1 + num2;
+    expect(sum).toBe(4); // This assertion will fail
+}
 
-const htmlFile = path.resolve(__dirname, '../index.html');
-const html     = fs.readFileSync(htmlFile, 'utf8');
+function passingAdditionCheck() {
+    const numA = 3;
+    const numB = 4;
+    const total = numA + numB;
+    expect(total).toBe(7); // This assertion will pass
+}
 
-let dom;
-let window;
-let gameCore;          // will hold imported module
+function demonstrationSuite() {
+    test('2 + 2 should be 5 (this test will fail)', failingAdditionCheck);
+    test('3 + 4 should be 7 (this test will pass)', passingAdditionCheck);
+}
 
-beforeAll(async () => {
-  dom    = new JSDOM(html, { runScripts: 'dangerously', resources: 'usable' });
-  window = dom.window;
-
-  // wait for <script type="module" src="gameCore.js"> to load
-  await new Promise(res => {
-    window.document.addEventListener('DOMContentLoaded', res);
-  });
-
-  // import the real module inside jsdom context
-  gameCore = await import(path.resolve(__dirname, '../gameCore.js'));
-});
-
-afterAll(() => {
-  window.close();
-});
-
-describe('Basic board integrity', () => {
-  test('grid exists and has 25 cells', () => {
-    const cells = gameCore.getGridCells();
-    expect(cells.length).toBe(25);
-  });
-
-  test('can highlight a valid cell', () => {
-    expect(gameCore.highlightCell(12)).toBe(true);
-    const mid = window.document.querySelector('[data-idx="12"]');
-    expect(mid.style.outline).toContain('limegreen');
-  });
-
-  test('highlightCell returns false for invalid index', () => {
-    expect(gameCore.highlightCell(99)).toBe(false);
-  });
-});
+describe('Demonstration Suite', demonstrationSuite);

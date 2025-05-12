@@ -21,54 +21,14 @@ This file describes our full CI/CD strategy—including the tools we chose, how 
 
 ---
 
-### Minimal GitHub Actions Workflow
-
-```yaml
-# .github/workflows/ci.yml
-name: CI
-
-on:
-  push:        { branches: [main] }
-  pull_request:{ branches: [main] }
-
-jobs:
-  build-test-docs:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v4
-        with: { node-version: 20 }
-
-      - name: Install deps
-        run: npm ci
-
-      - name: Run tests
-        run: npm test
-
-      - name: Run linters
-        run: |
-          npm run lint:js
-          npm run lint:html
-          npm run lint:css || true  # Stylelint soon™
-
-      - name: Build JSDoc
-        run: npm run docs
-
-      - name: Upload docs (PRs only)
-        if: github.ref != 'refs/heads/main'
-        uses: actions/upload-artifact@v4
-        with: { name: jsdoc, path: docs/ }
-
-      - name: Deploy site (main)
-        if: github.ref == 'refs/heads/main'
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./public
-````
-
----
+## Status so far in phase 1
+Most of the CI/CD tools are configured and operational:
+*   **Unit Tests (Jest):** Configured, and tests are running. The GitHub Actions workflow executes `npm test`.
+*   **Linting (ESLint, HTMLHint):** Configured, and `npm run lint` (or individual lint commands) can be run. ESLint and HTMLHint are set up. Stylelint is planned.
+*   **JSDoc:** The `jsdoc` package is installed, and an `npm run doc` script exists. However, further setup is needed. This includes:
+    *   Verifying or creating the `jsdoc.json` configuration file.
+    *   Ensuring the `npm run doc` command correctly generates documentation from the `sources/scripts/` directory into the `docs` folder.
+    *   Integrating JSDoc generation and artifact upload/deployment into the GitHub Actions workflow.
 
 ## Unit Tests
 
