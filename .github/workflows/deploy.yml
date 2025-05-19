@@ -1,42 +1,55 @@
-
+# .github/workflows/deploy.yaml
 name: 🚀 Deploy static site to GitHub Pages
 
 on:
   push:
-    branches: [main]        # run on direct pushes
+    branches: [main]
   pull_request:
-    branches: [main]        # still run checks on PRs
+    branches: [main]
+
+# All jobs need these three permissions
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:                 # optional but recommended
+  group: pages
+  cancel-in-progress: true
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      pages: write
-      id-token: write
+    steps:
+      - uses: actions/checkout@v3
+
+      # If you still want tests/lint, keep them here; otherwise remove Node entirely
+      - uses: actions/setup-node@v3
+        with: { node-version: 18 }
+      - working-directory: ./project
+        run: |
+          npm ci           
+          npm test 
+          npm run lint 
+
+      # ① Enable Pages + capture metadata
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v3   # :contentReference[oaicite:2]{index=2}
+
+      # ② Upload the folder that **really exists**
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./project                  # or ./project/docs if that’s your public folder
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    # ③ Tell GitHub this job targets the special “github-pages” environment
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
 
     steps:
-      - name: ⬇️  Checkout
-        uses: actions/checkout@v3
-
-      # Optional: run tests / lint first
-      - name: 🧪  Install deps & run checks
-        working-directory: ./project
-        run: |
-          npm ci
-          npm test || echo "No tests"
-          npm run lint || echo "No lint script"
-
-      # 📤 Upload the folder that actually contains index.html
-      - name: 📤  Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: ./project       
-
-      # 🛠️  Configure Pages site (only needed once)
-      - name: 🛠️  Configure Pages
-        uses: actions/configure-pages@v3
-
-      # 🚀  Publish
-      - name: 🚀  Deploy to GitHub Pages
+      - id: deploy
         uses: actions/deploy-pages@v3
