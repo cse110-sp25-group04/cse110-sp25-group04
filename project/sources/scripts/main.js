@@ -41,12 +41,12 @@ function renderBoard() {
 function init() {
     document.getElementById('new-board').addEventListener('click', generateBoard);
 
-    document.getElementById('save-board').addEventListener('click', function() {
+    document.getElementById('save-board').addEventListener('click', function () {
         localStorage.setItem('boardState', JSON.stringify(board));
         alert('Board saved!');
     });
 
-    document.getElementById('load-board').addEventListener('click', function() {
+    document.getElementById('load-board').addEventListener('click', function () {
         const saved = localStorage.getItem('boardState');
         if (!saved) {
             alert('No saved board found.');
