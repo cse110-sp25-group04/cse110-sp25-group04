@@ -5,7 +5,7 @@ import parser from '@typescript-eslint/parser';
 const { GLOBALS } = globalsPkg;
 
 export default [
-    {
+    {   ignores: ["docs/**"],
         files: ['**/*.{js,mjs,cjs}'],
         languageOptions: {
             parser,
