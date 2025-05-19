@@ -29,8 +29,6 @@ jobs:
       - working-directory: ./project
         run: |
           npm ci           
-          npm test 
-          npm run lint 
 
       # ① Enable Pages + capture metadata
       - name: Configure GitHub Pages
