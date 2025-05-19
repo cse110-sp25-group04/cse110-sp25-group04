@@ -23,7 +23,7 @@ jobs:
       # 1️⃣ Check out the repo
       - uses: actions/checkout@v3
 
-      # 2️⃣ (Optional) install deps, run tests/lint
+     
       - uses: actions/setup-node@v3
         with:
           node-version: 18
@@ -31,11 +31,10 @@ jobs:
         working-directory: ./project
         run: npm ci
 
-      # 3️⃣ Tell GitHub a Pages build is coming
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v3
 
-      # 4️⃣ Upload the folder that contains index.html at its root
+     
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
