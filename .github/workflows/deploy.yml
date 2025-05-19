@@ -39,19 +39,4 @@ jobs:
         with:
           path: ./project/sources/scripts               
 
-  deploy:
-    needs: build
-    if: |
-      (github.event_name == 'push'      && github.ref == 'refs/heads/main') ||
-      (github.event_name == 'pull_request' &&
-      github.event.pull_request.base.ref == 'main')
-    runs-on: ubuntu-latest
-
-    # ③ Tell GitHub this job targets the special “github-pages” environment
-    environment:
-      name: github-pages
-      url: ${{ steps.deploy.outputs.page_url }}
-
-    steps:
-      - id: deploy
-        uses: actions/deploy-pages@v3
+  
