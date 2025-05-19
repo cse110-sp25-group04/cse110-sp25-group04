@@ -20,23 +20,32 @@ concurrency:                 # optional but recommended
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
+      # 1️⃣  Check out code
       - uses: actions/checkout@v3
 
-      # If you still want tests/lint, keep them here; otherwise remove Node entirely
+      # 2️⃣  (Optional) install deps / run tests or lint
       - uses: actions/setup-node@v3
-        with: { node-version: 18 }
-      - working-directory: ./project
-        run: |
-          npm ci           
+        with:
+          node-version: 18
+      - name: Install deps
+        working-directory: ./project
+        run: npm ci
 
-       
+      # 3️⃣  Copy public files into a clean `site/` folder
+      - name: Prepare site folder
+        working-directory: ./project
+        run: |
+          mkdir -p site
+          cp -R sources/scripts/* site/
+
+      # 4️⃣  Tell GitHub a Pages build is coming
       - name: Configure GitHub Pages
-        uses: actions/configure-pages@v3 
-    
+        uses: actions/configure-pages@v3
+
+      # 5️⃣  Upload the site folder as the GitHub Pages artifact
       - name: Upload GitHub Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./project/sources/scripts               
-
-  
+          path: ./project/site
