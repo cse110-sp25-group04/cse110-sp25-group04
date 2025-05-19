@@ -6,6 +6,7 @@ on:
     branches: [ main ]
   pull_request:
     branches: [ main ]
+  workflow_dispatch: # Allows you to run this workflow manually from the Actions tab
 
 permissions:
   contents: read
@@ -13,45 +14,49 @@ permissions:
   id-token: write
 
 concurrency:
-  group: pages
-  cancel-in-progress: true
+  group: pages # Corrected from "pages" in the generic to match your likely intent
+  cancel-in-progress: true # Keeps your setting for cancelling outdated PR builds
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v4 # Updated version
 
-      - uses: actions/setup-node@v3
-        with: { node-version: 18 }
-      - name: Install deps
+      - name: Setup Node.js
+        uses: actions/setup-node@v3 # Your existing version, still current
+        with:
+          node-version: 18
+
+      - name: Install dependencies
         working-directory: ./project
         run: npm ci
 
-      # (optional) verify files really exist
-      - name: Debug listing
-        run: ls -R ./project/sources/scripts | head -40
+      - name: Debug listing project folder # (Optional) verify files in the correct folder
+        run: ls -R ./project | head -40
 
-      - name: Configure GitHub Pages
-        uses: actions/configure-pages@v3      # emits pages_build event
+      - name: Setup Pages
+        uses: actions/configure-pages@v5 # Updated version
 
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3 # Your existing version, generic uses same
         with:
-          path: ./project
+          path: ./project # Correct path for your project structure
 
   deploy:
-    needs: build
+    needs: build # Ensures build job completes first
     runs-on: ubuntu-latest
-    if: |
+    if: | # Your existing condition to deploy on main push or PR to main
       (github.event_name == 'push' && github.ref == 'refs/heads/main') ||
       (github.event_name == 'pull_request' &&
        github.event.pull_request.base.ref == 'main')
 
     environment:
       name: github-pages
-      url: ${{ steps.deploy.outputs.page_url }}
+      url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
-      - id: deploy
-        uses: actions/deploy-pages@v3         # now finds the run and artifact
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4 # Updated version
