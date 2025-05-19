@@ -1,51 +1,60 @@
-# .github/workflows/deploy.yaml
-name: 🚀 Deploy static site to GitHub Pages
+# .github/workflows/deploy.yml
+name: 🚀 Deploy static site
 
 on:
   push:
-    branches: [main]
+    branches: [ main ]         # production deploy
   pull_request:
-    branches: [main]
+    branches: [ main ]         # PR preview deploys
 
-# All jobs need these three permissions
 permissions:
   contents: read
   pages: write
   id-token: write
 
-concurrency:                 # optional but recommended
+concurrency:
   group: pages
   cancel-in-progress: true
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-      # 1️⃣  Check out code
+      # 1️⃣ Check out the repo
       - uses: actions/checkout@v3
 
-      # 2️⃣  (Optional) install deps / run tests or lint
+      # 2️⃣ (Optional) install deps, run tests/lint
       - uses: actions/setup-node@v3
         with:
           node-version: 18
-      - name: Install deps
+      - name: Install dependencies
         working-directory: ./project
         run: npm ci
 
-      # 3️⃣  Copy public files into a clean `site/` folder
-      - name: Prepare site folder
-        working-directory: ./project
-        run: |
-          mkdir -p site
-          cp -R sources/scripts/* site/
-
-      # 4️⃣  Tell GitHub a Pages build is coming
+      # 3️⃣ Tell GitHub a Pages build is coming
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v3
 
-      # 5️⃣  Upload the site folder as the GitHub Pages artifact
-      - name: Upload GitHub Pages artifact
+      # 4️⃣ Upload the folder that contains index.html at its root
+      - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./project/site
+          path: ./project/sources/scripts
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    # run on push → main OR PR targeting main
+    if: |
+      (github.event_name == 'push' && github.ref == 'refs/heads/main') ||
+      (github.event_name == 'pull_request' &&
+       github.event.pull_request.base.ref == 'main')
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+
+    steps:
+      - id: deploy
+        uses: actions/deploy-pages@v3
