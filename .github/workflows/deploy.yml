@@ -41,6 +41,10 @@ jobs:
 
   deploy:
     needs: build
+    if: |
+      (github.event_name == 'push'      && github.ref == 'refs/heads/main') ||
+      (github.event_name == 'pull_request' &&
+      github.event.pull_request.base.ref == 'main')
     runs-on: ubuntu-latest
 
     # ③ Tell GitHub this job targets the special “github-pages” environment
