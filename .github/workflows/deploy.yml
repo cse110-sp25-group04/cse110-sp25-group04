@@ -37,7 +37,7 @@ jobs:
       # ② Upload the folder that **really exists**
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: .project/sources/scripts               
+          path: ./project/sources/scripts               
 
   deploy:
     needs: build
