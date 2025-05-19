@@ -23,6 +23,7 @@ jobs:
       - run: |
           npm ci
           npm run build    # → emits ./build
+        working-directory: ./project
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with: { path: build/ }
