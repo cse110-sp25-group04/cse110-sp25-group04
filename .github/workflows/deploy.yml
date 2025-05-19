@@ -3,9 +3,9 @@ name: 🚀 Deploy static site
 
 on:
   push:
-    branches: [ main ]         # production deploy
+    branches: [ main ]
   pull_request:
-    branches: [ main ]         # PR preview deploys
+    branches: [ main ]
 
 permissions:
   contents: read
@@ -20,34 +20,29 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      # 1️⃣ Check out the repo
       - uses: actions/checkout@v3
 
-     
       - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-      - name: Install dependencies
+        with: { node-version: 18 }
+      - name: Install deps
         working-directory: ./project
         run: npm ci
 
+      # (optional) verify files really exist
       - name: Debug listing
         run: ls -R ./project/sources/scripts | head -40
 
       - name: Configure GitHub Pages
-        uses: actions/configure-pages@v3
+        uses: actions/configure-pages@v3      # emits pages_build event
 
-     
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./project/sources/scripts
+          path: ./project/sources/scripts      # <- folder with index.html
 
   deploy:
     needs: build
     runs-on: ubuntu-latest
-
-    # run on push → main OR PR targeting main
     if: |
       (github.event_name == 'push' && github.ref == 'refs/heads/main') ||
       (github.event_name == 'pull_request' &&
@@ -59,4 +54,4 @@ jobs:
 
     steps:
       - id: deploy
-        uses: actions/deploy-pages@v3
+        uses: actions/deploy-pages@v3         # now finds the run and artifact
