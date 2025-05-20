@@ -2,7 +2,7 @@
 
 ### Check out our project:
 
-https://cse110-sp25-group04.github.io/cse110-sp25-group04/project/index.html
+https://cse110-sp25-group04.github.io/cse110-sp25-group04/
 
 ### Check out team.md:
 
