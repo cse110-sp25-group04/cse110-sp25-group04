@@ -1,3 +1,39 @@
+//Run the init() function when the page has loaded
+window.addEventListener("DOMContentLoaded", init);
+
+//declare variables
+let handCells;
+let gridCells;
+let draggedElement = null;
+let initialMouseX;
+let initialMouseY;
+let initialElementLeft;
+let initialElementTop;
+let originalParentCell = null;
+let currentDropTarget = null;
+//Variables to store the latest mouse position for requestAnimationFrame
+let latestMouseX = 0;
+let latestMouseY = 0;
+let animationFrameId = null; //To track if an animation frame is scheduled
+
+let dropTargets;
+
+//Starts the program
+function init() {
+    handCells = document.querySelectorAll('#hand-container .hand-cell');
+    gridCells = document.querySelectorAll('#grid-container .grid-cell');
+
+    dropTargets = document.querySelectorAll('.grid-cell, .hand-cell');
+
+    //placeholder
+    const card1 = createCard('A♠️');
+    const card2 = createCard('K♣️');
+    const card3 = createCard('Q♦️');
+
+    // Add mouse down listener to the document to start dragging on any card
+    document.addEventListener('mousedown', handleMouseDown);
+}
+
 //Throttles function to reduce lag from running too quickly
 function throttle(func, limit) {
     let inThrottle;
@@ -15,135 +51,27 @@ function throttle(func, limit) {
     }
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-    const handCells = document.querySelectorAll('#hand-container .hand-cell');
-    const gridCells = document.querySelectorAll('#grid-container .grid-cell');
+//text would probably be a key to access card attributes?
+function createCard(text) {
+    console.log("CREATING CARDS");
+    const card = document.createElement('div');
+    card.classList.add('card');
+    card.textContent = text;
 
-    //text would probably be a key to access card attributes?
-    function createCard(text) {
-        console.log("CREATING CARDS");
-        const card = document.createElement('div');
-        card.classList.add('card');
-        card.textContent = text;
-
-        //finds first empty hand cell to add card to
-        for (let h of handCells){
-            if (h.classList.contains('has-card')){
-                console.log("EXIT");
-                continue;
-            }
-            h.appendChild(card);
-            h.classList.add('has-card');
-            console.log('CARD ADDED');
-            break;
+    //finds first empty hand cell to add card to
+    for (let h of handCells){
+        if (h.classList.contains('has-card')){
+            console.log("EXIT");
+            continue;
         }
-        return card;
+        h.appendChild(card);
+        h.classList.add('has-card');
+        console.log('CARD ADDED');
+        break;
     }
+    return card;
+}
 
-
-    //placeholder
-    const card1 = createCard('A♠️');
-    const card2 = createCard('K♣️');
-    const card3 = createCard('Q♦️');
-
-    let draggedElement = null;
-    let initialMouseX;
-    let initialMouseY;
-    let initialElementLeft;
-    let initialElementTop;
-    let originalParentCell = null;
-    let currentDropTarget = null;
-    //Variables to store the latest mouse position for requestAnimationFrame
-    let latestMouseX = 0;
-    let latestMouseY = 0;
-    let animationFrameId = null; //To track if an animation frame is scheduled
-
-    const dropTargets = document.querySelectorAll('.grid-cell, .hand-cell');
-
-    //Function to handle mouse down on a draggable element
-    function handleMouseDown(event) {
-        //Left Mouse Button Check
-        if (event.button !== 0) return;
-        draggedElement = event.target.closest('.card');
-        if (!draggedElement || draggedElement.parentElement.classList.contains('grid-cell')) return; //Not a card or taking card from gird-cell
-        event.preventDefault();
-
-        //MOUSE position relative to viewport
-        initialMouseX = event.clientX;
-        initialMouseY = event.clientY;
-
-        //ELEMENT position relative to the viewport
-        const rect = draggedElement.getBoundingClientRect();
-        initialElementLeft = rect.left;
-        initialElementTop = rect.top;
-        //width and height
-        initialElementWidth = rect.width;
-        initialElementHeight = rect.height;
-
-        originalParentCell = draggedElement.parentElement;
-        draggedElement.classList.add('dragging');
-        //add pixels for css positioning
-        draggedElement.style.left = initialElementLeft + 'px';
-        draggedElement.style.top = initialElementTop + 'px';
-        draggedElement.style.width = initialElementWidth + 'px';
-        draggedElement.style.height = initialElementHeight + 'px';
-
-        //Add event listeners to the document for moving and dropping
-        document.addEventListener('mousemove', throttledHandleMouseMove);
-        document.addEventListener('mouseup', handleMouseUp);
-    }
-
-    //Function to handle mouse move
-    /*function handleMouseMove(event) {
-        if (!draggedElement) return;
-
-        //Calculate the new position based on mouse movement
-        const deltaX = event.clientX - initialMouseX;
-        const deltaY = event.clientY - initialMouseY;
-
-        //Move card along with mouse cursor
-        draggedElement.style.left = (initialElementLeft + deltaX) + 'px';
-        draggedElement.style.top = (initialElementTop + deltaY) + 'px';
-
-        const cardRect = draggedElement.getBoundingClientRect();
-        const cardCenterX = cardRect.left + cardRect.width / 2;
-        const cardCenterY = cardRect.top + cardRect.height / 2;
-
-
-        //Iterate through potential drop targets
-        let hoveredTarget = null;
-        dropTargets.forEach(target => {
-            const targetRect = target.getBoundingClientRect();
-
-            //Check if card is on target
-            if (cardCenterX > targetRect.left && cardCenterX < targetRect.right &&
-                cardCenterY > targetRect.top && cardCenterY < targetRect.bottom) {
-                hoveredTarget = target;
-            }
-        });
-
-        // Update visual feedback on drop targets, currentDroptarget is null initially
-        if (hoveredTarget !== currentDropTarget) {
-            if (currentDropTarget) {
-                currentDropTarget.classList.remove('drag-over');
-            }
-
-            if (hoveredTarget) {
-                // Add drag-over class only if the target is a valid drop location (including original parent cell)
-                const hasCard = hoveredTarget.querySelector('.card');
-                if (!hasCard || hoveredTarget === originalParentCell) {
-                        hoveredTarget.classList.add('drag-over');
-                        currentDropTarget = hoveredTarget;
-                } else {
-                        currentDropTarget = null;
-                }
-            } else {
-                    currentDropTarget = null;
-            }
-        }
-    }
-
-    const throttledHandleMouseMove = throttle(handleMouseMove, 10);*/
 //Function to handle mouse down on a draggable element
 function handleMouseDown(event) {
     //Left Mouse Button Check
@@ -151,52 +79,49 @@ function handleMouseDown(event) {
 
     draggedElement = event.target.closest('.card');
     // Check if a card was found AND if its parent is NOT a grid-cell
-    if (!draggedElement || (draggedElement.parentElement && draggedElement.parentElement.classList.contains('grid-cell'))) { // Added parentElement check for safety
+    if (!draggedElement || (draggedElement.parentElement && draggedElement.parentElement.classList.contains('grid-cell')) ||
+    draggedElement.classList.contains('locked')) { // Added parentElement check for safety
             console.log("Drag prevented: Not a card or card is in a grid cell.");
             return; // Not a card or card is in a grid cell, prevent drag
     }
-
 
     event.preventDefault();
 
     //MOUSE position relative to viewport
     initialMouseX = event.clientX;
     initialMouseY = event.clientY;
-        // Set initial latest mouse position
+    // Set initial latest mouse position
     latestMouseX = event.clientX;
     latestMouseY = event.clientY;
-
 
     //ELEMENT position relative to the viewport
     const rect = draggedElement.getBoundingClientRect();
     initialElementLeft = rect.left;
     initialElementTop = rect.top;
-        // Store initial width and height
+    // Store initial width and height
     initialElementWidth = rect.width;
     initialElementHeight = rect.height;
-
 
     originalParentCell = draggedElement.parentElement;
     draggedElement.classList.add('dragging');
     //add pixels for css positioning
     draggedElement.style.left = initialElementLeft + 'px';
     draggedElement.style.top = initialElementTop + 'px';
-        // Explicitly set width and height when dragging starts
+    // Explicitly set width and height when dragging starts
     draggedElement.style.width = initialElementWidth + 'px';
     draggedElement.style.height = initialElementHeight + 'px';
-
 
     // Add event listeners to the document for moving and dropping
     // Use the direct handleMouseMove here to capture latest position
     document.addEventListener('mousemove', handleMouseMove);
     document.addEventListener('mouseup', handleMouseUp);
 
-        // Start the animation loop for positioning and checks
-        animationFrameId = requestAnimationFrame(updatePositionAndCheckTargets);
-        console.log("requestAnimationFrame loop started."); // Log when loop starts
+    // Start the animation loop for positioning and checks
+    animationFrameId = requestAnimationFrame(updatePositionAndCheckTargets);
+    console.log("requestAnimationFrame loop started."); // Log when loop starts
 }
 
-// Function to capture the latest mouse position
+// Function to capture the latest mouse position(helper)
 function handleMouseMove(event) {
         latestMouseX = event.clientX;
         latestMouseY = event.clientY;
@@ -207,13 +132,13 @@ function handleMouseMove(event) {
         }
 }
 
-    // Function to update card position and check drop targets
+// Function to update card position and check drop targets
 function updatePositionAndCheckTargets() {
     console.log("updatePositionAndCheckTargets running."); // Log each time the function runs
     if (!draggedElement) {
-            console.log("updatePositionAndCheckTargets stopping: draggedElement is null."); // Log when stopping
-            animationFrameId = null; // Stop the loop if element is gone
-            return;
+        console.log("updatePositionAndCheckTargets stopping: draggedElement is null."); // Log when stopping
+        animationFrameId = null; // Stop the loop if element is gone
+        return;
     }
 
     try {
@@ -228,7 +153,6 @@ function updatePositionAndCheckTargets() {
         const cardRect = draggedElement.getBoundingClientRect();
         const cardCenterX = cardRect.left + cardRect.width / 2;
         const cardCenterY = cardRect.top + cardRect.height / 2;
-
 
         //Iterate through potential drop targets
         let hoveredTarget = null;
@@ -295,7 +219,7 @@ function updatePositionAndCheckTargets() {
     }
 }
 
-//Function to handle mouse up (drop)
+// Function to handle mouse up (drop)
 function handleMouseUp() {
     if (!draggedElement) return;
 
@@ -348,7 +272,14 @@ function handleMouseUp() {
             draggedElement.removeEventListener('transitionend', handler);
             draggedElement.classList.remove('snapping-back');
 
+            // Only append if the draggedElement is not already in the originalParentCell
+            if (draggedElement.parentElement !== originalParentCell) {
+                originalParentCell.appendChild(draggedElement);
+                originalParentCell.classList.add('has-card');
+            }
+
             if (currentDropTarget && currentDropTarget.classList.contains('grid-cell')) {
+                draggedElement.classList.add('locked');
                 draggedElement.style.cursor = 'default';
             }
 
@@ -356,18 +287,15 @@ function handleMouseUp() {
             draggedElement.style.left = '';
             draggedElement.style.top = '';
             draggedElement.style.position = '';
-            originalParentCell.appendChild(draggedElement);
-            originalParentCell.classList.add('has-card');
+            // originalParentCell.appendChild(draggedElement);
+            // originalParentCell.classList.add('has-card');
         });
-
     }
+
+    //resets position and removes absolute positioning
 
     //Reset vars
     draggedElement = null;
     originalParentCell = null;
     currentDropTarget = null;
 }
-
-// Add mouse down listener to the document to start dragging on any card
-document.addEventListener('mousedown', handleMouseDown);
-});
