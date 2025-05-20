@@ -34,8 +34,6 @@ function init() {
     document.addEventListener('mousedown', handleMouseDown);
 }
 
-
-
 //Throttles function to reduce lag from running too quickly
 function throttle(func, limit) {
     let inThrottle;
@@ -81,40 +79,37 @@ function handleMouseDown(event) {
 
     draggedElement = event.target.closest('.card');
     // Check if a card was found AND if its parent is NOT a grid-cell
-    if (!draggedElement || (draggedElement.parentElement && draggedElement.parentElement.classList.contains('grid-cell'))) { // Added parentElement check for safety
+    if (!draggedElement || (draggedElement.parentElement && draggedElement.parentElement.classList.contains('grid-cell')) ||
+    draggedElement.classList.contains('locked')) { // Added parentElement check for safety
             console.log("Drag prevented: Not a card or card is in a grid cell.");
             return; // Not a card or card is in a grid cell, prevent drag
     }
-
 
     event.preventDefault();
 
     //MOUSE position relative to viewport
     initialMouseX = event.clientX;
     initialMouseY = event.clientY;
-        // Set initial latest mouse position
+    // Set initial latest mouse position
     latestMouseX = event.clientX;
     latestMouseY = event.clientY;
-
 
     //ELEMENT position relative to the viewport
     const rect = draggedElement.getBoundingClientRect();
     initialElementLeft = rect.left;
     initialElementTop = rect.top;
-        // Store initial width and height
+    // Store initial width and height
     initialElementWidth = rect.width;
     initialElementHeight = rect.height;
-
 
     originalParentCell = draggedElement.parentElement;
     draggedElement.classList.add('dragging');
     //add pixels for css positioning
     draggedElement.style.left = initialElementLeft + 'px';
     draggedElement.style.top = initialElementTop + 'px';
-        // Explicitly set width and height when dragging starts
+    // Explicitly set width and height when dragging starts
     draggedElement.style.width = initialElementWidth + 'px';
     draggedElement.style.height = initialElementHeight + 'px';
-
 
     // Add event listeners to the document for moving and dropping
     // Use the direct handleMouseMove here to capture latest position
@@ -158,7 +153,6 @@ function updatePositionAndCheckTargets() {
         const cardRect = draggedElement.getBoundingClientRect();
         const cardCenterX = cardRect.left + cardRect.width / 2;
         const cardCenterY = cardRect.top + cardRect.height / 2;
-
 
         //Iterate through potential drop targets
         let hoveredTarget = null;
@@ -225,7 +219,7 @@ function updatePositionAndCheckTargets() {
     }
 }
 
-//Function to handle mouse up (drop)
+// Function to handle mouse up (drop)
 function handleMouseUp() {
     if (!draggedElement) return;
 
@@ -275,9 +269,17 @@ function handleMouseUp() {
         draggedElement.style.top = targetSnapTop + 'px';
 
         draggedElement.addEventListener('transitionend', function handler() {
+            draggedElement.removeEventListener('transitionend', handler);
             draggedElement.classList.remove('snapping-back');
 
+            // Only append if the draggedElement is not already in the originalParentCell
+            if (draggedElement.parentElement !== originalParentCell) {
+                originalParentCell.appendChild(draggedElement);
+                originalParentCell.classList.add('has-card');
+            }
+
             if (currentDropTarget && currentDropTarget.classList.contains('grid-cell')) {
+                draggedElement.classList.add('locked');
                 draggedElement.style.cursor = 'default';
             }
 
@@ -285,14 +287,15 @@ function handleMouseUp() {
             draggedElement.style.left = '';
             draggedElement.style.top = '';
             draggedElement.style.position = '';
-            originalParentCell.appendChild(draggedElement);
-            originalParentCell.classList.add('has-card');
+            // originalParentCell.appendChild(draggedElement);
+            // originalParentCell.classList.add('has-card');
         });
-
     }
 
+    //resets position and removes absolute positioning
+
     //Reset vars
-    // draggedElement = null;
-    // originalParentCell = null;
-    // currentDropTarget = null;
+    draggedElement = null;
+    originalParentCell = null;
+    currentDropTarget = null;
 }
