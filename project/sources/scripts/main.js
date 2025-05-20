@@ -4,8 +4,15 @@ const ROWS = 7;
 let board = [];
 
 // Generate an empty board (ROWSxCOLS) and then render it
+// Each cell contains either 'grass', 'rock', or 'corrupt' tile 
+// and will be generated randomly with approximately the same probabilities
 function generateBoard() {
-    board = Array.from({ length: ROWS }, () => Array(COLS).fill(null));
+    const states = ['green', 'purple', 'orange'];
+    board = Array.from({ length: ROWS }, () => //Array(COLS).fill(null));
+        Array.from({ length: COLS }, () => 
+            states[Math.floor(Math.random() * states.length)]
+        )
+    );
     renderBoard();
 }
 
@@ -26,8 +33,10 @@ function renderBoard() {
             cell.id = `${x}-${y}`;
             if (board[y][x] !== null) {
                 cell.textContent = board[y][x];
+                cell.style.backgroundColor = board[y][x];
             } else {
                 cell.textContent = '';
+                cell.style.backgroundColor = '';
             }
             container.appendChild(cell);
         }
