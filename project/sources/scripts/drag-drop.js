@@ -21,12 +21,19 @@ function setupDragAndDrop(handCells, gridCells) {
         //Left Mouse Button Check
         if (event.button !== 0) return;
 
+        // if (animationFrameId !== null) {
+        //     cancelAnimationFrame(animationFrameId);
+        //     animationFrameId = null;
+        // }
+        console.log('[Drag Start] Dragging element:', draggedElement);
+        console.log('[Drag Start] animationFrameId before:', animationFrameId);
+
         draggedElement = event.target.closest('.card');
         // Check if a card was found AND if its parent is NOT a grid-cell
         if (!draggedElement || (draggedElement.parentElement && draggedElement.parentElement.classList.contains('grid-cell')) ||
         draggedElement.classList.contains('locked')) { // Added parentElement check for safety
-                console.log("Drag prevented: Not a card or card is in a grid cell.");
-                return; // Not a card or card is in a grid cell, prevent drag
+            console.log('Drag prevented: Not a card or card is in a grid cell.');
+            return; // Not a card or card is in a grid cell, prevent drag
         }
 
         event.preventDefault();
@@ -62,25 +69,25 @@ function setupDragAndDrop(handCells, gridCells) {
 
         // Start the animation loop for positioning and checks
         animationFrameId = requestAnimationFrame(updatePositionAndCheckTargets);
-        console.log("requestAnimationFrame loop started."); // Log when loop starts
+        console.log('requestAnimationFrame loop started.'); // Log when loop starts
     }
 
     // Function to capture the latest mouse position(helper)
     function handleMouseMove(event) {
-            latestMouseX = event.clientX;
-            latestMouseY = event.clientY;
-            // Request an animation frame if one is not already scheduled
-            if (animationFrameId === null) {
-                animationFrameId = requestAnimationFrame(updatePositionAndCheckTargets);
-                console.log("requestAnimationFrame requested from mousemove."); // Log when frame is requested
-            }
+        latestMouseX = event.clientX;
+        latestMouseY = event.clientY;
+        // Request an animation frame if one is not already scheduled
+        if (animationFrameId === null) {
+            animationFrameId = requestAnimationFrame(updatePositionAndCheckTargets);
+            console.log('requestAnimationFrame requested from mousemove.'); // Log when frame is requested
+        }
     }
 
     // Function to update card position and check drop targets
     function updatePositionAndCheckTargets() {
-        console.log("updatePositionAndCheckTargets running."); // Log each time the function runs
+        console.log('updatePositionAndCheckTargets running.'); // Log each time the function runs
         if (!draggedElement) {
-            console.log("updatePositionAndCheckTargets stopping: draggedElement is null."); // Log when stopping
+            console.log('updatePositionAndCheckTargets stopping: draggedElement is null.'); // Log when stopping
             animationFrameId = null; // Stop the loop if element is gone
             return;
         }
@@ -212,36 +219,44 @@ function setupDragAndDrop(handCells, gridCells) {
             draggedElement.style.left = targetSnapLeft + 'px';
             draggedElement.style.top = targetSnapTop + 'px';
 
-            draggedElement.addEventListener('transitionend', function handler() {
-                draggedElement.removeEventListener('transitionend', handler);
-                draggedElement.classList.remove('snapping-back');
+            const snappingCard = draggedElement; // Save a reference for use in the handler
 
-                // Only append if the draggedElement is not already in the originalParentCell
-                if (originalParentCell && draggedElement.parentElement !== originalParentCell) {
-                    originalParentCell.appendChild(draggedElement);
+            snappingCard.addEventListener('transitionend', function handler() {
+                snappingCard.removeEventListener('transitionend', handler);
+                console.log('[Snap Back] Transition ended for', snappingCard);
+
+                snappingCard.classList.remove('snapping-back');
+
+                if (originalParentCell && snappingCard.parentElement !== originalParentCell) {
+                    originalParentCell.appendChild(snappingCard);
                     originalParentCell.classList.add('has-card');
                 }
 
                 if (currentDropTarget && currentDropTarget.classList.contains('grid-cell')) {
-                    draggedElement.classList.add('locked');
-                    draggedElement.style.cursor = 'default';
+                    snappingCard.classList.add('locked');
+                    snappingCard.style.cursor = 'default';
                 }
 
-                //Reset position and remove absolute positioning
-                draggedElement.style.left = '';
-                draggedElement.style.top = '';
-                draggedElement.style.position = '';
-                // originalParentCell.appendChild(draggedElement);
-                // originalParentCell.classList.add('has-card');
+                // Reset position styles
+                snappingCard.style.left = '';
+                snappingCard.style.top = '';
+                snappingCard.style.position = '';
+
+                //Reset vars
+                draggedElement = null;
+                originalParentCell = null;
+                currentDropTarget = null;
+                animationFrameId = null;
             });
         }
 
         //resets position and removes absolute positioning
 
         //Reset vars
-        draggedElement = null;
-        originalParentCell = null;
-        currentDropTarget = null;
+        // draggedElement = null;
+        // originalParentCell = null;
+        // currentDropTarget = null;
+        // animationFrameId = null;
     }
     document.addEventListener('mousedown', handleMouseDown);
 }
