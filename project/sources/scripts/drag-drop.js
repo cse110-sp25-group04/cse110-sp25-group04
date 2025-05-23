@@ -10,6 +10,7 @@ let currentDropTarget = null;
 let latestMouseX = 0;
 let latestMouseY = 0;
 let animationFrameId = null; //To track if an animation frame is scheduled
+let isTransitioning = false;
 
 let dropTargets;
 
@@ -20,6 +21,10 @@ function setupDragAndDrop(handCells, gridCells) {
     function handleMouseDown(event) {
         //Left Mouse Button Check
         if (event.button !== 0) return;
+
+        if(isTransitioning) {
+            return;
+        }
 
         // if (animationFrameId !== null) {
         //     cancelAnimationFrame(animationFrameId);
@@ -207,6 +212,9 @@ function setupDragAndDrop(handCells, gridCells) {
             //Invalid drop target, snap back
             draggedElement.classList.add('snapping-back');
 
+            //disable dragging during transition
+            isTransitioning = true;
+
             //Get the original position relative to the viewport
             const originalRect = originalParentCell.getBoundingClientRect();
             //Gets padding position for original cell
@@ -226,6 +234,7 @@ function setupDragAndDrop(handCells, gridCells) {
                 console.log('[Snap Back] Transition ended for', snappingCard);
 
                 snappingCard.classList.remove('snapping-back');
+                isTransitioning = false;
 
                 if (originalParentCell && snappingCard.parentElement !== originalParentCell) {
                     originalParentCell.appendChild(snappingCard);
