@@ -307,18 +307,8 @@ class DragAndDropManager {
 
         this.#updateMouse(event);
 
-        const rect = this.draggedElement.getBoundingClientRect();
-        this.initialElementLeft = rect.left;
-        this.initialElementTop = rect.top;
-        const initialElementWidth = rect.width;
-        const initialElementHeight = rect.height;
-
-        this.originalParentCell = this.draggedElement.parentElement;
-        this.draggedElement.classList.add('dragging');
-        this.draggedElement.style.left = `${this.initialElementLeft}px`;
-        this.draggedElement.style.top = `${this.initialElementTop}px`;
-        this.draggedElement.style.width = `${initialElementWidth}px`;
-        this.draggedElement.style.height = `${initialElementHeight}px`;
+        //maintain styling
+        this.#updateStyle();
 
         document.addEventListener('mousemove', this.handleMouseMove);
         document.addEventListener('mouseup', this.handleMouseUp);
@@ -341,51 +331,51 @@ class DragAndDropManager {
         }
 
         try {
-        const deltaX = this.latestMouseX - this.initialMouseX;
-        const deltaY = this.latestMouseY - this.initialMouseY;
+            const deltaX = this.latestMouseX - this.initialMouseX;
+            const deltaY = this.latestMouseY - this.initialMouseY;
 
-        this.draggedElement.style.left = `${this.initialElementLeft + deltaX}px`;
-        this.draggedElement.style.top = `${this.initialElementTop + deltaY}px`;
+            this.draggedElement.style.left = `${this.initialElementLeft + deltaX}px`;
+            this.draggedElement.style.top = `${this.initialElementTop + deltaY}px`;
 
-        const cardRect = this.draggedElement.getBoundingClientRect();
-        const cardCenterX = cardRect.left + cardRect.width / 2;
-        const cardCenterY = cardRect.top + cardRect.height / 2;
+            const cardRect = this.draggedElement.getBoundingClientRect();
+            const cardCenterX = cardRect.left + cardRect.width / 2;
+            const cardCenterY = cardRect.top + cardRect.height / 2;
 
-        let hoveredTarget = null;
-        this.dropTargets.forEach(target => {
-            const targetRect = target.getBoundingClientRect();
-            if (cardCenterX > targetRect.left && cardCenterX < targetRect.right &&
-                cardCenterY > targetRect.top && cardCenterY < targetRect.bottom) {
-            hoveredTarget = target;
+            let hoveredTarget = null;
+            this.dropTargets.forEach(target => {
+                const targetRect = target.getBoundingClientRect();
+                if (cardCenterX > targetRect.left && cardCenterX < targetRect.right &&
+                    cardCenterY > targetRect.top && cardCenterY < targetRect.bottom) {
+                    hoveredTarget = target;
+                }
+            });
+
+            if (hoveredTarget !== this.currentDropTarget) {
+                if (this.currentDropTarget) {
+                this.currentDropTarget.classList.remove('drag-over');
+                }
+
+                if (hoveredTarget) {
+                    const hasCard = hoveredTarget.querySelector('.card');
+                if (!hasCard || hoveredTarget === this.originalParentCell) {
+                    hoveredTarget.classList.add('drag-over');
+                    this.currentDropTarget = hoveredTarget;
+                } else {
+                    this.currentDropTarget = null;
+                }
+                } else {
+                    this.currentDropTarget = null;
+                }
             }
-        });
-
-        if (hoveredTarget !== this.currentDropTarget) {
-            if (this.currentDropTarget) {
-            this.currentDropTarget.classList.remove('drag-over');
-            }
-
-            if (hoveredTarget) {
-            const hasCard = hoveredTarget.querySelector('.card');
-            if (!hasCard || hoveredTarget === this.originalParentCell) {
-                hoveredTarget.classList.add('drag-over');
-                this.currentDropTarget = hoveredTarget;
-            } else {
-                this.currentDropTarget = null;
-            }
-            } else {
-            this.currentDropTarget = null;
-            }
-        }
         } catch (error) {
-        this.#resetState();
+            this.#resetState();
         return;
         }
 
         if (this.draggedElement) {
-        this.animationFrameId = requestAnimationFrame(this.updatePositionAndCheckTargets);
+            this.animationFrameId = requestAnimationFrame(this.updatePositionAndCheckTargets);
         } else {
-        this.animationFrameId = null;
+            this.animationFrameId = null;
         }
     }
 
@@ -439,6 +429,22 @@ class DragAndDropManager {
         this.draggedElement.style.top = '';
         this.draggedElement.style.position = '';
         this.currentDropTarget.classList.add('has-card');
+    }
+
+    //maintain styling of elements
+    #updateStyle() {
+        const rect = this.draggedElement.getBoundingClientRect();
+        this.initialElementLeft = rect.left;
+        this.initialElementTop = rect.top;
+        const initialElementWidth = rect.width;
+        const initialElementHeight = rect.height;
+
+        this.originalParentCell = this.draggedElement.parentElement;
+        this.draggedElement.classList.add('dragging');
+        this.draggedElement.style.left = `${this.initialElementLeft}px`;
+        this.draggedElement.style.top = `${this.initialElementTop}px`;
+        this.draggedElement.style.width = `${initialElementWidth}px`;
+        this.draggedElement.style.height = `${initialElementHeight}px`;
     }
 
     //handle snappingback animation
