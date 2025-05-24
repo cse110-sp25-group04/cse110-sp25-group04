@@ -26,10 +26,6 @@ function setupDragAndDrop(handCells, gridCells) {
             return;
         }
 
-        // if (animationFrameId !== null) {
-        //     cancelAnimationFrame(animationFrameId);
-        //     animationFrameId = null;
-        // }
         console.log('[Drag Start] Dragging element:', draggedElement);
         console.log('[Drag Start] animationFrameId before:', animationFrameId);
 
@@ -258,14 +254,6 @@ function setupDragAndDrop(handCells, gridCells) {
                 animationFrameId = null;
             });
         }
-
-        //resets position and removes absolute positioning
-
-        //Reset vars
-        // draggedElement = null;
-        // originalParentCell = null;
-        // currentDropTarget = null;
-        // animationFrameId = null;
     }
     document.addEventListener('mousedown', handleMouseDown);
 }

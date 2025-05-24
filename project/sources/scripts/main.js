@@ -1,4 +1,4 @@
-import { setupDragAndDrop } from './drag-drop.js';
+import { setupDragAndDrop } from './drag_drop.js';
 
 //Run the init() function when the page has loaded
 window.addEventListener('DOMContentLoaded', init);
