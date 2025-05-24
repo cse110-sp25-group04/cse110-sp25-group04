@@ -1,4 +1,4 @@
-import { setupDragAndDrop } from './drag_drop.js';
+import DragAndDropManager from './drag_drop.js';
 
 //Run the init() function when the page has loaded
 window.addEventListener('DOMContentLoaded', init);
@@ -21,7 +21,7 @@ function init() {
 
     // Add mouse down listener to the document to start dragging on any card
     // document.addEventListener('mousedown', handleMouseDown);
-    setupDragAndDrop(handCells, gridCells);
+    const dndManager = new DragAndDropManager(handCells, gridCells);
 }
 
 //Throttles function to reduce lag from running too quickly
