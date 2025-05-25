@@ -266,7 +266,7 @@
 // export { setupDragAndDrop };
 
 class DragAndDropManager {
-    constructor (handCells, gridCells) {
+    constructor(handCells, gridCells) {
         // Properties (was global vars)
         this.draggedElement = null;
         this.initialMouseX = 0;
@@ -299,14 +299,14 @@ class DragAndDropManager {
      * @param {*} event 
      * @returns n/a
      */
-    handleMouseDown (event) {
+    handleMouseDown(event) {
         if (event.button !== 0 || this.isTransitioning) return;
 
         this.draggedElement = event.target.closest('.card');
         if (!this.draggedElement || 
             (this.draggedElement.parentElement && this.draggedElement.parentElement.classList.contains('grid-cell')) ||
             this.draggedElement.classList.contains('locked')) {
-        return;
+            return;
         }
 
         event.preventDefault();
@@ -322,11 +322,11 @@ class DragAndDropManager {
         this.animationFrameId = requestAnimationFrame(this.updatePositionAndCheckTargets);
     }
 
-    handleMouseMove (event) {
+    handleMouseMove(event) {
         this.latestMouseX = event.clientX;
         this.latestMouseY = event.clientY;
         if (this.animationFrameId === null) {
-        this.animationFrameId = requestAnimationFrame(this.updatePositionAndCheckTargets);
+            this.animationFrameId = requestAnimationFrame(this.updatePositionAndCheckTargets);
         }
     }
 
@@ -335,10 +335,10 @@ class DragAndDropManager {
      * 
      * @returns n/a
      */
-    updatePositionAndCheckTargets () {
+    updatePositionAndCheckTargets() {
         if (!this.draggedElement) {
-        this.animationFrameId = null;
-        return;
+            this.animationFrameId = null;
+            return;
         }
 
         try {
@@ -363,24 +363,24 @@ class DragAndDropManager {
 
             if (hoveredTarget !== this.currentDropTarget) {
                 if (this.currentDropTarget) {
-                this.currentDropTarget.classList.remove('drag-over');
+                    this.currentDropTarget.classList.remove('drag-over');
                 }
 
                 if (hoveredTarget) {
                     const hasCard = hoveredTarget.querySelector('.card');
-                if (!hasCard || hoveredTarget === this.originalParentCell) {
-                    hoveredTarget.classList.add('drag-over');
-                    this.currentDropTarget = hoveredTarget;
-                } else {
-                    this.currentDropTarget = null;
-                }
+                    if (!hasCard || hoveredTarget === this.originalParentCell) {
+                        hoveredTarget.classList.add('drag-over');
+                        this.currentDropTarget = hoveredTarget;
+                    } else {
+                        this.currentDropTarget = null;
+                    }
                 } else {
                     this.currentDropTarget = null;
                 }
             }
         } catch (error) {
             this.#resetState();
-        return;
+            return;
         }
 
         if (this.draggedElement) {
@@ -395,7 +395,7 @@ class DragAndDropManager {
      * 
      * @returns n/a
      */
-    handleMouseUp () {
+    handleMouseUp() {
         if (!this.draggedElement) return;
 
         cancelAnimationFrame(this.animationFrameId);
@@ -406,7 +406,7 @@ class DragAndDropManager {
 
         this.draggedElement.classList.remove('dragging');
         if (this.currentDropTarget) {
-        this.currentDropTarget.classList.remove('drag-over');
+            this.currentDropTarget.classList.remove('drag-over');
         }
 
         if (this.currentDropTarget && (!this.currentDropTarget.querySelector('.card') || this.currentDropTarget === this.originalParentCell)) {
@@ -423,7 +423,7 @@ class DragAndDropManager {
     }
 
     //helper function to reset state
-    #resetState () {
+    #resetState() {
         this.draggedElement = null;
         this.originalParentCell = null;
         this.currentDropTarget = null;
@@ -431,7 +431,7 @@ class DragAndDropManager {
     }
 
     //update mouse positions
-    #updateMouse (event) {
+    #updateMouse(event) {
         this.initialMouseX = event.clientX;
         this.initialMouseY = event.clientY;
         this.latestMouseX = event.clientX;
@@ -439,7 +439,7 @@ class DragAndDropManager {
     }
 
     //add card to gridcell
-    #addChild () {
+    #addChild() {
         this.currentDropTarget.appendChild(this.draggedElement);
         this.draggedElement.style.left = '';
         this.draggedElement.style.top = '';
@@ -448,7 +448,7 @@ class DragAndDropManager {
     }
 
     //maintain styling of elements
-    #updateStyle () {
+    #updateStyle() {
         const rect = this.draggedElement.getBoundingClientRect();
         this.initialElementLeft = rect.left;
         this.initialElementTop = rect.top;
@@ -464,7 +464,7 @@ class DragAndDropManager {
     }
 
     //handles the snapping back transition animation
-    handleTransition () {
+    handleTransition() {
         this.draggedElement.classList.add('snapping-back');
         this.isTransitioning = true;
 
@@ -484,13 +484,13 @@ class DragAndDropManager {
             this.isTransitioning = false;
 
             if (this.originalParentCell && snappingCard.parentElement !== this.originalParentCell) {
-            this.originalParentCell.appendChild(snappingCard);
-            this.originalParentCell.classList.add('has-card');
+                this.originalParentCell.appendChild(snappingCard);
+                this.originalParentCell.classList.add('has-card');
             }
 
             if (this.currentDropTarget && this.currentDropTarget.classList.contains('grid-cell')) {
-            snappingCard.classList.add('locked');
-            snappingCard.style.cursor = 'default';
+                snappingCard.classList.add('locked');
+                snappingCard.style.cursor = 'default';
             }
 
             snappingCard.style.left = '';
