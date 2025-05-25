@@ -2,7 +2,9 @@ const ROWS = 4, COLS = 6;
 
 const board = Array.from({ length: ROWS }, () => Array(COLS).fill(null));
 
-function changeBoard(x, y, type) {
+function changeBoard(cell, type) {
+    const [x, y] = cell.id.split('-').map(Number);
+
     let offsets = [];
     if (type === '+') {
         offsets = [[1,0], [-1,0], [0,1], [0,-1]];

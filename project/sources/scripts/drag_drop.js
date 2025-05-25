@@ -182,9 +182,8 @@ class DragAndDropManager {
         this.draggedElement.style.position = '';
         this.currentDropTarget.classList.add('has-card');
 
-        const [x, y] = this.currentDropTarget.id.split('-').map(Number);
         const type = this.draggedElement.dataset.type;
-        changeBoard(x, y, type);
+        changeBoard(this.currentDropTarget, type);
     }
 
     //maintain styling of elements
