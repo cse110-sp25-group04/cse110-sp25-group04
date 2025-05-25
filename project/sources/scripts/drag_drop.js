@@ -1,3 +1,6 @@
+import boardModule from './board.js';
+const { changeBoard, ROWS, COLS } = boardModule;
+
 class DragAndDropManager {
     constructor(handCells, gridCells) {
         // Properties (was global vars)
