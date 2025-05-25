@@ -1,5 +1,5 @@
 import boardModule from './board.js';
-const { changeBoard } = boardModule;
+const { CHANGE_BOARD } = boardModule;
 
 class DragAndDropManager {
     constructor(handCells, gridCells) {
@@ -183,7 +183,7 @@ class DragAndDropManager {
         this.currentDropTarget.classList.add('has-card');
 
         const type = this.draggedElement.dataset.type;
-        changeBoard(this.currentDropTarget, type);
+        CHANGE_BOARD(this.currentDropTarget, type);
     }
 
     //maintain styling of elements
