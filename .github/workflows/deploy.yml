@@ -1,0 +1,62 @@
+# .github/workflows/deploy.yml
+name: 🚀 Deploy static site
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch: # Allows you to run this workflow manually from the Actions tab
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages # Corrected from "pages" in the generic to match your likely intent
+  cancel-in-progress: true # Keeps your setting for cancelling outdated PR builds
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4 # Updated version
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3 # Your existing version, still current
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        working-directory: ./project
+        run: npm ci
+
+      - name: Debug listing project folder # (Optional) verify files in the correct folder
+        run: ls -R ./project | head -40
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5 # Updated version
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3 # Your existing version, generic uses same
+        with:
+          path: ./project # Correct path for your project structure
+
+  deploy:
+    needs: build # Ensures build job completes first
+    runs-on: ubuntu-latest
+    if: | # Your existing condition to deploy on main push or PR to main
+      (github.event_name == 'push' && github.ref == 'refs/heads/main') ||
+      (github.event_name == 'pull_request' &&
+       github.event.pull_request.base.ref == 'main')
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4 # Updated version
