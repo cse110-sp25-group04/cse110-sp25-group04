@@ -86,7 +86,7 @@ class DragAndDropManager {
             const cardCenterY = cardRect.top + cardRect.height / 2;
 
             let hoveredTarget = null;
-            this.dropTargets.forEach(target => {
+            this.dropTargets.forEach(function(target) {
                 const targetRect = target.getBoundingClientRect();
                 if (cardCenterX > targetRect.left && cardCenterX < targetRect.right &&
                     cardCenterY > targetRect.top && cardCenterY < targetRect.bottom) {
@@ -112,7 +112,7 @@ class DragAndDropManager {
                 }
             }
         } catch (error) {
-            this.#resetState();
+            this.resetState();
             return;
         }
 
@@ -156,7 +156,7 @@ class DragAndDropManager {
     }
 
     //helper function to reset state
-    #resetState() {
+    resetState() {
         this.draggedElement = null;
         this.originalParentCell = null;
         this.currentDropTarget = null;
@@ -212,7 +212,7 @@ class DragAndDropManager {
 
         const snappingCard = this.draggedElement;
 
-        snappingCard.addEventListener('transitionend', () => {
+        snappingCard.addEventListener('transitionend', function() {
             snappingCard.classList.remove('snapping-back');
             this.isTransitioning = false;
 
@@ -230,8 +230,8 @@ class DragAndDropManager {
             snappingCard.style.top = '';
             snappingCard.style.position = '';
 
-            this.#resetState();
-        }, { once: true });
+            this.resetState();
+        }.bind(this), { once: true });
     }
 }
 
