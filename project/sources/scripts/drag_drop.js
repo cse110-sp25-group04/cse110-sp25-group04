@@ -266,7 +266,7 @@
 // export { setupDragAndDrop };
 
 class DragAndDropManager {
-    constructor(handCells, gridCells) {
+    constructor (handCells, gridCells) {
         // Properties (was global vars)
         this.draggedElement = null;
         this.initialMouseX = 0;
@@ -299,7 +299,7 @@ class DragAndDropManager {
      * @param {*} event 
      * @returns n/a
      */
-    handleMouseDown(event) {
+    handleMouseDown (event) {
         if (event.button !== 0 || this.isTransitioning) return;
 
         this.draggedElement = event.target.closest('.card');
@@ -322,7 +322,7 @@ class DragAndDropManager {
         this.animationFrameId = requestAnimationFrame(this.updatePositionAndCheckTargets);
     }
 
-    handleMouseMove(event) {
+    handleMouseMove (event) {
         this.latestMouseX = event.clientX;
         this.latestMouseY = event.clientY;
         if (this.animationFrameId === null) {
@@ -335,7 +335,7 @@ class DragAndDropManager {
      * 
      * @returns n/a
      */
-    updatePositionAndCheckTargets() {
+    updatePositionAndCheckTargets () {
         if (!this.draggedElement) {
         this.animationFrameId = null;
         return;
@@ -395,7 +395,7 @@ class DragAndDropManager {
      * 
      * @returns n/a
      */
-    handleMouseUp() {
+    handleMouseUp () {
         if (!this.draggedElement) return;
 
         cancelAnimationFrame(this.animationFrameId);
@@ -423,7 +423,7 @@ class DragAndDropManager {
     }
 
     //helper function to reset state
-    #resetState() {
+    #resetState () {
         this.draggedElement = null;
         this.originalParentCell = null;
         this.currentDropTarget = null;
@@ -431,7 +431,7 @@ class DragAndDropManager {
     }
 
     //update mouse positions
-    #updateMouse(event) {
+    #updateMouse (event) {
         this.initialMouseX = event.clientX;
         this.initialMouseY = event.clientY;
         this.latestMouseX = event.clientX;
@@ -439,7 +439,7 @@ class DragAndDropManager {
     }
 
     //add card to gridcell
-    #addChild() {
+    #addChild () {
         this.currentDropTarget.appendChild(this.draggedElement);
         this.draggedElement.style.left = '';
         this.draggedElement.style.top = '';
@@ -448,7 +448,7 @@ class DragAndDropManager {
     }
 
     //maintain styling of elements
-    #updateStyle() {
+    #updateStyle () {
         const rect = this.draggedElement.getBoundingClientRect();
         this.initialElementLeft = rect.left;
         this.initialElementTop = rect.top;
@@ -464,7 +464,7 @@ class DragAndDropManager {
     }
 
     //handles the snapping back transition animation
-    handleTransition() {
+    handleTransition () {
         this.draggedElement.classList.add('snapping-back');
         this.isTransitioning = true;
 
