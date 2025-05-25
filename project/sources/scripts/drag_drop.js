@@ -86,7 +86,7 @@ class DragAndDropManager {
             const cardCenterY = cardRect.top + cardRect.height / 2;
 
             let hoveredTarget = null;
-            this.dropTargets.forEach(function(target) {
+            this.dropTargets.forEach(function (target) {
                 const targetRect = target.getBoundingClientRect();
                 if (cardCenterX > targetRect.left && cardCenterX < targetRect.right &&
                     cardCenterY > targetRect.top && cardCenterY < targetRect.bottom) {
@@ -212,7 +212,7 @@ class DragAndDropManager {
 
         const snappingCard = this.draggedElement;
 
-        snappingCard.addEventListener('transitionend', function() {
+        snappingCard.addEventListener('transitionend', function () {
             snappingCard.classList.remove('snapping-back');
             this.isTransitioning = false;
 
