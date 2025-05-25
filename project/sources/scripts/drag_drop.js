@@ -293,6 +293,12 @@ class DragAndDropManager {
         document.addEventListener('mousedown', this.handleMouseDown);
     }
 
+    /**
+     * Function to handle when dragging an element across the board
+     * 
+     * @param {*} event 
+     * @returns n/a
+     */
     handleMouseDown(event) {
         if (event.button !== 0 || this.isTransitioning) return;
 
@@ -324,6 +330,11 @@ class DragAndDropManager {
         }
     }
 
+    /**
+     * Function to update the targets elements while dragging a card
+     * 
+     * @returns n/a
+     */
     updatePositionAndCheckTargets() {
         if (!this.draggedElement) {
         this.animationFrameId = null;
@@ -379,6 +390,11 @@ class DragAndDropManager {
         }
     }
 
+    /**
+     * Function to handle the functionality when dropping an element on the page.
+     * 
+     * @returns n/a
+     */
     handleMouseUp() {
         if (!this.draggedElement) return;
 
@@ -447,7 +463,7 @@ class DragAndDropManager {
         this.draggedElement.style.height = `${initialElementHeight}px`;
     }
 
-    //handle snappingback animation
+    //handles the snapping back transition animation
     handleTransition() {
         this.draggedElement.classList.add('snapping-back');
         this.isTransitioning = true;
