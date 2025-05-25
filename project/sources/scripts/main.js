@@ -12,12 +12,12 @@ function buildGrid() {
     const container = document.getElementById('grid-container');
     container.innerHTML = '';
     for (let y = 0; y < ROWS; y++) {
-      for (let x = 0; x < COLS; x++) {
-        const cell = document.createElement('div');
-        cell.className = 'grid-cell';
-        cell.id = `${x}-${y}`;
-        container.appendChild(cell);
-      }
+        for (let x = 0; x < COLS; x++) {
+            const cell = document.createElement('div');
+            cell.className = 'grid-cell';
+            cell.id = `${x}-${y}`;
+            container.appendChild(cell);
+        }
     }
 }
 
