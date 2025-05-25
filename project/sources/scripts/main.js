@@ -67,11 +67,7 @@ function createCard(text) {
     const card = document.createElement('div');
     card.classList.add('card');
     card.textContent = text;
-
-    //checks if card has a speciality
-    if (['+', 'x', '■'].includes(text)) {
-        card.dataset.type = text;
-    }
+    card.dataset.type = text;
 
     //finds first empty hand cell to add card to
     for (let h of handCells) {
