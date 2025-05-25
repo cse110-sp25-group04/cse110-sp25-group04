@@ -1,6 +1,13 @@
 const ROWS = 4, COLS = 6;
 
-const board = Array.from({ length: ROWS }, () => Array(COLS).fill(null));
+//initalizes the 2d array board to be null
+const BOARD = [];
+for (let i = 0; i < ROWS; i++) {
+    BOARD[i] = [];
+    for (let j = 0; j < COLS; j++) {
+        BOARD[i][j] = null;
+    }
+}
 
 function changeBoard(cell, type) {
     const [x, y] = cell.id.split('-').map(Number);
@@ -20,7 +27,7 @@ function changeBoard(cell, type) {
         //calculate the new position for x and y
         const nx = x + dx, ny = y + dy;
 
-        //if the new position is out of bounds return
+        //if the new position is out of bounds, continue
         if (nx < 0 || nx >= COLS || ny < 0 || ny >= ROWS) {
             continue;
         }
@@ -28,11 +35,10 @@ function changeBoard(cell, type) {
         //target new position and change color
         const cell = document.getElementById(`${nx}-${ny}`);
         if (!cell.querySelector('.card')) {
-            board[ny][nx] = 'green';
+            BOARD[ny][nx] = 'green';
             cell.style.backgroundColor = 'green';
         }
     };
 }
 
-export { ROWS, COLS, board, changeBoard };
-export default { ROWS, COLS, board, changeBoard };
+export { ROWS, COLS, BOARD, changeBoard };

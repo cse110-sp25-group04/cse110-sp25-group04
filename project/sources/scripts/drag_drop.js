@@ -1,5 +1,4 @@
-import boardModule from './board.js';
-const { changeBoard } = boardModule;
+import { changeBoard } from './board.js';
 
 class DragAndDropManager {
     constructor(handCells, gridCells) {
