@@ -9,16 +9,16 @@ let gridCells;
 const ROWS = 4, COLS = 6;
 
 function buildGrid() {
-  const container = document.getElementById('grid-container');
-  container.innerHTML = '';
-  for (let y = 0; y < ROWS; y++) {
-    for (let x = 0; x < COLS; x++) {
-      const cell = document.createElement('div');
-      cell.className = 'grid-cell';
-      cell.id = `${x}-${y}`;
-      container.appendChild(cell);
+    const container = document.getElementById('grid-container');
+    container.innerHTML = '';
+    for (let y = 0; y < ROWS; y++) {
+      for (let x = 0; x < COLS; x++) {
+        const cell = document.createElement('div');
+        cell.className = 'grid-cell';
+        cell.id = `${x}-${y}`;
+        container.appendChild(cell);
+      }
     }
-  }
 }
 
 //Starts the program
@@ -68,6 +68,7 @@ function createCard(text) {
     card.classList.add('card');
     card.textContent = text;
 
+    //checks if card has a speciality
     if (['+', 'x', '■'].includes(text)) {
         card.dataset.type = text;
     }
