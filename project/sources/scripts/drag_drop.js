@@ -1,3 +1,5 @@
+import { changeBoard } from './board.js';
+
 class DragAndDropManager {
     constructor(handCells, gridCells) {
         // Properties (was global vars)
@@ -178,6 +180,9 @@ class DragAndDropManager {
         this.draggedElement.style.top = '';
         this.draggedElement.style.position = '';
         this.currentDropTarget.classList.add('has-card');
+
+        const type = this.draggedElement.dataset.type;
+        changeBoard(this.currentDropTarget, type);
     }
 
     //maintain styling of elements
