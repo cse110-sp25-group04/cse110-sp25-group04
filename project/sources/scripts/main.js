@@ -27,7 +27,8 @@ function init() {
 
     handCells = document.querySelectorAll('#hand-container .hand-cell');
     gridCells = document.querySelectorAll('#grid-container .grid-cell');
-
+    const testCell = gridCells[0];
+    testCell.style.backgroundColor = 'green';
     // dropTargets = document.querySelectorAll('.grid-cell, .hand-cell');
 
     //placeholder
