@@ -39,8 +39,7 @@ class DragAndDropManager {
 
         this.draggedElement = event.target.closest('.card');
         if (!this.draggedElement || 
-            (this.draggedElement.parentElement && this.draggedElement.parentElement.classList.contains('grid-cell')) ||
-            this.draggedElement.classList.contains('locked')) {
+            (this.draggedElement.parentElement && this.draggedElement.parentElement.classList.contains('grid-cell'))) {
             return;
         }
 
@@ -144,7 +143,9 @@ class DragAndDropManager {
             this.currentDropTarget.classList.remove('drag-over');
         }
 
-        if (this.currentDropTarget && (!this.currentDropTarget.querySelector('.card') || this.currentDropTarget === this.originalParentCell)) {
+        
+        if (this.currentDropTarget && (!this.currentDropTarget.querySelector('.card') || this.currentDropTarget === this.originalParentCell)
+            && this.currentDropTarget.style.backgroundColor === 'green') {
             //removes card from parent cell and updates state of parent
             if (this.originalParentCell && this.originalParentCell !== this.currentDropTarget) {
                 this.originalParentCell.removeChild(this.draggedElement);
@@ -224,11 +225,6 @@ class DragAndDropManager {
             if (this.originalParentCell && snappingCard.parentElement !== this.originalParentCell) {
                 this.originalParentCell.appendChild(snappingCard);
                 this.originalParentCell.classList.add('has-card');
-            }
-
-            if (this.currentDropTarget && this.currentDropTarget.classList.contains('grid-cell')) {
-                snappingCard.classList.add('locked');
-                snappingCard.style.cursor = 'default';
             }
 
             snappingCard.style.left = '';
