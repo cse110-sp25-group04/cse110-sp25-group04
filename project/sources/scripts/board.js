@@ -9,6 +9,13 @@ for (let i = 0; i < ROWS; i++) {
     }
 }
 
+/**
+ * Applies the effect of a played card on the board at position given by cell
+ * using the given type.
+ * 
+ * @param {String} cell: a string with representation 'x-y'
+ * @param {String} type: a character representing the type of card 
+ */
 function changeBoard(cell, type) {
     const [x, y] = cell.id.split('-').map(Number);
 
