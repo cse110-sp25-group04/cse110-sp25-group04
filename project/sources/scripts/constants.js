@@ -1,3 +1,2 @@
-export { DEBUG };
-
-const DEBUG = true;
+//use as a debug flag for logging
+export const DEBUG = true;
