@@ -2,8 +2,9 @@
 
 name: Feature Name
 about: Request a feature 
-title: "[Feature ]"
+title: "[Feature]"
 labels: feature
+type: feature
 assignees: ''
 
 ---
@@ -17,7 +18,6 @@ A clear and concise description of the feature
 ## Done Checklist:
 
 - [ ] Meets feature requirements
-- [ ] Tested for age cases
+- [ ] Tested for edge cases
 - [ ] Tested and linted
 - [ ] Approved person 1
-- [ ] Approved person 2
