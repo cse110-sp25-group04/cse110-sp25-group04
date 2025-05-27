@@ -1,5 +1,7 @@
 import { changeBoard } from './board.js';
 
+const GREEN = 'green';
+
 class DragAndDropManager {
     constructor(handCells, gridCells) {
         // Properties (was global vars)
@@ -36,10 +38,9 @@ class DragAndDropManager {
      */
     handleMouseDown(event) {
         if (event.button !== 0 || this.isTransitioning) return;
-
         this.draggedElement = event.target.closest('.card');
-        if (!this.draggedElement || 
-            (this.draggedElement.parentElement && this.draggedElement.parentElement.classList.contains('grid-cell'))) {
+        const notValidDrag = !this.draggedElement || (this.draggedElement.parentElement && this.draggedElement.parentElement.classList.contains('grid-cell'));
+        if (notValidDrag) {
             return;
         }
 
@@ -143,9 +144,9 @@ class DragAndDropManager {
             this.currentDropTarget.classList.remove('drag-over');
         }
 
-        
-        if (this.currentDropTarget && (!this.currentDropTarget.querySelector('.card') || this.currentDropTarget === this.originalParentCell)
-            && this.currentDropTarget.style.backgroundColor === 'green') {
+        const invalidGrid = !this.currentDropTarget.querySelector('.card') || this.currentDropTarget === this.originalParentCell;
+        if (this.currentDropTarget && (invalidGrid)
+            && this.currentDropTarget.style.backgroundColor === GREEN) {
             //removes card from parent cell and updates state of parent
             if (this.originalParentCell && this.originalParentCell !== this.currentDropTarget) {
                 this.originalParentCell.removeChild(this.draggedElement);
