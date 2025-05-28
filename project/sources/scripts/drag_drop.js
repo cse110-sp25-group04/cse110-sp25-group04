@@ -1,7 +1,5 @@
 import { changeBoard } from './board.js';
 
-const GREEN = 'green';
-
 class DragAndDropManager {
     constructor(handCells, gridCells) {
         // Properties (was global vars)
@@ -146,7 +144,7 @@ class DragAndDropManager {
 
         const invalidGrid = !this.currentDropTarget.querySelector('.card') || this.currentDropTarget === this.originalParentCell;
         if (this.currentDropTarget && (invalidGrid)
-            && this.currentDropTarget.style.backgroundColor === GREEN) {
+            && this.currentDropTarget.dataset.cellState === CLEAR) {
             //removes card from parent cell and updates state of parent
             if (this.originalParentCell && this.originalParentCell !== this.currentDropTarget) {
                 this.originalParentCell.removeChild(this.draggedElement);
