@@ -18,6 +18,9 @@ function buildGrid() {
             const cell = document.createElement('div');
             cell.className = 'grid-cell';
             cell.id = `${x}-${y}`;
+            cell.dataset.cellState = ROCK;
+            // dataset.cellState -> data-cell-state attribute
+            // for now just default cell state to rock until we do level loading stuff
             container.appendChild(cell);
         }
     }
@@ -34,10 +37,15 @@ function init() {
     // dropTargets = document.querySelectorAll('.grid-cell, .hand-cell');
 
     //placeholder
-    const card1 = createCard('A♠️');
-    const card2 = createCard('K♣️');
-    const card3 = createCard('Q♦️');
+    //const card1 = createCard('A♠️');
+    //const card2 = createCard('K♣️');
+    //const card3 = createCard('Q♦️');
 
+    createCard('x');
+    createCard('x');
+    createCard('x');
+    createCard('+');
+    createCard('+');
     createCard('+');
     createCard('x');
     createCard('■');
