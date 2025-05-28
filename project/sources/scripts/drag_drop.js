@@ -260,7 +260,7 @@ class DragAndDropManager {
                 if (DEBUG) {
                     console.log('Purple Tile Detected');
                 }
-                if (hasCards === false){
+                if (hasCards === false) {
                     hasCards = false; //placeholder for reset() ?
                 }
                 return false;
