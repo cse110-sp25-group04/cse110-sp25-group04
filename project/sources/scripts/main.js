@@ -1,5 +1,7 @@
 import DragAndDropManager from './drag_drop.js';
 
+import { DEBUG } from './constants.js';
+
 //Run the init() function when the page has loaded
 window.addEventListener('DOMContentLoaded', init);
 
@@ -64,7 +66,9 @@ function throttle(func, limit) {
 
 //text would probably be a key to access card attributes?
 function createCard(text) {
-    console.log('CREATING CARDS');
+    if (DEBUG) {
+        console.log('CREATING CARDS');
+    }
     const card = document.createElement('div');
     card.classList.add('card');
     card.textContent = text;
@@ -73,12 +77,16 @@ function createCard(text) {
     //finds first empty hand cell to add card to
     for (let h of handCells) {
         if (h.classList.contains('has-card')) {
-            console.log('EXIT');
+            if (DEBUG) {
+                console.log('EXIT');
+            }
             continue;
         }
         h.appendChild(card);
         h.classList.add('has-card');
-        console.log('CARD ADDED');
+        if (DEBUG) {
+            console.log('CARD ADDED');
+        }
         break;
     }
     return card;
