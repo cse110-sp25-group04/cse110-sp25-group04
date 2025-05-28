@@ -1,6 +1,7 @@
 import { changeBoard } from './board.js';
 
 const GREEN = 'green';
+const PURPLE = 'purple';
 
 class DragAndDropManager {
     constructor(handCells, gridCells) {
@@ -241,19 +242,27 @@ class DragAndDropManager {
 
     //Function to handle win check
     #checkWin() {
+        //if there is still purple and user's hand is empty we can have a loss screen or offer a reset as they have failed the puzzle
+        let hasCards = true;
+        for (const h of this.handCells) {
+            if (h.classList.contains('has-card') === false) {
+                if (DEBUG) {
+                    console.log('Player has no cards');
+                }
+                hasCards = false;
+                break;
+            }
+        }
+
         for (const g of this.gridCells) {
             //rather than checking for all grass/rock, returns false on purple
-            if (cell.style.backgroundColor === 'purple') {
-                console.log('Purple Tile Detected');
-                //if there is still pruple and user's hand is empty we can have a loss screen or offer a reset as they have failed the puzzle
-                for (const h of this.handCells) {
-                    if (h.classList.contains('has-card')) {
-                        console.log('Player still has cards: no reset');
-                        return false;
-                    }
+            if (g.style.backgroundColor === PURPLE) {
+                if (DEBUG) {
+                    console.log('Purple Tile Detected');
                 }
-                console.log('Player is out of cards: reset');
-                //reset() ?
+                if (hasCards === false){
+                    hasCards = false; //placeholder for reset() ?
+                }
                 return false;
             }
         }
