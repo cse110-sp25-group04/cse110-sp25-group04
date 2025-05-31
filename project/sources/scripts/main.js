@@ -1,6 +1,6 @@
 import DragAndDropManager from './drag_drop.js';
 
-import { DEBUG } from './constants.js';
+import { DEBUG, CellStates, FlowerTypes } from './constants.js';
 
 //Run the init() function when the page has loaded
 window.addEventListener('DOMContentLoaded', init);
@@ -18,7 +18,7 @@ function buildGrid() {
             const cell = document.createElement('div');
             cell.className = 'grid-cell';
             cell.id = `${x}-${y}`;
-            cell.dataset.cellState = ROCK;
+            cell.dataset.cellState = CellStates.ROCK;
             // dataset.cellState -> data-cell-state attribute
             // for now just default cell state to rock until we do level loading stuff
             container.appendChild(cell);
@@ -33,22 +33,18 @@ function init() {
     handCells = document.querySelectorAll('#hand-container .hand-cell');
     gridCells = document.querySelectorAll('#grid-container .grid-cell');
     const testCell = gridCells[0];
+    testCell.dataset.cellState = CellStates.CLEAR;
     testCell.style.backgroundColor = 'green';
     // dropTargets = document.querySelectorAll('.grid-cell, .hand-cell');
 
     //placeholder
-    //const card1 = createCard('A♠️');
-    //const card2 = createCard('K♣️');
-    //const card3 = createCard('Q♦️');
+    const card1 = createCard('A♠️');
+    const card2 = createCard('K♣️');
+    const card3 = createCard('Q♦️');
 
-    createCard('x');
-    createCard('x');
-    createCard('x');
-    createCard('+');
-    createCard('+');
-    createCard('+');
-    createCard('x');
-    createCard('■');
+    createCard(FlowerTypes.PLUS);
+    createCard(FlowerTypes.CROSS);
+    createCard(FlowerTypes.SQUARE);
 
     // Add mouse down listener to the document to start dragging on any card
     // document.addEventListener('mousedown', handleMouseDown);

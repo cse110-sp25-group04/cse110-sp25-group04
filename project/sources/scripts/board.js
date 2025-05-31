@@ -1,6 +1,9 @@
+import { DEBUG, CellStates, FlowerTypes } from './constants.js';
+
 const ROWS = 4, COLS = 6;
 
 //initalizes the 2d array board to be null
+// TODO: use level loading to initialize the board - Arul
 const BOARD = [];
 for (let i = 0; i < ROWS; i++) {
     BOARD[i] = [];
@@ -20,14 +23,18 @@ function changeBoard(cell, type) {
     const [x, y] = cell.id.split('-').map(Number);
 
     let offsets = [];
-    if (type === '+') {
-        offsets = [[1,0], [-1,0], [0,1], [0,-1]];
-    }
-    else if (type === 'x') {
-        offsets = [[1,1], [1,-1], [-1,1], [-1,-1]];
-    }
-    else if (type === '■') {
-        offsets = [[1,0], [-1,0], [0,1], [0,-1], [1,1], [1,-1], [-1,1], [-1,-1]];
+    // switch statement for readability
+    switch(type) {
+        case FlowerTypes.PLUS:
+            offsets = [[1,0], [-1,0], [0,1], [0,-1]];
+        case FlowerTypes.CROSS:
+            offsets = [[1,1], [1,-1], [-1,1], [-1,-1]];
+        case FlowerTypes.SQUARE:
+            offsets = [[1,0], [-1,0], [0,1], [0,-1], [1,1], [1,-1], [-1,1], [-1,-1]];
+        default:
+            if(DEBUG) {
+                console.log("Unsupported Flower Type Used: " + type);
+            }       
     }
 
     for (let [dx,dy] of offsets) {
@@ -42,7 +49,8 @@ function changeBoard(cell, type) {
         //target new position and change color
         const cell = document.getElementById(`${nx}-${ny}`);
         if (!cell.querySelector('.card')) {
-            BOARD[ny][nx] = 'green';
+            BOARD[ny][nx] = CellStates.CLEAR;
+            cell.dataset.cellState = CellStates.CLEAR;
             cell.style.backgroundColor = 'green';
         }
     };

@@ -2,7 +2,6 @@
 export const DEBUG = true;
 
 // Cell states
-
 export const CellStates = {
     CLEAR: 'clear',
     FLOWER: 'flower',
