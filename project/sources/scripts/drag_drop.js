@@ -1,5 +1,5 @@
 import { changeBoard } from './board.js';
-import { CellStates, FlowerTypes } from './constants.js';
+import { CELL_STATES, FLOWER_TYPES } from './constants.js';
 
 class DragAndDropManager {
     constructor(handCells, gridCells) {
@@ -145,7 +145,7 @@ class DragAndDropManager {
 
         const invalidGrid = !this.currentDropTarget.querySelector('.card') || this.currentDropTarget === this.originalParentCell;
         if (this.currentDropTarget && (invalidGrid)
-            && this.currentDropTarget.dataset.cellState === CellStates.CLEAR) {
+            && this.currentDropTarget.dataset.cellState === CELL_STATES.CLEAR) {
             //removes card from parent cell and updates state of parent
             if (this.originalParentCell && this.originalParentCell !== this.currentDropTarget) {
                 this.originalParentCell.removeChild(this.draggedElement);
@@ -155,11 +155,6 @@ class DragAndDropManager {
             this.#addChild();
         } else {
             this.handleTransition();
-            if (DEBUG) {
-                console.log("cellstate " + this.currentDropTarget.dataset.cellState);
-                console.log("clear " + CellStates.CLEAR);
-            }
-            
         }
     }
 

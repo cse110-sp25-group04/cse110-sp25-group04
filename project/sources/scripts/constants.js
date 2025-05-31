@@ -2,7 +2,7 @@
 export const DEBUG = true;
 
 // Cell states
-export const CellStates = {
+export const CELL_STATES = {
     CLEAR: 'clear',
     FLOWER: 'flower',
     CORRUPT: 'corrupt',
@@ -10,7 +10,7 @@ export const CellStates = {
 };
 
 // Flower types
-export const FlowerTypes = {
+export const FLOWER_TYPES = {
     PLUS: '+',
     CROSS: 'x',
     SQUARE: '■'
