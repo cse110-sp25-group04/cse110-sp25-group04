@@ -33,7 +33,7 @@ function init() {
     handCells = document.querySelectorAll('#hand-container .hand-cell');
     gridCells = document.querySelectorAll('#grid-container .grid-cell');
     const testCell = gridCells[0];
-    testCell.dataset.cellState = CELL_STATES.CLEAR;
+    testCell.dataset.cellState = CELL_STATES.GRASS;
     testCell.style.backgroundColor = 'green';
     // dropTargets = document.querySelectorAll('.grid-cell, .hand-cell');
 

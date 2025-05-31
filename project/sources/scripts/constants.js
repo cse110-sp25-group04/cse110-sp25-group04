@@ -3,7 +3,7 @@ export const DEBUG = true;
 
 // Cell states
 export const CELL_STATES = {
-    CLEAR: 'clear',
+    GRASS: 'grass',
     FLOWER: 'flower',
     CORRUPT: 'corrupt',
     ROCK: 'rock'
