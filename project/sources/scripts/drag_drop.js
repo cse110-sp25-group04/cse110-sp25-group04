@@ -148,7 +148,7 @@ class DragAndDropManager {
 
         const invalidGrid = !this.currentDropTarget.querySelector('.card') || this.currentDropTarget === this.originalParentCell;
         if (this.currentDropTarget && (invalidGrid)
-            && this.currentDropTarget.dataset.cellState === CELL_STATES.CLEAR) {
+            && this.currentDropTarget.dataset.cellState === CELL_STATES.GRASS) {
             //removes card from parent cell and updates state of parent
             if (this.originalParentCell && this.originalParentCell !== this.currentDropTarget) {
                 this.originalParentCell.removeChild(this.draggedElement);
@@ -254,7 +254,7 @@ class DragAndDropManager {
 
         for (const g of this.gridCells) {
             //rather than checking for all grass/rock, returns false on purple
-            if (g.style.backgroundColor === PURPLE) {
+            if (g.dataset.cellState === CELL_STATES.CORRUPT) {
                 if (DEBUG) {
                     console.log('Purple Tile Detected');
                 }

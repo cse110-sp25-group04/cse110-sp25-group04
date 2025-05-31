@@ -27,10 +27,13 @@ function changeBoard(cell, type) {
     switch(type) {
     case FLOWER_TYPES.PLUS:
         offsets = [[1,0], [-1,0], [0,1], [0,-1]];
+        break;
     case FLOWER_TYPES.CROSS:
         offsets = [[1,1], [1,-1], [-1,1], [-1,-1]];
+        break;
     case FLOWER_TYPES.SQUARE:
         offsets = [[1,0], [-1,0], [0,1], [0,-1], [1,1], [1,-1], [-1,1], [-1,-1]];
+        break;
     default:
         if(DEBUG) {
             console.log('Unsupported Flower Type Used: ' + type);
@@ -49,8 +52,8 @@ function changeBoard(cell, type) {
         //target new position and change color
         const cell = document.getElementById(`${nx}-${ny}`);
         if (!cell.querySelector('.card')) {
-            BOARD[ny][nx] = CELL_STATES.CLEAR;
-            cell.dataset.cellState = CELL_STATES.CLEAR;
+            BOARD[ny][nx] = CELL_STATES.GRASS;
+            cell.dataset.cellState = CELL_STATES.GRASS;
             cell.style.backgroundColor = 'green';
         }
     };
