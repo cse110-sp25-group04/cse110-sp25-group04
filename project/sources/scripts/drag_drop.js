@@ -18,6 +18,9 @@ class DragAndDropManager {
 
         // Store drop targets
         this.dropTargets = [...handCells, ...gridCells];
+        this.gridCells = [...gridCells];
+        this.handCells = [...handCells];
+        
 
         // Bind methods to 'this' to ensure correct context
         this.handleMouseDown = this.handleMouseDown.bind(this);
@@ -233,6 +236,35 @@ class DragAndDropManager {
 
             this.resetState();
         }.bind(this), { once: true });
+    }
+
+    //Function to handle win check
+    #checkWin() {
+        //if there is still purple and user's hand is empty we can have a loss screen or offer a reset as they have failed the puzzle
+        let hasCards = true;
+        for (const h of this.handCells) {
+            if (h.classList.contains('has-card') === false) {
+                if (DEBUG) {
+                    console.log('Player has no cards');
+                }
+                hasCards = false;
+                break;
+            }
+        }
+
+        for (const g of this.gridCells) {
+            //rather than checking for all grass/rock, returns false on purple
+            if (g.style.backgroundColor === PURPLE) {
+                if (DEBUG) {
+                    console.log('Purple Tile Detected');
+                }
+                if (hasCards === false) {
+                    hasCards = false; //placeholder for reset() ?
+                }
+                return false;
+            }
+        }
+        return true;
     }
 }
 
