@@ -152,8 +152,7 @@ class DragAndDropManager {
         }
 
         const invalidGrid = !this.currentDropTarget.querySelector('.card') || this.currentDropTarget === this.originalParentCell;
-        if (this.currentDropTarget && (invalidGrid)
-            && this.currentDropTarget.dataset.cellState === CELL_STATES.GRASS) {
+        if (!this.currentDropTarget || (invalidGrid)) {
             //removes card from parent cell and updates state of parent
             if (this.originalParentCell && this.originalParentCell !== this.currentDropTarget) {
                 this.originalParentCell.removeChild(this.draggedElement);
@@ -275,7 +274,7 @@ class DragAndDropManager {
 
     //function to play fail audio when card is placed somewhere invalid
     #failAudio() {
-        const audio = new Audio('/project/sources/assets/fail.mp3');
+        const audio = new Audio('/sources/assets/fail.mp3');
         audio.play();
     }
 }
