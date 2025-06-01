@@ -33,7 +33,6 @@
     margin: 20px auto;
   }
   
-  /* slots maintain the aspect ratio */
   .grid-cell {
     background-color: #bcecac;
     border-radius: 5px;
