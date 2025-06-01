@@ -28,7 +28,7 @@
     grid-auto-rows: 1fr;
     width: 100%;
     max-width: calc(var(--grid-cols) * var(--card-max-width));
-    aspect-ratio: calc(var(--grid-cols) / var(--grid-rows));
+    /*aspect-ratio: calc(var(--grid-cols) / var(--grid-rows));*/
     box-sizing: border-box;
     margin: 20px auto;
   }
@@ -43,6 +43,9 @@
     justify-content: center;
     align-items: center;
     color: #333;
+
+    min-width: 0;
+    min-height: 0;
   }
 
   #hand-container {
