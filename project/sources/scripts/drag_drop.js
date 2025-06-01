@@ -145,6 +145,12 @@ class DragAndDropManager {
         if (this.currentDropTarget) {
             this.currentDropTarget.classList.remove('drag-over');
         }
+        //if the card is outside the board
+        if (this.currentDropTarget === null) {
+            this.#failAudio();
+            this.handleTransition();
+            return;
+        }
 
         const invalidGrid = !this.currentDropTarget.querySelector('.card') || this.currentDropTarget === this.originalParentCell;
         if (this.currentDropTarget && (invalidGrid)
@@ -157,6 +163,7 @@ class DragAndDropManager {
 
             this.#addChild();
         } else {
+            this.#failAudio();
             this.handleTransition();
         }
     }
@@ -265,6 +272,12 @@ class DragAndDropManager {
             }
         }
         return true;
+    }
+
+    //function to play fail audio when card is placed somewhere invalid
+    #failAudio() {
+        const audio = new Audio('/project/sources/assets/fail.mp3');
+        audio.play();
     }
 }
 
