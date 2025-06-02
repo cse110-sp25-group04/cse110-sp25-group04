@@ -63,6 +63,7 @@ function loadLevel(levelName) {
     const levelBoard = levelObj.LAYOUT;
     console.log(levelBoard);
     const levelCards = levelObj.CARDS;
+    // update internal representation
     for (let r = 0; r < ROWS; r++) {
         for (let c = 0; c < COLS; c++) {
             // load in correct value for each cell
@@ -137,9 +138,10 @@ function changeBoard(cell, type) {
         if (!cell.querySelector('.card')) {
             BOARD[ny][nx] = CELL_STATES.GRASS;
             cell.dataset.cellState = CELL_STATES.GRASS;
-            cell.style.backgroundColor = 'green';
+            //cell.style.backgroundColor = 'green';
         }
     };
+    drawBoard();
 }
 
 export { ROWS, COLS, BOARD, changeBoard, loadLevel };
