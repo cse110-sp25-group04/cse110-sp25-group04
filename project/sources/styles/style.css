@@ -7,15 +7,20 @@
 --grid-rows: 4;
 }
 
-body {
+html, body {
 margin: 0;
 display: block;
 /*display: flex;
    justify-content: center;
    align-items: center;*/
-min-height: 70vh;
+min-width: 70vw;
 background: #f5f5f5;
+overflow: hidden;
 }
+
+/* #game-wrapper{
+    transform: scale(0.8);
+}  */
 
 #grid-container {
 display: grid;
