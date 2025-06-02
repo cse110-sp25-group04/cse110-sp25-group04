@@ -36,15 +36,6 @@ function init() {
     // dropTargets = document.querySelectorAll('.grid-cell, .hand-cell');
     loadLevel('ONE');
 
-    //placeholder
-    // const card1 = createCard('A♠️');
-    // const card2 = createCard('K♣️');
-    // const card3 = createCard('Q♦️');
-
-    // createCard(FLOWER_TYPES.PLUS);
-    // createCard(FLOWER_TYPES.CROSS);
-    // createCard(FLOWER_TYPES.SQUARE);
-
     // Add mouse down listener to the document to start dragging on any card
     // document.addEventListener('mousedown', handleMouseDown);
     const dndManager = new DragAndDropManager(handCells, gridCells);

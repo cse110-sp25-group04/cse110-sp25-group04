@@ -172,10 +172,9 @@ function changeBoard(cell, type) {
         //target new position and change color
         // nx is column, ny is row
         const cell = document.getElementById(`${nx}-${ny}`);
-        if (!cell.querySelector('.card')) {
+        if (!cell.querySelector('.card') && BOARD[ny][nx] == CELL_STATES.CORRUPT) {
             BOARD[ny][nx] = CELL_STATES.GRASS;
             cell.dataset.cellState = CELL_STATES.GRASS;
-            //cell.style.backgroundColor = 'green';
         }
     };
     drawBoard();
