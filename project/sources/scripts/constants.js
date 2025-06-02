@@ -1,4 +1,4 @@
-//use as a debug flag for logging
+// Use as a debug flag for logging
 export const DEBUG = true;
 
 // Cell states
@@ -15,3 +15,6 @@ export const FLOWER_TYPES = {
     CROSS: 'x',
     SQUARE: '■'
 };
+
+// Audio Sources
+export const FAIL_AUDIO = new Audio('/sources/assets/fail.mp3');

@@ -1,5 +1,5 @@
 import { changeBoard } from './board.js';
-import { CELL_STATES, FLOWER_TYPES } from './constants.js';
+import { CELL_STATES, FAIL_AUDIO, FLOWER_TYPES } from './constants.js';
 
 class DragAndDropManager {
     constructor(handCells, gridCells) {
@@ -276,8 +276,7 @@ class DragAndDropManager {
 
     //function to play fail audio when card is placed somewhere invalid
     #failAudio() {
-        const audio = new Audio('/project/sources/assets/fail.mp3');
-        audio.play();
+        FAIL_AUDIO.play();
     }
 }
 
