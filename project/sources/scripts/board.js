@@ -93,9 +93,9 @@ function loadLevel(levelName) {
     }
     // update the board visuals
     drawBoard();
-    // load the cards
-    for (let card of levelCards) {
-        createCard(card);
+    // load the cards (format: cardname=PLUS)
+    for (let cardname of levelCards) {
+        createCard(FLOWER_TYPES[cardname]);
     }
 }
 /**

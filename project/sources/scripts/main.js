@@ -9,6 +9,7 @@ window.addEventListener('DOMContentLoaded', init);
 //declare variables
 let handCells;
 let gridCells;
+let levelCounter = 1;
 const ROWS = 4, COLS = 6;
 
 function buildGrid() {
