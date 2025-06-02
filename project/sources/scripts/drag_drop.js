@@ -20,7 +20,6 @@ class DragAndDropManager {
         this.dropTargets = [...handCells, ...gridCells];
         this.gridCells = [...gridCells];
         this.handCells = [...handCells];
-        
 
         // Bind methods to 'this' to ensure correct context
         this.handleMouseDown = this.handleMouseDown.bind(this);
