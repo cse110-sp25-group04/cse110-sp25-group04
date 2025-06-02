@@ -154,6 +154,9 @@ function changeBoard(cell, type) {
     case FLOWER_TYPES.SQUARE:
         offsets = [[1,0], [-1,0], [0,1], [0,-1], [1,1], [1,-1], [-1,1], [-1,-1]];
         break;
+    case FLOWER_TYPES.KNIGHT:
+        offsets = [[2,1], [1,2], [-2,1], [1,-2], [2,-1], [-1,2], [-2,-1], [-1,-2]];
+        break;
     default:
         if(DEBUG) {
             console.log('Unsupported Flower Type Used: ' + type);

@@ -13,7 +13,8 @@ export const CELL_STATES = {
 export const FLOWER_TYPES = {
     PLUS: '+',
     CROSS: 'x',
-    SQUARE: '■'
+    SQUARE: '■',
+    KNIGHT: 'N'
 };
 
 // Levels (for now)
@@ -23,14 +24,20 @@ export const LEVELS = {
                 ['C', 'G', 'R', 'C', 'R', 'R'],
                 ['C', 'C', 'C', 'G', 'R', 'R'],
                 ['C', 'C', 'C', 'R', 'C', 'G']],
-        CARDS: [FLOWER_TYPES.PLUS, FLOWER_TYPES.CROSS, FLOWER_TYPES.SQUARE,
-                'ABC', '123', 'Arul']
+        CARDS: [FLOWER_TYPES.PLUS, FLOWER_TYPES.CROSS, FLOWER_TYPES.SQUARE, 'ABC', '123', 'Arul']
     },
-    ONE: {
+    1: {
         LAYOUT:[['R', 'R', 'C', 'C', 'R', 'R'], 
                 ['R', 'C', 'R', 'R', 'C', 'R'], 
                 ['C', 'G', 'C', 'C', 'R', 'R'], 
                 ['R', 'C', 'C', 'R', 'C', 'R']],
         CARDS: [FLOWER_TYPES.PLUS, FLOWER_TYPES.PLUS, FLOWER_TYPES.PLUS, FLOWER_TYPES.CROSS, FLOWER_TYPES.CROSS]
+    },
+    KNIGHT: {
+        LAYOUT:[['R', 'R', 'C', 'R', 'C', 'R'], 
+                ['R', 'C', 'R', 'R', 'R', 'C'], 
+                ['R', 'R', 'R', 'G', 'R', 'R'], 
+                ['R', 'C', 'R', 'R', 'R', 'C']],
+        CARDS: [FLOWER_TYPES.KNIGHT, FLOWER_TYPES.PLUS, FLOWER_TYPES.PLUS, FLOWER_TYPES.CROSS, FLOWER_TYPES.CROSS]
     }
 };

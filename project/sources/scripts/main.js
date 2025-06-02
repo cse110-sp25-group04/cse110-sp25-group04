@@ -34,7 +34,7 @@ function init() {
     handCells = document.querySelectorAll('#hand-container .hand-cell');
     gridCells = document.querySelectorAll('#grid-container .grid-cell');
     // dropTargets = document.querySelectorAll('.grid-cell, .hand-cell');
-    loadLevel('ONE');
+    loadLevel(2);
 
     // Add mouse down listener to the document to start dragging on any card
     // document.addEventListener('mousedown', handleMouseDown);
