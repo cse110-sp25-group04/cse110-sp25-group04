@@ -1,6 +1,7 @@
 import DragAndDropManager from './drag_drop.js';
 
 import { DEBUG, CELL_STATES, FLOWER_TYPES } from './constants.js';
+import { loadLevel } from './board.js';
 
 //Run the init() function when the page has loaded
 window.addEventListener('DOMContentLoaded', init);
@@ -36,6 +37,7 @@ function init() {
     testCell.dataset.cellState = CELL_STATES.GRASS;
     testCell.style.backgroundColor = 'green';
     // dropTargets = document.querySelectorAll('.grid-cell, .hand-cell');
+    loadLevel('TEST');
 
     //placeholder
     const card1 = createCard('A♠️');

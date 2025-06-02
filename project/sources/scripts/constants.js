@@ -15,3 +15,15 @@ export const FLOWER_TYPES = {
     CROSS: 'x',
     SQUARE: '■'
 };
+
+// Levels (for now)
+export const LEVELS = {
+    TEST: {
+        LAYOUT:[['C', 'R', 'G', 'G', 'C', 'C'],
+                ['C', 'G', 'R', 'C', 'R', 'R'],
+                ['C', 'C', 'C', 'G', 'R', 'R'],
+                ['C', 'C', 'C', 'R', 'C', 'G']],
+        CARDS: [FLOWER_TYPES.PLUS, FLOWER_TYPES.CROSS, FLOWER_TYPES.SQUARE,
+                'ABC', '123', 'Arul']
+    }
+};
