@@ -33,20 +33,17 @@ function init() {
 
     handCells = document.querySelectorAll('#hand-container .hand-cell');
     gridCells = document.querySelectorAll('#grid-container .grid-cell');
-    const testCell = gridCells[0];
-    testCell.dataset.cellState = CELL_STATES.GRASS;
-    testCell.style.backgroundColor = 'green';
     // dropTargets = document.querySelectorAll('.grid-cell, .hand-cell');
-    loadLevel('TEST');
+    loadLevel('ONE');
 
     //placeholder
-    const card1 = createCard('A♠️');
-    const card2 = createCard('K♣️');
-    const card3 = createCard('Q♦️');
+    // const card1 = createCard('A♠️');
+    // const card2 = createCard('K♣️');
+    // const card3 = createCard('Q♦️');
 
-    createCard(FLOWER_TYPES.PLUS);
-    createCard(FLOWER_TYPES.CROSS);
-    createCard(FLOWER_TYPES.SQUARE);
+    // createCard(FLOWER_TYPES.PLUS);
+    // createCard(FLOWER_TYPES.CROSS);
+    // createCard(FLOWER_TYPES.SQUARE);
 
     // Add mouse down listener to the document to start dragging on any card
     // document.addEventListener('mousedown', handleMouseDown);
@@ -68,32 +65,4 @@ function throttle(func, limit) {
             }, limit);
         }
     };
-}
-
-//text would probably be a key to access card attributes?
-function createCard(text) {
-    if (DEBUG) {
-        console.log('CREATING CARDS');
-    }
-    const card = document.createElement('div');
-    card.classList.add('card');
-    card.textContent = text;
-    card.dataset.type = text;
-
-    //finds first empty hand cell to add card to
-    for (let h of handCells) {
-        if (h.classList.contains('has-card')) {
-            if (DEBUG) {
-                console.log('EXIT');
-            }
-            continue;
-        }
-        h.appendChild(card);
-        h.classList.add('has-card');
-        if (DEBUG) {
-            console.log('CARD ADDED');
-        }
-        break;
-    }
-    return card;
 }

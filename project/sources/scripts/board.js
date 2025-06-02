@@ -93,6 +93,43 @@ function loadLevel(levelName) {
     }
     // update the board visuals
     drawBoard();
+    // load the cards
+    for (let card of levelCards) {
+        createCard(card);
+    }
+}
+/**
+ * Creates a card in hand with a given string as the cardname
+ * This cardname will determine the type of card and what actions it can do.
+ * 
+ * @param {String} cardname: a string with the new card's name 
+ */
+function createCard(text) {
+    let handCells = document.querySelectorAll('#hand-container .hand-cell');
+    if (DEBUG) {
+        console.log('CREATING CARDS');
+    }
+    const card = document.createElement('div');
+    card.classList.add('card');
+    card.textContent = text;
+    card.dataset.type = text;
+
+    //finds first empty hand cell to add card to
+    for (let h of handCells) {
+        if (h.classList.contains('has-card')) {
+            if (DEBUG) {
+                console.log('EXIT');
+            }
+            continue;
+        }
+        h.appendChild(card);
+        h.classList.add('has-card');
+        if (DEBUG) {
+            console.log('CARD ADDED');
+        }
+        break;
+    }
+    return card;
 }
 
 /**

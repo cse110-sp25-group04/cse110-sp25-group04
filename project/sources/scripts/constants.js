@@ -25,5 +25,12 @@ export const LEVELS = {
                 ['C', 'C', 'C', 'R', 'C', 'G']],
         CARDS: [FLOWER_TYPES.PLUS, FLOWER_TYPES.CROSS, FLOWER_TYPES.SQUARE,
                 'ABC', '123', 'Arul']
+    },
+    ONE: {
+        LAYOUT:[['R', 'R', 'C', 'C', 'R', 'R'], 
+                ['R', 'C', 'R', 'R', 'C', 'R'], 
+                ['C', 'G', 'C', 'C', 'R', 'R'], 
+                ['R', 'C', 'C', 'R', 'C', 'R']],
+        CARDS: [FLOWER_TYPES.PLUS, FLOWER_TYPES.PLUS, FLOWER_TYPES.PLUS, FLOWER_TYPES.CROSS, FLOWER_TYPES.CROSS]
     }
 };
