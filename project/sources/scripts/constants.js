@@ -17,4 +17,5 @@ export const FLOWER_TYPES = {
 };
 
 // Audio Sources
-export const FAIL_AUDIO = new Audio('/project/sources/assets/fail.mp3');
+// export const FAIL_AUDIO = new Audio('/project/sources/assets/fail.mp3');
+export const FAIL_AUDIO = new Audio('/cse110-sp25-group04/sources/assets/fail.mp3');
