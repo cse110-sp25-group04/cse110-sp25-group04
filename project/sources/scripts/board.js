@@ -49,7 +49,35 @@ function drawBoard() {
             }
         }
     }
-    
+}
+
+/**
+ * Remove/reset existing cards on board
+ */
+function clearBoard() {
+    // HACK: just set innerhtml because i am lazy =)
+    let gridCells = document.getElementById('grid-container').children;
+    for (let i = 0; i < gridCells.length; i++) {
+        gridCells[i].innerHTML = '';
+        gridCells[i].classList.remove('has-card');
+    }
+
+}
+
+/**
+ * Remove/reset existing cards in hand
+ */
+function clearCards() {
+    // HACK: just set innerhtml because i am lazy =)
+    let handContainer = document.getElementById('hand-container');
+    handContainer.innerHTML = 
+    `<div class="hand-cell"></div>
+    <div class="hand-cell"></div>
+    <div class="hand-cell"></div>
+    <div class="hand-cell"></div>
+    <div class="hand-cell"></div>
+    <div class="hand-cell"></div>`
+
 }
 
 /**
@@ -63,6 +91,7 @@ function loadLevel(levelName) {
     const levelBoard = levelObj.LAYOUT;
     console.log(levelBoard);
     const levelCards = levelObj.CARDS;
+    
     // update internal representation
     for (let r = 0; r < ROWS; r++) {
         for (let c = 0; c < COLS; c++) {
@@ -91,11 +120,22 @@ function loadLevel(levelName) {
             }
         }
     }
+    
     // update the board visuals
+    clearBoard();
     drawBoard();
+    
+    // remove existing cards
+    clearCards();
+    
     // load the cards (format: cardname=PLUS)
     for (let cardname of levelCards) {
-        createCard(FLOWER_TYPES[cardname]);
+        if(FLOWER_TYPES[cardname]) {
+            createCard(FLOWER_TYPES[cardname]);
+        }
+        else {
+            createCard(cardname);
+        }
     }
 }
 /**

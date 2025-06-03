@@ -1,6 +1,6 @@
 import DragAndDropManager from './drag_drop.js';
 
-import { DEBUG, CELL_STATES, FLOWER_TYPES } from './constants.js';
+import { DEBUG, CELL_STATES, FLOWER_TYPES, LEVELS } from './constants.js';
 import { loadLevel } from './board.js';
 
 //Run the init() function when the page has loaded
@@ -9,7 +9,7 @@ window.addEventListener('DOMContentLoaded', init);
 //declare variables
 let handCells;
 let gridCells;
-let levelCounter = 1;
+let levelCounter = 0;
 const ROWS = 4, COLS = 6;
 
 function buildGrid() {
@@ -35,11 +35,26 @@ function init() {
     handCells = document.querySelectorAll('#hand-container .hand-cell');
     gridCells = document.querySelectorAll('#grid-container .grid-cell');
     // dropTargets = document.querySelectorAll('.grid-cell, .hand-cell');
-    loadLevel(2);
+    loadLevel(levelCounter);
 
     // Add mouse down listener to the document to start dragging on any card
     // document.addEventListener('mousedown', handleMouseDown);
     const dndManager = new DragAndDropManager(handCells, gridCells);
+    
+    // Add previous/next level button listeners
+    const prevButton = document.getElementById('previous-level');
+    const nextButton = document.getElementById('next-level');
+    prevButton.addEventListener('click', function () {
+        if(levelCounter <= 0) return;
+        levelCounter -= 1;
+        loadLevel(levelCounter);
+    });
+    nextButton.addEventListener('click', function () {
+        console.log(LEVELS.length);
+        if(levelCounter >= LEVELS.length-1) return;
+        levelCounter += 1;
+        loadLevel(levelCounter);
+    });
 }
 
 //Throttles function to reduce lag from running too quickly

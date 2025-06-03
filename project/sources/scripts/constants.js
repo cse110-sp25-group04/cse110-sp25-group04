@@ -25,7 +25,7 @@ export const LEVELS = [
                 ['R', 'C', 'R', 'R', 'C', 'R'], 
                 ['C', 'G', 'C', 'C', 'R', 'R'], 
                 ['R', 'C', 'C', 'R', 'C', 'R']],
-        CARDS: ['PLUS', 'PLUS', 'PLUS', 'PLUS', 'PLUS']
+        CARDS: ['PLUS', 'PLUS', 'PLUS', 'CROSS', 'CROSS']
     },
     // Level 2
     {
@@ -42,12 +42,6 @@ export const LEVELS = [
                 ['C', 'R', 'C', 'R', 'C', 'R'], 
                 ['G', 'C', 'C', 'C', 'C', 'R']],
         CARDS: ['KNIGHT', 'KNIGHT', 'KNIGHT', 'KNIGHT', 'KNIGHT', 'KNIGHT']
-
-
-
-
-
-
     },
     // Level 4
     {
