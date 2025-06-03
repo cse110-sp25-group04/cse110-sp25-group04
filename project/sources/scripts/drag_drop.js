@@ -1,4 +1,4 @@
-import { changeBoard } from './board.js';
+import { changeBoard, BOARD, drawBoard } from './board.js';
 import { checkGameStatus } from './main.js';
 import { DEBUG, CELL_STATES, FLOWER_TYPES } from './constants.js';
 
@@ -16,6 +16,9 @@ class DragAndDropManager {
         this.latestMouseY = 0;
         this.animationFrameId = null;
         this.isTransitioning = false;
+
+        // Card move history
+        this.moveHistory = [];
 
         // Store drop targets
         this.dropTargets = [...handCells, ...gridCells];
@@ -186,8 +189,14 @@ class DragAndDropManager {
         this.currentDropTarget.classList.add('has-card');
 
         const type = this.draggedElement.dataset.type;
-        changeBoard(this.currentDropTarget, type);
-        
+        const updatedBoard = changeBoard(this.currentDropTarget, type);
+        this.moveHistory.push({
+            card: this.draggedElement,
+            originalParent: this.originalParentCell,
+            targetCell: this.currentDropTarget,
+            history: updatedBoard
+        });
+
         // HACK: without this settimeout the card animation doesn't finish before the alert
         setTimeout(checkGameStatus, 1);
         // check for win whenever card is placed
@@ -241,6 +250,27 @@ class DragAndDropManager {
 
             this.resetState();
         }.bind(this), { once: true });
+    }
+
+    undo() {
+        if (this.moveHistory.length === 0) { return; }
+        const lastMove = this.moveHistory.pop();
+
+        // revert Board back to corrupt and update DOM
+        lastMove.history.forEach(function (coordinates) {
+            let x = coordinates.x;
+            let y = coordinates.y;
+            BOARD[y][x] = CELL_STATES.CORRUPT;
+            document.getElementById(`${x}-${y}`).dataset.cellState = CELL_STATES.CORRUPT;
+        });
+
+        drawBoard();
+
+        // move the card back
+        lastMove.targetCell.removeChild(lastMove.card);
+        lastMove.targetCell.classList.remove('has-card');
+        lastMove.originalParent.appendChild(lastMove.card);
+        lastMove.originalParent.classList.add('has-card');
     }
 }
 

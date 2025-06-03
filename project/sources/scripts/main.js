@@ -11,6 +11,7 @@ let handCells;
 let gridCells;
 let levelCounter;
 let highestLevelReached;
+let dndManager;
 
 function buildGrid() {
     const container = document.getElementById('grid-container');
@@ -46,7 +47,7 @@ function init() {
     // document.addEventListener('mousedown', handleMouseDown);
     handCells = document.querySelectorAll('#hand-container .hand-cell');
     gridCells = document.querySelectorAll('#grid-container .grid-cell');
-    const dndManager = new DragAndDropManager(handCells, gridCells);
+    dndManager = new DragAndDropManager(handCells, gridCells);
     
     
 }
@@ -74,12 +75,14 @@ function createControlListeners() {
     const nextButton = document.getElementById('next-level');
     const resetButton = document.getElementById('reset');
     const resetLSButton = document.getElementById('reset-local-storage');
+    const undoButton = document.getElementById('undo');
 
     prevButton.addEventListener('click', function () {
         if(levelCounter <= 0) return;
         levelCounter -= 1;
         localStorage.setItem('level-number', levelCounter);
         loadLevel(levelCounter);
+        if (dndManager) { dndManager.moveHistory = []; }
     });
 
     nextButton.addEventListener('click', function () {
@@ -87,14 +90,21 @@ function createControlListeners() {
         levelCounter += 1;
         localStorage.setItem('level-number', levelCounter);
         loadLevel(levelCounter);
+        if (dndManager) { dndManager.moveHistory = []; }
     });
 
     resetButton.addEventListener('click', function () {
         loadLevel(levelCounter);
+        if (dndManager) { dndManager.moveHistory = []; }
     });
 
     resetLSButton.addEventListener('click', function () {
         localStorage.clear();
+        if (dndManager) { dndManager.moveHistory = []; }
+    });
+
+    undoButton.addEventListener('click', () => {
+        if (dndManager) { dndManager.undo(); }
     });
 }
 
@@ -172,6 +182,7 @@ function handleLevelPassed() {
     levelCounter += 1;
     localStorage.setItem('level-number', levelCounter);
     loadLevel(levelCounter);
+    if (dndManager) { dndManager.moveHistory = []; }
     
     // only update highestLevelReached here (no cheating!)
     // check localstorage value + new levelcounter
@@ -184,4 +195,5 @@ function handleLevelFailed() {
     alert('Level Failed');
     // reload level
     loadLevel(levelCounter);
+    if (dndManager) { dndManager.moveHistory = []; }
 }

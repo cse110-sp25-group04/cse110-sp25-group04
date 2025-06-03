@@ -202,6 +202,7 @@ function changeBoard(cell, type) {
         }       
     }
 
+    const history = [];
     for (let [dx,dy] of offsets) {
         //calculate the new position for x and y
         const nx = x + dx, ny = y + dy;
@@ -217,11 +218,14 @@ function changeBoard(cell, type) {
         if (!cell.querySelector('.card') && BOARD[ny][nx] == CELL_STATES.CORRUPT) {
             BOARD[ny][nx] = CELL_STATES.GRASS;
             cell.dataset.cellState = CELL_STATES.GRASS;
+            history.push({x: nx, y: ny});
         }
     };
     drawBoard();
+
+    return history;
 }
 
 
 
-export { BOARD, changeBoard, loadLevel };
+export { BOARD, changeBoard, loadLevel, drawBoard };
