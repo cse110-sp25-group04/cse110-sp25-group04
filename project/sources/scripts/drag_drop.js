@@ -1,6 +1,6 @@
 import { changeBoard, BOARD, drawBoard } from './board.js';
 import { checkGameStatus } from './main.js';
-import { DEBUG, CELL_STATES, FLOWER_TYPES } from './constants.js';
+import { DEBUG, CELL_STATES, FLOWER_TYPES, FAIL_AUDIO,} from './constants.js';
 
 class DragAndDropManager {
     constructor(handCells, gridCells) {
@@ -24,7 +24,6 @@ class DragAndDropManager {
         this.dropTargets = [...handCells, ...gridCells];
         this.gridCells = [...gridCells];
         this.handCells = [...handCells];
-        
 
         // Bind methods to 'this' to ensure correct context
         this.handleMouseDown = this.handleMouseDown.bind(this);
@@ -149,6 +148,12 @@ class DragAndDropManager {
         if (this.currentDropTarget) {
             this.currentDropTarget.classList.remove('drag-over');
         }
+        //if the card is outside the board
+        if (this.currentDropTarget === null) {
+            this.#failAudio();
+            this.handleTransition();
+            return;
+        }
 
         const invalidGrid = !this.currentDropTarget.querySelector('.card') || this.currentDropTarget === this.originalParentCell;
         if (this.currentDropTarget && (invalidGrid)
@@ -160,6 +165,7 @@ class DragAndDropManager {
             }
             this.#addChild();
         } else {
+            this.#failAudio();
             this.handleTransition();
         }
     }
@@ -271,6 +277,11 @@ class DragAndDropManager {
         lastMove.targetCell.classList.remove('has-card');
         lastMove.originalParent.appendChild(lastMove.card);
         lastMove.originalParent.classList.add('has-card');
+    }
+
+    //function to play fail audio when card is placed somewhere invalid
+    #failAudio() {
+        FAIL_AUDIO.play();
     }
 }
 

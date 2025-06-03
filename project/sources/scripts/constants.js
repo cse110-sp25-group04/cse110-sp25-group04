@@ -1,4 +1,4 @@
-//use as a debug flag for logging
+// Use as a debug flag for logging
 export const DEBUG = true;
 
 // Board sizes
@@ -20,6 +20,11 @@ export const FLOWER_TYPES = {
     SQUARE: '■',
     KNIGHT: 'N'
 };
+
+// Audio Sources
+// export const FAIL_AUDIO = new Audio('/project/sources/assets/fail.mp3');
+export const FAIL_AUDIO = new Audio('/cse110-sp25-group04/sources/assets/fail.mp3');
+
 
 // Levels (for now)
 export const LEVELS = [
