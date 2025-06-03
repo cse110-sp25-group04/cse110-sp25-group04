@@ -25,26 +25,26 @@ function drawBoard() {
             if (!cell.querySelector('.card')) {
                 // styling logic can be applied here
                 switch(BOARD[r][c]) {
-                    case CELL_STATES.CORRUPT:
-                        cell.style.backgroundColor = 'purple';
-                        break;
-                    case CELL_STATES.GRASS:
-                        cell.style.backgroundColor = 'green';
-                        break;
-                    case CELL_STATES.ROCK:
-                        cell.style.backgroundColor = 'gray';
-                        break;
-                    case CELL_STATES.FLOWER:
-                        // this case shouldn't be reached if a card isn't there
-                        if (DEBUG) {
-                            console.log(`Unreachable cell type reached at (${r},${c}).`);
-                        }
-                        break;
-                    default:
-                        if (DEBUG) {
-                            console.log('Unknown cell type in internal representation: ' + BOARD[r][c]);
-                        }
-                        break;       
+                case CELL_STATES.CORRUPT:
+                    cell.style.backgroundColor = 'purple';
+                    break;
+                case CELL_STATES.GRASS:
+                    cell.style.backgroundColor = 'green';
+                    break;
+                case CELL_STATES.ROCK:
+                    cell.style.backgroundColor = 'gray';
+                    break;
+                case CELL_STATES.FLOWER:
+                    // this case shouldn't be reached if a card isn't there
+                    if (DEBUG) {
+                        console.log(`Unreachable cell type reached at (${r},${c}).`);
+                    }
+                    break;
+                default:
+                    if (DEBUG) {
+                        console.log('Unknown cell type in internal representation: ' + BOARD[r][c]);
+                    }
+                    break;       
                 }
             }
         }

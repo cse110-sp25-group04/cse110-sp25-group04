@@ -22,41 +22,41 @@ export const LEVELS = [
     // Level 1
     {
         LAYOUT:[['R', 'R', 'C', 'C', 'R', 'R'], 
-                ['R', 'C', 'R', 'R', 'C', 'R'], 
-                ['C', 'G', 'C', 'C', 'R', 'R'], 
-                ['R', 'C', 'C', 'R', 'C', 'R']],
+            ['R', 'C', 'R', 'R', 'C', 'R'], 
+            ['C', 'G', 'C', 'C', 'R', 'R'], 
+            ['R', 'C', 'C', 'R', 'C', 'R']],
         CARDS: ['PLUS', 'PLUS', 'PLUS', 'CROSS', 'CROSS']
     },
     // Level 2
     {
         LAYOUT:[['R', 'R', 'C', 'R', 'C', 'R'], 
-                ['R', 'C', 'R', 'R', 'R', 'C'], 
-                ['R', 'R', 'R', 'G', 'R', 'R'], 
-                ['R', 'C', 'R', 'R', 'R', 'C']],
+            ['R', 'C', 'R', 'R', 'R', 'C'], 
+            ['R', 'R', 'R', 'G', 'R', 'R'], 
+            ['R', 'C', 'R', 'R', 'R', 'C']],
         CARDS: ['KNIGHT']
     },
     // Level 3
     {
         LAYOUT:[['C', 'C', 'R', 'C', 'C', 'C'], 
-                ['C', 'C', 'C', 'C', 'C', 'R'], 
-                ['C', 'R', 'C', 'R', 'C', 'R'], 
-                ['G', 'C', 'C', 'C', 'C', 'R']],
+            ['C', 'C', 'C', 'C', 'C', 'R'], 
+            ['C', 'R', 'C', 'R', 'C', 'R'], 
+            ['G', 'C', 'C', 'C', 'C', 'R']],
         CARDS: ['KNIGHT', 'KNIGHT', 'KNIGHT', 'KNIGHT', 'KNIGHT', 'KNIGHT']
     },
     // Level 4
     {
         LAYOUT:[['R', 'R', 'C', 'R', 'C', 'R'], 
-                ['R', 'C', 'R', 'R', 'R', 'C'], 
-                ['R', 'R', 'R', 'G', 'R', 'R'], 
-                ['R', 'C', 'R', 'R', 'R', 'C']],
+            ['R', 'C', 'R', 'R', 'R', 'C'], 
+            ['R', 'R', 'R', 'G', 'R', 'R'], 
+            ['R', 'C', 'R', 'R', 'R', 'C']],
         CARDS: ['L','E','V','E','L','4']
     },
     // Level 5
     {
         LAYOUT:[['R', 'R', 'C', 'R', 'C', 'R'], 
-                ['R', 'C', 'R', 'R', 'R', 'C'], 
-                ['R', 'R', 'R', 'G', 'R', 'R'], 
-                ['R', 'C', 'R', 'R', 'R', 'C']],
+            ['R', 'C', 'R', 'R', 'R', 'C'], 
+            ['R', 'R', 'R', 'G', 'R', 'R'], 
+            ['R', 'C', 'R', 'R', 'R', 'C']],
         CARDS: ['L','E','V','E','L','5']
     }
 ];
