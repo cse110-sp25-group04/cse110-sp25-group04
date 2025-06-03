@@ -1,6 +1,10 @@
 //use as a debug flag for logging
 export const DEBUG = true;
 
+// Board sizes
+export const ROWS = 4;
+export const COLS = 6;
+
 // Cell states
 export const CELL_STATES = {
     GRASS: 'grass',
