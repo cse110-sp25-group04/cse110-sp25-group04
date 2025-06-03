@@ -17,7 +17,7 @@ export const CELL_STATES = {
 export const FLOWER_TYPES = {
     PLUS: '+',
     CROSS: 'x',
-    SQUARE: '■'
+    SQUARE: '■',
     KNIGHT: 'N'
 };
 
