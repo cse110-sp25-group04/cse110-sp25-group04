@@ -83,11 +83,11 @@ function clearCards() {
 /**
  * Loads a new level
  * 
- * @param {String} levelName: a string with the internal level name
+ * @param {number} levelNumber: a number representing the level to be loaded
  */
-function loadLevel(levelName) {
+function loadLevel(levelNumber) {
     // let's get the object that represents the level
-    const levelObj = LEVELS[levelName];
+    const levelObj = LEVELS[levelNumber];
     const levelBoard = levelObj.LAYOUT;
     console.log(levelBoard);
     const levelCards = levelObj.CARDS;
