@@ -9,7 +9,7 @@ window.addEventListener('DOMContentLoaded', init);
 //declare variables
 let handCells;
 let gridCells;
-let levelCounter = 0;
+let levelCounter;
 
 function buildGrid() {
     const container = document.getElementById('grid-container');
@@ -33,7 +33,16 @@ function init() {
 
     handCells = document.querySelectorAll('#hand-container .hand-cell');
     gridCells = document.querySelectorAll('#grid-container .grid-cell');
-    // dropTargets = document.querySelectorAll('.grid-cell, .hand-cell');
+
+
+    // get the level from localStorage
+    if (localStorage.getItem('level-number')) {
+        levelCounter = Number(localStorage.getItem('level-number'));
+    }
+    else {
+        levelCounter = 0;
+        localStorage.setItem('level-number', 0);
+    }
     loadLevel(levelCounter);
 
     // Add mouse down listener to the document to start dragging on any card
@@ -46,11 +55,13 @@ function init() {
     prevButton.addEventListener('click', function () {
         if(levelCounter <= 0) return;
         levelCounter -= 1;
+        localStorage.setItem('level-number', levelCounter);
         loadLevel(levelCounter);
     });
     nextButton.addEventListener('click', function () {
         if(levelCounter >= LEVELS.length-1) return;
         levelCounter += 1;
+        localStorage.setItem('level-number', levelCounter);
         loadLevel(levelCounter);
     });
 }
