@@ -1,6 +1,5 @@
-import { DEBUG, CELL_STATES, FLOWER_TYPES, LEVELS } from './constants.js';
+import { ROWS, COLS, DEBUG, CELL_STATES, FLOWER_TYPES, LEVELS } from './constants.js';
 
-const ROWS = 4, COLS = 6;
 
 //initalizes the 2d array board to be null
 // TODO: use level loading to initialize the board - Arul
@@ -223,4 +222,4 @@ function changeBoard(cell, type) {
     drawBoard();
 }
 
-export { ROWS, COLS, BOARD, changeBoard, loadLevel };
+export { BOARD, changeBoard, loadLevel };

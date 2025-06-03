@@ -1,6 +1,6 @@
 import DragAndDropManager from './drag_drop.js';
 
-import { DEBUG, CELL_STATES, FLOWER_TYPES, LEVELS } from './constants.js';
+import { ROWS, COLS, DEBUG, CELL_STATES, FLOWER_TYPES, LEVELS } from './constants.js';
 import { loadLevel } from './board.js';
 
 //Run the init() function when the page has loaded
@@ -10,7 +10,6 @@ window.addEventListener('DOMContentLoaded', init);
 let handCells;
 let gridCells;
 let levelCounter = 0;
-const ROWS = 4, COLS = 6;
 
 function buildGrid() {
     const container = document.getElementById('grid-container');
@@ -50,7 +49,6 @@ function init() {
         loadLevel(levelCounter);
     });
     nextButton.addEventListener('click', function () {
-        console.log(LEVELS.length);
         if(levelCounter >= LEVELS.length-1) return;
         levelCounter += 1;
         loadLevel(levelCounter);
