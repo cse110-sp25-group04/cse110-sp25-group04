@@ -224,4 +224,4 @@ function changeBoard(cell, type) {
 
 
 
-export { BOARD, changeBoard, loadLevel, clearBoard };
+export { BOARD, changeBoard, loadLevel };

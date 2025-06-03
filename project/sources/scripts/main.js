@@ -1,7 +1,7 @@
 import DragAndDropManager from './drag_drop.js';
 
 import { ROWS, COLS, DEBUG, CELL_STATES, FLOWER_TYPES, LEVELS } from './constants.js';
-import { loadLevel, clearBoard } from './board.js';
+import { loadLevel } from './board.js';
 
 //Run the init() function when the page has loaded
 window.addEventListener('DOMContentLoaded', init);
@@ -10,6 +10,7 @@ window.addEventListener('DOMContentLoaded', init);
 let handCells;
 let gridCells;
 let levelCounter;
+let highestLevelReached;
 
 function buildGrid() {
     const container = document.getElementById('grid-container');
@@ -35,6 +36,8 @@ function init() {
     // get the level from localStorage
     levelCounter = getLevelNumber();
     loadLevel(levelCounter);
+
+    highestLevelReached = getHighestLevelReached();
 
     // creates listeners for previous/next/reset
     createControlListeners();
@@ -70,20 +73,28 @@ function createControlListeners() {
     const prevButton = document.getElementById('previous-level');
     const nextButton = document.getElementById('next-level');
     const resetButton = document.getElementById('reset');
+    const resetLSButton = document.getElementById('reset-local-storage');
+
     prevButton.addEventListener('click', function () {
         if(levelCounter <= 0) return;
         levelCounter -= 1;
         localStorage.setItem('level-number', levelCounter);
         loadLevel(levelCounter);
     });
+
     nextButton.addEventListener('click', function () {
-        if(levelCounter >= LEVELS.length-1) return;
+        if(levelCounter >= highestLevelReached) return;
         levelCounter += 1;
         localStorage.setItem('level-number', levelCounter);
         loadLevel(levelCounter);
     });
+
     resetButton.addEventListener('click', function () {
         loadLevel(levelCounter);
+    });
+
+    resetLSButton.addEventListener('click', function () {
+        localStorage.clear();
     });
 }
 
@@ -93,6 +104,16 @@ function getLevelNumber() {
     }
     else {
         localStorage.setItem('level-number', 0);
+        return 0;
+    }
+}
+
+function getHighestLevelReached() {
+    if (localStorage.getItem('highest-level')) {
+        return Number(localStorage.getItem('highest-level'));
+    }
+    else {
+        localStorage.setItem('highest-level', 0);
         return 0;
     }
 }
@@ -151,7 +172,11 @@ function handleLevelPassed() {
     levelCounter += 1;
     localStorage.setItem('level-number', levelCounter);
     loadLevel(levelCounter);
-
+    
+    // only update highestLevelReached here (no cheating!)
+    // check localstorage value + new levelcounter
+    highestLevelReached = Math.max(getHighestLevelReached(), levelCounter);
+    localStorage.setItem('highest-level', highestLevelReached);
 }
 
 // Handle level failure
