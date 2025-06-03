@@ -76,7 +76,7 @@ function clearCards() {
     <div class="hand-cell"></div>
     <div class="hand-cell"></div>
     <div class="hand-cell"></div>
-    <div class="hand-cell"></div>`
+    <div class="hand-cell"></div>`;
 
 }
 
