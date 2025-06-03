@@ -1,6 +1,7 @@
 import DragAndDropManager from './drag_drop.js';
 
-import { DEBUG, CELL_STATES, FLOWER_TYPES } from './constants.js';
+import { DEBUG, CELL_STATES, FLOWER_TYPES, LEVELS } from './constants.js';
+import { loadLevel } from './board.js';
 
 //Run the init() function when the page has loaded
 window.addEventListener('DOMContentLoaded', init);
@@ -8,6 +9,7 @@ window.addEventListener('DOMContentLoaded', init);
 //declare variables
 let handCells;
 let gridCells;
+let levelCounter = 0;
 const ROWS = 4, COLS = 6;
 
 function buildGrid() {
@@ -32,23 +34,27 @@ function init() {
 
     handCells = document.querySelectorAll('#hand-container .hand-cell');
     gridCells = document.querySelectorAll('#grid-container .grid-cell');
-    const testCell = gridCells[0];
-    testCell.dataset.cellState = CELL_STATES.GRASS;
-    testCell.style.backgroundColor = 'green';
     // dropTargets = document.querySelectorAll('.grid-cell, .hand-cell');
-
-    //placeholder
-    const card1 = createCard('A♠️');
-    const card2 = createCard('K♣️');
-    const card3 = createCard('Q♦️');
-
-    createCard(FLOWER_TYPES.PLUS);
-    createCard(FLOWER_TYPES.CROSS);
-    createCard(FLOWER_TYPES.SQUARE);
+    loadLevel(levelCounter);
 
     // Add mouse down listener to the document to start dragging on any card
     // document.addEventListener('mousedown', handleMouseDown);
     const dndManager = new DragAndDropManager(handCells, gridCells);
+    
+    // Add previous/next level button listeners
+    const prevButton = document.getElementById('previous-level');
+    const nextButton = document.getElementById('next-level');
+    prevButton.addEventListener('click', function () {
+        if(levelCounter <= 0) return;
+        levelCounter -= 1;
+        loadLevel(levelCounter);
+    });
+    nextButton.addEventListener('click', function () {
+        console.log(LEVELS.length);
+        if(levelCounter >= LEVELS.length-1) return;
+        levelCounter += 1;
+        loadLevel(levelCounter);
+    });
 }
 
 //Throttles function to reduce lag from running too quickly
@@ -66,32 +72,4 @@ function throttle(func, limit) {
             }, limit);
         }
     };
-}
-
-//text would probably be a key to access card attributes?
-function createCard(text) {
-    if (DEBUG) {
-        console.log('CREATING CARDS');
-    }
-    const card = document.createElement('div');
-    card.classList.add('card');
-    card.textContent = text;
-    card.dataset.type = text;
-
-    //finds first empty hand cell to add card to
-    for (let h of handCells) {
-        if (h.classList.contains('has-card')) {
-            if (DEBUG) {
-                console.log('EXIT');
-            }
-            continue;
-        }
-        h.appendChild(card);
-        h.classList.add('has-card');
-        if (DEBUG) {
-            console.log('CARD ADDED');
-        }
-        break;
-    }
-    return card;
 }
