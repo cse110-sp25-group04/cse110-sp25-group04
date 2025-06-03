@@ -1,5 +1,6 @@
 import { changeBoard } from './board.js';
-import { CELL_STATES, FLOWER_TYPES } from './constants.js';
+import { checkGameStatus } from './main.js';
+import { DEBUG, CELL_STATES, FLOWER_TYPES } from './constants.js';
 
 class DragAndDropManager {
     constructor(handCells, gridCells) {
@@ -154,7 +155,6 @@ class DragAndDropManager {
                 this.originalParentCell.removeChild(this.draggedElement);
                 this.originalParentCell.classList.remove('has-card');
             }
-
             this.#addChild();
         } else {
             this.handleTransition();
@@ -187,6 +187,11 @@ class DragAndDropManager {
 
         const type = this.draggedElement.dataset.type;
         changeBoard(this.currentDropTarget, type);
+        
+        // HACK: without this settimeout the card animation doesn't finish before the alert
+        setTimeout(checkGameStatus, 1);
+        // check for win whenever card is placed
+
     }
 
     //maintain styling of elements
@@ -236,35 +241,6 @@ class DragAndDropManager {
 
             this.resetState();
         }.bind(this), { once: true });
-    }
-
-    //Function to handle win check
-    #checkWin() {
-        //if there is still purple and user's hand is empty we can have a loss screen or offer a reset as they have failed the puzzle
-        let hasCards = true;
-        for (const h of this.handCells) {
-            if (h.classList.contains('has-card') === false) {
-                if (DEBUG) {
-                    console.log('Player has no cards');
-                }
-                hasCards = false;
-                break;
-            }
-        }
-
-        for (const g of this.gridCells) {
-            //rather than checking for all grass/rock, returns false on purple
-            if (g.dataset.cellState === CELL_STATES.CORRUPT) {
-                if (DEBUG) {
-                    console.log('Purple Tile Detected');
-                }
-                if (hasCards === false) {
-                    hasCards = false; //placeholder for reset() ?
-                }
-                return false;
-            }
-        }
-        return true;
     }
 }
 

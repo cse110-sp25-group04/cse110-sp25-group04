@@ -1,7 +1,7 @@
 import DragAndDropManager from './drag_drop.js';
 
 import { ROWS, COLS, DEBUG, CELL_STATES, FLOWER_TYPES, LEVELS } from './constants.js';
-import { loadLevel } from './board.js';
+import { loadLevel, clearBoard } from './board.js';
 
 //Run the init() function when the page has loaded
 window.addEventListener('DOMContentLoaded', init);
@@ -29,41 +29,23 @@ function buildGrid() {
 
 //Starts the program
 function init() {
+    // build the grid cells
     buildGrid();
 
-    handCells = document.querySelectorAll('#hand-container .hand-cell');
-    gridCells = document.querySelectorAll('#grid-container .grid-cell');
-
-
     // get the level from localStorage
-    if (localStorage.getItem('level-number')) {
-        levelCounter = Number(localStorage.getItem('level-number'));
-    }
-    else {
-        levelCounter = 0;
-        localStorage.setItem('level-number', 0);
-    }
+    levelCounter = getLevelNumber();
     loadLevel(levelCounter);
+
+    // creates listeners for previous/next/reset
+    createControlListeners();
 
     // Add mouse down listener to the document to start dragging on any card
     // document.addEventListener('mousedown', handleMouseDown);
+    handCells = document.querySelectorAll('#hand-container .hand-cell');
+    gridCells = document.querySelectorAll('#grid-container .grid-cell');
     const dndManager = new DragAndDropManager(handCells, gridCells);
     
-    // Add previous/next level button listeners
-    const prevButton = document.getElementById('previous-level');
-    const nextButton = document.getElementById('next-level');
-    prevButton.addEventListener('click', function () {
-        if(levelCounter <= 0) return;
-        levelCounter -= 1;
-        localStorage.setItem('level-number', levelCounter);
-        loadLevel(levelCounter);
-    });
-    nextButton.addEventListener('click', function () {
-        if(levelCounter >= LEVELS.length-1) return;
-        levelCounter += 1;
-        localStorage.setItem('level-number', levelCounter);
-        loadLevel(levelCounter);
-    });
+    
 }
 
 //Throttles function to reduce lag from running too quickly
@@ -81,4 +63,100 @@ function throttle(func, limit) {
             }, limit);
         }
     };
+}
+
+function createControlListeners() {
+    // Add previous/next level button listeners
+    const prevButton = document.getElementById('previous-level');
+    const nextButton = document.getElementById('next-level');
+    const resetButton = document.getElementById('reset');
+    prevButton.addEventListener('click', function () {
+        if(levelCounter <= 0) return;
+        levelCounter -= 1;
+        localStorage.setItem('level-number', levelCounter);
+        loadLevel(levelCounter);
+    });
+    nextButton.addEventListener('click', function () {
+        if(levelCounter >= LEVELS.length-1) return;
+        levelCounter += 1;
+        localStorage.setItem('level-number', levelCounter);
+        loadLevel(levelCounter);
+    });
+    resetButton.addEventListener('click', function () {
+        loadLevel(levelCounter);
+    });
+}
+
+function getLevelNumber() {
+    if (localStorage.getItem('level-number')) {
+        return Number(localStorage.getItem('level-number'));
+    }
+    else {
+        localStorage.setItem('level-number', 0);
+        return 0;
+    }
+}
+
+// Is this the right place for these functions?
+
+
+// Function to handle win check
+export { checkGameStatus };
+function checkGameStatus() {
+
+    let handCells = document.querySelectorAll('#hand-container .hand-cell');
+    let gridCells = document.querySelectorAll('#grid-container .grid-cell');
+
+    // if there is still purple and user's hand is empty we can have a loss screen or offer a reset as they have failed the puzzle
+    let hasCards = false;
+    for (const h of handCells) {
+        if (h.classList.contains('has-card') === true) {
+            if (DEBUG) {
+                console.log('Player has cards');
+            }
+            hasCards = true;
+            break;
+        }
+    }
+
+    // check if there is corrupt left
+    for (const g of gridCells) {
+        if (g.dataset.cellState === CELL_STATES.CORRUPT) {
+            if (DEBUG) {
+                console.log('Purple Tile Detected');
+            }
+            if (hasCards) {
+                // corrupt left + cards = keep going
+                return;
+            }
+            else {
+                // corrupt left + no cards = lose
+                handleLevelFailed();
+                return;
+            }
+        }
+    }
+
+    // no corrupt left
+    handleLevelPassed();
+    return;
+}
+
+// Handle level success
+function handleLevelPassed() {
+    alert('Level Passed');
+    if(levelCounter >= LEVELS.length-1) {
+        alert('Completed all existing levels, congrats!');
+    };
+    levelCounter += 1;
+    localStorage.setItem('level-number', levelCounter);
+    loadLevel(levelCounter);
+
+}
+
+// Handle level failure
+function handleLevelFailed() {
+    alert('Level Failed');
+    // reload level
+    loadLevel(levelCounter);
 }

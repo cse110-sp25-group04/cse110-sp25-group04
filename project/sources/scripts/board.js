@@ -222,4 +222,6 @@ function changeBoard(cell, type) {
     drawBoard();
 }
 
-export { BOARD, changeBoard, loadLevel };
+
+
+export { BOARD, changeBoard, loadLevel, clearBoard };

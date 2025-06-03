@@ -2,7 +2,7 @@
 export const DEBUG = true;
 
 // Board sizes
-export const ROWS = 4
+export const ROWS = 4;
 export const COLS = 6;
 
 // Cell states
