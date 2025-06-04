@@ -1,21 +1,32 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 :root {
 --card-aspect: 5 / 7;
---card-min-width: 70px;
---card-max-width: 110px;
+--card-min-width: 50px;
+/* --card-min-width: 70px; */
+--card-max-width: 90px;
+/* --card-max-width: 110px; */
 --card-height: calc(var(--card-min-width) * var(--card-aspect));
 --grid-cols: 6;
 --grid-rows: 4;
 }
 
-html, body {
-margin: 0;
+html{
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
 display: block;
 /*display: flex;
    justify-content: center;
    align-items: center;*/
-min-width: 70vw;
 background: #f5f5f5;
-overflow: hidden;
+border: 5px dashed red;
 }
 
 #grid-container {
