@@ -6,10 +6,8 @@
 
 :root {
     --card-aspect: 5 / 7;
---card-min-width: 50px;
-/* --card-min-width: 70px; */
+    --card-min-width: 50px;
 --card-max-width: 90px;
-/* --card-max-width: 110px; Cards resized for window*/
     --card-height: calc(var(--card-min-width) * var(--card-aspect));
     --grid-cols: 6;
     --grid-rows: 4;
@@ -24,9 +22,6 @@
   body {
     margin: 0;
     display: block;
-    /*display: flex;
-    justify-content: center;
-    align-items: center;*/
     min-height: 70vh;
     background: #f5f5f5;
   }
@@ -89,8 +84,8 @@
   /* Style for valid drop targets when dragging over */
   .grid-cell.drag-over,
   .hand-cell.drag-over {
-      border: 2px dashed blue; /* Example visual feedback */
-      background-color: #d3f9d3; /* Lighter background */
+      border: 2px dashed blue; 
+      background-color: #d3f9d3; 
   }
 
   .card {
