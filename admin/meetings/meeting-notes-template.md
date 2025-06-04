@@ -31,19 +31,19 @@
 
 ## 🚧 Blockers
 
-- [ ] [Describe any blocking issues]
+1. [Describe any blocking issues]
 
 ---
 
 ## 📅 Planning: What’s Coming Up Next
 
-- [ ] [Upcoming tasks or milestones]
+1. [Upcoming tasks or milestones]
 
 ---
 
 ## ⚠️ Concerns
 
-- [ ] [List concerns or risks]
+-  [List concerns or risks]
 
 ---
 
