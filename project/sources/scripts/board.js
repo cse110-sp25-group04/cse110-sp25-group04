@@ -68,15 +68,11 @@ function clearBoard() {
  */
 function clearCards() {
     // HACK: just set innerhtml because i am lazy =)
-    let handContainer = document.getElementById('hand-container');
-    handContainer.innerHTML = 
-    `<div class="hand-cell"></div>
-    <div class="hand-cell"></div>
-    <div class="hand-cell"></div>
-    <div class="hand-cell"></div>
-    <div class="hand-cell"></div>
-    <div class="hand-cell"></div>`;
-
+    let handCells = document.querySelectorAll('.hand-cell');
+    for (let h of handCells) {
+        h.innerHTML = '';
+        h.classList.remove('has-card');
+    }
 }
 
 /**
@@ -90,7 +86,11 @@ function loadLevel(levelNumber) {
     const levelBoard = levelObj.LAYOUT;
     console.log(levelBoard);
     const levelCards = levelObj.CARDS;
-    
+    const numCards = levelCards.length;
+
+    //generate the hand
+    buildHand(numCards);
+
     // update internal representation
     for (let r = 0; r < ROWS; r++) {
         for (let c = 0; c < COLS; c++) {
@@ -169,6 +169,28 @@ function createCard(text) {
         break;
     }
     return card;
+}
+
+/**
+ * Generates the players hand dynamically given number of cards for level.
+ * 
+ * @param {Number} num: a number of handcells to generate
+ */
+function buildHand(num) {
+    const handContainer = document.getElementById('hand-container')
+    handContainer.innerHTML = '';
+    //ensures hand container is correct size
+    handContainer.style.gridTemplateColumns = `repeat(${num}, 1fr)`;
+    handContainer.style.maxWidth = `calc(${num} * var(--card-max-width))`;
+    if (DEBUG) {
+        console.log('CREATING HAND');
+    }
+    // creates a hand cell for each card
+    for (let i = 0; i < num; i++) {
+        const handCell = document.createElement('div');
+        handCell.classList.add('hand-cell');
+        handContainer.appendChild(handCell);
+    }
 }
 
 /**
