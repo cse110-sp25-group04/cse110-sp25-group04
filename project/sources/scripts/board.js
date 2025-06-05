@@ -177,7 +177,7 @@ function createCard(text) {
  * @param {Number} num: a number of handcells to generate
  */
 function buildHand(num) {
-    const handContainer = document.getElementById('hand-container')
+    const handContainer = document.getElementById('hand-container');
     handContainer.innerHTML = '';
     //ensures hand container is correct size
     handContainer.style.gridTemplateColumns = `repeat(${num}, 1fr)`;
