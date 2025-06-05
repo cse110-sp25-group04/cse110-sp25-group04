@@ -3,7 +3,7 @@
 ## CARDEN - A Garden Puzzle Game
 
 ```
-A fun and simple puzzle game where the player must clear the evil **CORRUPTION** by using the *power of **BEAUTY***
+A fun and simple puzzle game where the player must clear the evil CORRUPTION by using the power of BEAUTY
 You may notice the cute flowers that are in your hand, play them, but be careful, 
 
 ### !!! THE CORRUPTION WILL EAT THEM ALIVE !!! ###
