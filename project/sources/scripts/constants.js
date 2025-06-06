@@ -22,11 +22,7 @@ export const FLOWER_TYPES = {
 };
 
 // Audio Sources
-// export const FAIL_AUDIO = new Audio('/project/sources/assets/fail.mp3');
-export const FAIL_AUDIO = new Audio('/project/sources/assets/error-bbm.mp3');
-export const CARD_GRAB_AUDIO = new Audio('/project/sources/assets/card-grab-temp2.mp3');
-export const WIN_AUDIO = new Audio('/project/sourc/assets/success.mp3');
-export const LOSS_AUDIO = new Audio('/project/sources/assets/loss-sound.mp3');
+export const FAIL_AUDIO = new Audio('/project/sources/assets/error.mp3');
 
 // Levels (for now)
 export const LEVELS = [

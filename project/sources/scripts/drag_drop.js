@@ -1,6 +1,6 @@
 import { changeBoard, BOARD, drawBoard } from './board.js';
 import { checkGameStatus } from './main.js';
-import { DEBUG, CELL_STATES, FLOWER_TYPES, FAIL_AUDIO, CARD_GRAB_AUDIO,} from './constants.js';
+import { DEBUG, CELL_STATES, FLOWER_TYPES, FAIL_AUDIO, } from './constants.js';
 
 class DragAndDropManager {
     constructor(handCells, gridCells) {
@@ -48,7 +48,6 @@ class DragAndDropManager {
         if (notValidDrag) {
             return;
         }
-        CARD_GRAB_AUDIO.play()
 
         event.preventDefault();
 
