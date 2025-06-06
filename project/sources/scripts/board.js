@@ -198,7 +198,7 @@ function buildHand(num) {
  * using the given type.
  * 
  * @param {String} cell: a string with representation 'x-y'
- * @param {String} type: a character representing the type of card 
+ * @param {String} type: a character representing the type of card
  */
 function changeBoard(cell, type) {
     const [x, y] = cell.id.split('-').map(Number);
