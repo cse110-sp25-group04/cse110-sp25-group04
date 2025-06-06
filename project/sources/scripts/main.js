@@ -1,6 +1,6 @@
 import DragAndDropManager from './drag_drop.js';
 
-import { ROWS, COLS, DEBUG, CELL_STATES, FLOWER_TYPES, LEVELS } from './constants.js';
+import { ROWS, COLS, DEBUG, CELL_STATES, FLOWER_TYPES, LEVELS, WIN_AUDIO } from './constants.js';
 import { loadLevel } from './board.js';
 
 //Run the init() function when the page has loaded
@@ -50,6 +50,10 @@ function init() {
     dndManager = new DragAndDropManager(handCells, gridCells);
     
     
+    const winButton = document.querySelector("#win");
+    winButton.addEventListener('click', function() {
+        WIN_AUDIO.play();
+    });
 }
 
 //Throttles function to reduce lag from running too quickly
