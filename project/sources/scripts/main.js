@@ -1,6 +1,6 @@
 import DragAndDropManager from './drag_drop.js';
 
-import { ROWS, COLS, DEBUG, CELL_STATES, FLOWER_TYPES, LEVELS } from './constants.js';
+import { ROWS, COLS, DEBUG, CELL_STATES, FLOWER_TYPES, LEVELS,} from './constants.js';
 import { loadLevel } from './board.js';
 
 //Run the init() function when the page has loaded
@@ -48,8 +48,6 @@ function init() {
     handCells = document.querySelectorAll('#hand-container .hand-cell');
     gridCells = document.querySelectorAll('#grid-container .grid-cell');
     dndManager = new DragAndDropManager(handCells, gridCells);
-    
-    
 }
 
 //Throttles function to reduce lag from running too quickly
