@@ -192,6 +192,8 @@ class DragAndDropManager {
         this.draggedElement.style.left = '';
         this.draggedElement.style.top = '';
         this.draggedElement.style.position = '';
+        this.draggedElement.style.width = '';
+        this.draggedElement.style.height = '';
         this.currentDropTarget.classList.add('has-card');
 
         const type = this.draggedElement.dataset.type;
