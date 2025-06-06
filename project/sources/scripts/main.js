@@ -43,19 +43,19 @@ function init() {
     highestLevelReached = getHighestLevelReached();
 
     //get undo and reset counters from localStorage
-    undoCounter = localStorage.getItem("undo-counter");
+    undoCounter = localStorage.getItem('undo-counter');
     if (undoCounter === null) {
         undoCounter = 0;
-        localStorage.setItem("undo-counter", '0')
+        localStorage.setItem('undo-counter', '0');
     }
     else {
         undoCounter = Number(undoCounter);
     }
 
-    resetCounter = localStorage.getItem("reset-counter");
+    resetCounter = localStorage.getItem('reset-counter');
     if (resetCounter === null) {
         resetCounter = 0;
-        localStorage.setItem("reset-counter", '0')
+        localStorage.setItem('reset-counter', '0');
     }
     else {
         resetCounter = Number(resetCounter);
@@ -119,7 +119,6 @@ function createControlListeners() {
         if (dndManager) { dndManager.moveHistory = []; }
         resetCounter += 1;
         localStorage.setItem('reset-counter', resetCounter);
-        console.log(`Local Resets: ${resetCounter} localStorage Resets: ${localStorage.getItem("reset-counter")}`);
     });
 
     resetLSButton.addEventListener('click', function () {
@@ -131,7 +130,6 @@ function createControlListeners() {
         if (dndManager) { dndManager.undo(); }
         undoCounter += 1;
         localStorage.setItem('undo-counter', undoCounter);
-        console.log(`Local Undos: ${undoCounter} localStorage undos: ${localStorage.getItem("undo-counter")}`);
     });
 }
 
