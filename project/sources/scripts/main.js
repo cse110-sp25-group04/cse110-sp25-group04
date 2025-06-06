@@ -1,6 +1,6 @@
 import DragAndDropManager from './drag_drop.js';
 
-import { ROWS, COLS, DEBUG, CELL_STATES, FLOWER_TYPES, LEVELS, WIN_AUDIO } from './constants.js';
+import { ROWS, COLS, DEBUG, CELL_STATES, FLOWER_TYPES, LEVELS, WIN_AUDIO, LOSS_AUDIO } from './constants.js';
 import { loadLevel } from './board.js';
 
 //Run the init() function when the page has loaded
@@ -53,6 +53,11 @@ function init() {
     const winButton = document.querySelector("#win");
     winButton.addEventListener('click', function() {
         WIN_AUDIO.play();
+    });
+
+    const lossButton = document.querySelector("#loss");
+    lossButton.addEventListener('click', function() {
+        LOSS_AUDIO.play();
     });
 }
 
