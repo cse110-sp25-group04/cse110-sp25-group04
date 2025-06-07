@@ -11,7 +11,7 @@ class Modal {
         this.modalButton = document.querySelector(buttonSelector);
         this.nextHandler = null;
 
-        this.modalButton.addEventListener('click', () => {
+        this.modalButton.addEventListener('click', function() {
             this.hide();
             if (this.nextHandler) {
                 this.nextHandler();
