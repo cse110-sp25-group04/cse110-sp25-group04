@@ -74,7 +74,7 @@ background-image: radial-gradient(#beefae,#c5f1b6, #cbf2be, #abd79d);
 .flower-strip {
   background-image: url('../assets/flower-background.png');
   position: fixed;
-  background-position: bottom;
+  background-position: center bottom;
   height: 100%;
   width: 100%;
   z-index: -1;
