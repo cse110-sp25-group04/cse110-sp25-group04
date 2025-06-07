@@ -151,8 +151,6 @@ function getHighestLevelReached() {
     }
 }
 
-// Is this the right place for these functions?
-
 
 // Function to handle win check
 export { checkGameStatus };
