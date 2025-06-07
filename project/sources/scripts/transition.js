@@ -1,46 +1,52 @@
+/**
+ * @param {string} modalSelector - The HTML selector for the modal element. (.modal)
+ * @param {string} textSelector - The HTML selector for the text element inside the modal. (#modal-text)
+ * @param {string} buttonSelector - The HTML selector for the button element inside the modal. (#modal-button)  
+ */
+class Modal {
+    constructor(modalSelector, textSelector, buttonSelector) {
+        // Initializes the modal with the provided selectors for the modal, text, and button elements.
+        this.modal = document.querySelector(modalSelector);
+        this.modalText = document.querySelector(textSelector);
+        this.modalButton = document.querySelector(buttonSelector);
+        this.nextHandler = null;
 
-let modal = document.querySelector('.modal');
-let modalText = document.getElementById('modal-text');
-let modalButton = document.getElementById('modal-button');
-let nextHandler = null;
-
-let confettiCanvas = document.getElementById('confetti-canvas');   
-let confettiCall = confetti.create(confettiCanvas, {
-    resize: true,
-    useWorker: true
-});
-
-export { showModal };
-
-function showModal(passed, nextLevel) {
-    modalText.textContent = '';
-    nextHandler = nextLevel;
-    modalButton.textContent = '';
-    if (passed) {
-        modalText.textContent = 'Level Completed!';
-        modalButton.textContent = 'NEXT LEVEL'; 
-        confettiCall({
-            particleCount: 1200,
-            spread: 200,
-            origin: { y: 0.6 },
+        this.modalButton.addEventListener('click', () => {
+            this.hide();
+            if (this.nextHandler) {
+                this.nextHandler();
+                this.nextHandler = null; // reset nextHandler to prevent multiple calls
+            }
         });
     }
 
-    else {
-        modalText.textContent = 'Level Failed!';
-        modalButton.textContent = 'TRY AGAIN';
-    }
-    modal.style.display = 'grid';
-    
-    modalButton.addEventListener('click', function () {
-        hideModal();
-        if (nextHandler) {
-            nextHandler();
-            nextHandler = null; // reset nextHandler to prevent multiple calls
+    /**
+     * Displays the modal overlay with the appropriate message and button text.
+     * @param {boolean} passed - Indicates if the level was completed or failed.
+     * @param {function} nextLevel - Function to call back when the modal button is clicked.
+     * @returns n/a
+     */
+    show(passed, nextLevel) {
+        this.nextHandler = nextLevel;
+        if (passed) {
+            this.modalText.textContent = 'Level Completed!';
+            this.modalButton.textContent = 'NEXT LEVEL'; 
         }
+        else {
+            this.modalText.textContent = 'Level Failed!';
+            this.modalButton.textContent = 'TRY AGAIN';
+        }
+        this.modal.style.display = 'grid';
+    }
 
-    });
+    /**
+     * Function to hide the modal overlay.
+     * 
+     * @returns n/a
+     */
+    hide() {
+        this.modal.style.display = 'none';
+    }
 }
-function hideModal() {
-    modal.style.display = 'none';
-}
+
+export default Modal;
