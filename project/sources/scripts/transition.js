@@ -5,7 +5,7 @@ let modalButton = document.getElementById('modal-button');
 let nextHandler = null;
 
 let confettiCanvas = document.getElementById('confetti-canvas');   
-const confettiCall = confetti.create(confettiCanvas, {
+let confettiCall = confetti.create(confettiCanvas, {
     resize: true,
     useWorker: true
 });
