@@ -220,6 +220,10 @@ function handleLevelPassed() {
     alert('Level Passed');
     if(levelCounter >= LEVELS.length-1) {
         alert('Completed all existing levels, congrats!');
+        levelCounter = 0;
+        localStorage.setItem('level-number', '0');
+        highestLevelReached = 0;
+        localStorage.setItem('highest-level', '0');
     };
     levelCounter += 1;
     localStorage.setItem('level-number', levelCounter);
