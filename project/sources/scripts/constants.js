@@ -28,13 +28,61 @@ export const FAIL_AUDIO = new Audio('/cse110-sp25-group04/sources/assets/error.m
 export const LEVELS = [
     // Level 1
     {
+        LAYOUT:[['R', 'R', 'R', 'R', 'R', 'R'], 
+            ['R', 'R', 'R', 'C', 'R', 'R'], 
+            ['R', 'R', 'C', 'G', 'C', 'R'], 
+            ['R', 'R', 'R', 'C', 'R', 'R']],
+        CARDS: ['PLUS']
+    },
+    // Level 2
+    {
+        LAYOUT:[['R', 'R', 'R', 'R', 'R', 'R'], 
+            ['R', 'R', 'C', 'R', 'C', 'R'], 
+            ['R', 'R', 'R', 'G', 'R', 'R'], 
+            ['R', 'R', 'C', 'R', 'C', 'R']],
+        CARDS: ['CROSS']
+    },
+    // Level 3
+    {
         LAYOUT:[['R', 'R', 'C', 'C', 'R', 'R'], 
             ['R', 'C', 'R', 'R', 'C', 'R'], 
             ['C', 'G', 'C', 'C', 'R', 'R'], 
             ['R', 'C', 'C', 'R', 'C', 'R']],
         CARDS: ['PLUS', 'PLUS', 'PLUS', 'CROSS', 'CROSS']
     },
-    // Level 2
+    // Level 4
+    {
+        LAYOUT:[['C', 'C', 'G', 'R', 'C', 'C'], 
+            ['C', 'R', 'C', 'C', 'R', 'C'], 
+            ['C', 'R', 'C', 'R', 'C', 'R'], 
+            ['R', 'R', 'R', 'R', 'R', 'R']],
+        CARDS: ['PLUS', 'PLUS', 'PLUS', 'PLUS', 'CROSS', 'CROSS', 'CROSS']
+    },
+    // Level 5
+    {
+        LAYOUT:[['R', 'R', 'R', 'R', 'R', 'R'], 
+            ['R', 'R', 'C', 'C', 'C', 'R'], 
+            ['R', 'R', 'C', 'G', 'C', 'R'], 
+            ['R', 'R', 'C', 'C', 'C', 'R']],
+        CARDS: ['SQUARE']
+    },
+    // Level 6
+    {
+        LAYOUT:[['R', 'G', 'R', 'R', 'R', 'R'], 
+            ['R', 'R', 'C', 'C', 'C', 'R'], 
+            ['R', 'R', 'C', 'C', 'C', 'R'], 
+            ['R', 'R', 'C', 'C', 'C', 'R']],
+        CARDS: ['CROSS', 'CROSS', 'SQUARE']
+    },
+    // Level 7
+    {
+        LAYOUT:[['R', 'R', 'C', 'R', 'R', 'R'],
+            ['R', 'C', 'C', 'C', 'R', 'C'], 
+            ['C', 'C', 'C', 'R', 'C', 'C'], 
+            ['G', 'C', 'R', 'R', 'C', 'C']],
+        CARDS: ['PLUS', 'CROSS', 'CROSS', 'SQUARE', 'SQUARE']
+    },
+    // Level 8
     {
         LAYOUT:[['R', 'R', 'C', 'R', 'C', 'R'], 
             ['R', 'C', 'R', 'R', 'R', 'C'], 
@@ -42,7 +90,7 @@ export const LEVELS = [
             ['R', 'C', 'R', 'R', 'R', 'C']],
         CARDS: ['KNIGHT']
     },
-    // Level 3
+    // Level 9
     {
         LAYOUT:[['C', 'C', 'C', 'C', 'C', 'R'], 
             ['C', 'R', 'C', 'C', 'C', 'R'], 
@@ -50,7 +98,7 @@ export const LEVELS = [
             ['C', 'C', 'C', 'C', 'C', 'G']],
         CARDS: ['CROSS', 'SQUARE', 'KNIGHT', 'KNIGHT', 'KNIGHT', 'KNIGHT']
     },
-    // Level 4
+    // Level 10
     {
         LAYOUT:[['C', 'C', 'R', 'C', 'C', 'R'], 
             ['C', 'R', 'C', 'C', 'C', 'R'], 
@@ -58,7 +106,7 @@ export const LEVELS = [
             ['C', 'R', 'C', 'R', 'C', 'R']],
         CARDS: ['PLUS','KNIGHT','KNIGHT','KNIGHT','KNIGHT','KNIGHT']
     },
-    // Level 5
+    // Level 11
     {
         LAYOUT:[['C', 'C', 'R', 'C', 'C', 'C'], 
             ['C', 'C', 'C', 'C', 'C', 'R'], 
