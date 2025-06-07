@@ -103,11 +103,6 @@ body {
   min-height: 0;
 }
 
-.hand-cell.drag-over {
-  border: 2px dashed blue;
-  background-color: #d3f9d3;
-}
-
 /*---------------------------------------
   Card styling and dragging
 ----------------------------------------*/
