@@ -113,6 +113,14 @@ export const LEVELS = [
             ['C', 'R', 'C', 'R', 'C', 'R'], 
             ['G', 'C', 'C', 'C', 'C', 'R']],
         CARDS: ['KNIGHT', 'KNIGHT', 'KNIGHT', 'KNIGHT', 'KNIGHT', 'KNIGHT']
+    },
+    // Level 12
+    {
+        LAYOUT:[['R', 'C', 'C', 'C', 'R', 'C'], 
+            ['C', 'C', 'C', 'C', 'C', 'C'], 
+            ['R', 'C', 'C', 'C', 'R', 'C'], 
+            ['C', 'G', 'C', 'R', 'C', 'R']],
+        CARDS: ['KNIGHT', 'KNIGHT', 'KNIGHT', 'KNIGHT', 'KNIGHT', 'KNIGHT']
     }
 ];
 
