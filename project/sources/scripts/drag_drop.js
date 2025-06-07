@@ -3,13 +3,14 @@ import { checkGameStatus } from './main.js';
 import { DEBUG, CELL_STATES, FLOWER_TYPES, FAIL_AUDIO, } from './constants.js';
 
 /**
- * @class DragAndDropManager
- * @description
  * Hanles dragging for flower cards from hand to grid,
  * handles visuals, undo history, and failure audio
+ * 
+ * @class DragAndDropManager
  */
 class DragAndDropManager {
     /**
+     * Creates a new drag and drop manager
      * 
      * @param {HTMLElement[]} handCells Array of hand elements
      * @param {HTMLElement[]} gridCells Array of grid cell elements
@@ -47,9 +48,10 @@ class DragAndDropManager {
     }
 
     /**
-     * @method handleMouseDown
-     * @description handle when dragging an element across the board
+     * Handle when dragging an element across the board
+     * 
      * @param {MouseEvent} event 
+     * @returns {void}
      */
     handleMouseDown(event) {
         if (event.button !== 0 || this.isTransitioning) return;
@@ -73,8 +75,8 @@ class DragAndDropManager {
     }
 
     /**
-     * @method handleMouseMove
-     * @description Track cursor movements and position updates
+     * Track cursor movements and position updates
+     * 
      * @param {MouseEvent} event 
      */
     handleMouseMove(event) {
@@ -86,8 +88,9 @@ class DragAndDropManager {
     }
 
     /**
-     * @method updatePositionAndCheckTargets
-     * @description Move the dragged card and highlight the cell under its center
+     * Updates the dragged card and highlight the cell under its center
+     * 
+     * @returns {void}
      */
     updatePositionAndCheckTargets() {
         if (!this.draggedElement) {
@@ -145,8 +148,9 @@ class DragAndDropManager {
     }
 
     /**
-     * @method handleMouseUp
-     * @description Drop card and apply placement rules or snap back on failure of placement
+     * Drop card and apply placement rules or snap back on failure of placement
+     * 
+     * @returns {void}
      */
     handleMouseUp() {
         if (!this.draggedElement) return;
@@ -186,8 +190,7 @@ class DragAndDropManager {
     }
 
     /**
-     * @method resetState
-     * @description Clear drag properties
+     * Clear drag properties
      */
     resetState() {
         this.draggedElement = null;
@@ -196,10 +199,11 @@ class DragAndDropManager {
         this.animationFrameId = null;
     }
 
+    
     /**
-     * @private
-     * @method #updateMouse
-     * @description Record cursor coordinates
+     * Record cursor coordinates
+     * 
+     * @param {MouseEvent} event: original mouse event
      */
     #updateMouse(event) {
         this.initialMouseX = event.clientX;
@@ -209,9 +213,7 @@ class DragAndDropManager {
     }
 
     /**
-     * @private
-     * @method #addChild
-     * @description Place card into target cell and update board & history
+     * Place card into target cell and update board & history
      */
     #addChild() {
         this.currentDropTarget.appendChild(this.draggedElement);
@@ -236,9 +238,7 @@ class DragAndDropManager {
     }
 
     /**
-     * @private
-     * @method #updateStyle
-     * @description Update card and parent cell
+     * Update card and parent cell
      */
     #updateStyle() {
         const rect = this.draggedElement.getBoundingClientRect();
@@ -256,8 +256,7 @@ class DragAndDropManager {
     }
 
     /**
-     * @method handleTransition
-     * @description Animate card snap back to original cell 
+     * Animate card snap back to original cell
      */
     handleTransition() {
         this.draggedElement.classList.add('snapping-back');
@@ -294,8 +293,9 @@ class DragAndDropManager {
     }
 
     /**
-     * @method undo
-     * @description Revert last placement of card, restores board and moves card back
+     * Revert last placement of card, restores board and moves card back
+     * 
+     * @returns {void}
      */
     undo() {
         if (this.moveHistory.length === 0) { return; }
@@ -319,9 +319,7 @@ class DragAndDropManager {
     }
 
     /**
-     * @private
-     * @method #failAudio
-     * @description Play error sound on invalid placements of cards
+     * Play error sound on invalid placements of cards
      */
     #failAudio() {
         FAIL_AUDIO.play();

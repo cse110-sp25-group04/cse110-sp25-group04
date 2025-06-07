@@ -1,6 +1,8 @@
 /**
  * Toggle for detailed logging, debugging process
  * If True, game events and state changes are logged onto the console
+ * 
+ * @type {boolean}
  */
 export const DEBUG = true;
 
@@ -8,6 +10,8 @@ export const DEBUG = true;
  * Board dimensions
  * ROWS: number of horizontal rows on the grid
  * COLS: number of vertical columns on the grid  
+ * 
+ * @type {number}
  */
 export const ROWS = 4;
 export const COLS = 6;
@@ -18,6 +22,8 @@ export const COLS = 6;
  * FLOWER: tile containing a flower
  * CORRUPT: tile that must be cleared in order to win
  * ROCK: unchanged cell state, no possible placement
+ * 
+ * @enum {string}
  */
 export const CELL_STATES = {
     GRASS: 'grass',
@@ -28,6 +34,8 @@ export const CELL_STATES = {
 
 /**
  * Symbols for each flower card type
+ * 
+ * @enum {string}
  */
 export const FLOWER_TYPES = {
     PLUS: '+',
@@ -37,8 +45,9 @@ export const FLOWER_TYPES = {
 };
 
 /**
- * Audio for failure events 
- * Plays when player fails a level
+ * Audio for failure events plays when player fails a level
+ * 
+ * @type {HTMLAudioElement}
  */
 export const FAIL_AUDIO = new Audio('/project/sources/assets/error.mp3');
 
@@ -46,6 +55,8 @@ export const FAIL_AUDIO = new Audio('/project/sources/assets/error.mp3');
  * Level configuration
  * Layout: 2D Array of inital cell states 
  * Cards: Array of strings corresponding to flower cards
+ * 
+ * @type {Array<{LAYOUT: string[][], CARDS: string[]}>}
  */
 export const LEVELS = [
     // Level 1

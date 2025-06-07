@@ -1,10 +1,5 @@
 import { ROWS, COLS, DEBUG, CELL_STATES, FLOWER_TYPES, LEVELS } from './constants.js';
 
-
-/*──────────────────────────────────────────────────────────────────────────────
-  Internal board representation
-──────────────────────────────────────────────────────────────────────────────*/
-
 /**
  * 2D array matching ROWSxCOLS, intializes as NULL 
  */
@@ -16,13 +11,8 @@ for (let i = 0; i < ROWS; i++) {
     }
 }
 
-/*──────────────────────────────────────────────────────────────────────────────
-  Rendering and Clearing
-──────────────────────────────────────────────────────────────────────────────*/
-
 /**
- * @function drawBoard
- * @description Syncs cell's DOM with BOARD[r][c] 
+ * Syncs cell's DOM with interal board array, BOARD[r][c] 
  */
 function drawBoard() {
     for (let r = 0; r < ROWS; r++) {
@@ -59,8 +49,7 @@ function drawBoard() {
 }
 
 /**
- * @function clearBoard
- * @description Remove all card elements from the grid
+ * Remove all card elements from the grid
  */
 function clearBoard() {
     let gridCells = document.getElementById('grid-container').children;
@@ -72,8 +61,7 @@ function clearBoard() {
 }
 
 /**
- * @function clearCards
- * @description Remove all card elements from the hands
+ * Removes all card elements from the hands
  */
 function clearCards() {
     let handCells = document.querySelectorAll('.hand-cell');
@@ -83,15 +71,10 @@ function clearCards() {
     }
 }
 
-/*──────────────────────────────────────────────────────────────────────────────
-  Level Loading
-──────────────────────────────────────────────────────────────────────────────*/
-
 /**
- * @function loadLevel
- * @description
  * Populate BOARD then rebuild the DOM grid, clear and recreate
  * hand cards for levels
+ * 
  * @param {number} levelNumber - Index of the level to load.
  */
 function loadLevel(levelNumber) {
@@ -151,17 +134,12 @@ function loadLevel(levelNumber) {
     }
 }
 
-/*──────────────────────────────────────────────────────────────────────────────
-  Hand & Card Creation
-──────────────────────────────────────────────────────────────────────────────*/
-
 /**
- * @function createCard
- * @description
  * Creates a card in hand with a given string as the cardname
  * This cardname will determine the type of card and what actions it can do.
+ * 
  * @param {string} text a string with the new card's name 
- * @returns {HTMLElement} The newly created card element.
+ * @returns {HTMLElement} The newly created card element
  */
 function createCard(text) {
     let handCells = document.querySelectorAll('#hand-container .hand-cell');
@@ -192,9 +170,8 @@ function createCard(text) {
 }
 
 /**
- * @function buildHand
- * @description
  * Generates the players hand dynamically given number of cards for level
+ * 
  * @param {number} num a number of handcells to generate
  */
 function buildHand(num) {
@@ -215,18 +192,13 @@ function buildHand(num) {
     }
 }
 
-/*──────────────────────────────────────────────────────────────────────────────
-  Board Change via Card Effects
-──────────────────────────────────────────────────────────────────────────────*/
-
 /**
- * @function changeBoard
- * @description
  * Applies the effect of a played card on the board at position given by cell
  * using the given type.
  * 
  * @param {String} cell a string with representation 'x-y'
  * @param {String} type a character representing the type of card
+ * @returns {Array<{x: number, y: number}>} Array of new positions
  */
 function changeBoard(cell, type) {
     const [x, y] = cell.id.split('-').map(Number);
