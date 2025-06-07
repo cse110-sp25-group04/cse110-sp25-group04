@@ -51,6 +51,10 @@ export const FLOWER_TYPES = {
  */
 export const FAIL_AUDIO = new Audio('/cse110-sp25-group04/sources/assets/error.mp3');
 
+// Level conditions
+export const WIN = true;
+export const LOSE = false;
+
 /**
  * Level configuration
  * Layout: 2D Array of inital cell states 
