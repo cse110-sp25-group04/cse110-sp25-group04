@@ -24,6 +24,10 @@ export const FLOWER_TYPES = {
 // Audio Sources
 export const FAIL_AUDIO = new Audio('/project/sources/assets/error.mp3');
 
+// Level conditions
+export const WIN = true;
+export const LOSE = false;
+
 // Levels (for now)
 export const LEVELS = [
     // Level 1
