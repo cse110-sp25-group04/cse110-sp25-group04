@@ -11,6 +11,8 @@ let handCells;
 let gridCells;
 let levelCounter;
 let highestLevelReached;
+let undoCounter;
+let resetCounter;
 let dndManager;
 
 function buildGrid() {
@@ -39,6 +41,25 @@ function init() {
     loadLevel(levelCounter);
 
     highestLevelReached = getHighestLevelReached();
+
+    //get undo and reset counters from localStorage
+    undoCounter = localStorage.getItem('undo-counter');
+    if (undoCounter === null) {
+        undoCounter = 0;
+        localStorage.setItem('undo-counter', '0');
+    }
+    else {
+        undoCounter = Number(undoCounter);
+    }
+
+    resetCounter = localStorage.getItem('reset-counter');
+    if (resetCounter === null) {
+        resetCounter = 0;
+        localStorage.setItem('reset-counter', '0');
+    }
+    else {
+        resetCounter = Number(resetCounter);
+    }
 
     // creates listeners for previous/next/reset
     createControlListeners();
@@ -94,6 +115,8 @@ function createControlListeners() {
     resetButton.addEventListener('click', function () {
         loadLevel(levelCounter);
         if (dndManager) { dndManager.moveHistory = []; }
+        resetCounter += 1;
+        localStorage.setItem('reset-counter', resetCounter);
     });
 
     resetLSButton.addEventListener('click', function () {
@@ -103,6 +126,8 @@ function createControlListeners() {
 
     undoButton.addEventListener('click', () => {
         if (dndManager) { dndManager.undo(); }
+        undoCounter += 1;
+        localStorage.setItem('undo-counter', undoCounter);
     });
 }
 

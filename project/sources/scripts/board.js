@@ -177,6 +177,7 @@ function createCard(text) {
  * @param {Number} num: a number of handcells to generate
  */
 function buildHand(num) {
+    
     const handContainer = document.getElementById('hand-container');
     handContainer.innerHTML = '';
     //ensures hand container is correct size
@@ -198,7 +199,7 @@ function buildHand(num) {
  * using the given type.
  * 
  * @param {String} cell: a string with representation 'x-y'
- * @param {String} type: a character representing the type of card 
+ * @param {String} type: a character representing the type of card
  */
 function changeBoard(cell, type) {
     const [x, y] = cell.id.split('-').map(Number);
