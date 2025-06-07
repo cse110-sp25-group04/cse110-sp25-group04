@@ -11,7 +11,7 @@ class Modal {
         this.modalButton = document.querySelector(buttonSelector);
         this.nextHandler = null;
 
-        this.modalButton.addEventListener('click', function() {
+        this.modalButton.addEventListener('click', function () {
             this.hide();
             if (this.nextHandler) {
                 this.nextHandler();
@@ -24,6 +24,7 @@ class Modal {
      * Displays the modal overlay with the appropriate message and button text.
      * @param {boolean} passed - Indicates if the level was completed or failed.
      * @param {function} nextLevel - Function to call back when the modal button is clicked.
+     * 
      * @returns n/a
      */
     show(passed, nextLevel) {
