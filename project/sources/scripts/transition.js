@@ -1,30 +1,31 @@
+
 const modal = document.querySelector('.modal');
-const modalText = document.querySelector('.modal-text');
-const modalButton = document.querySelector('.modal-button');
+const modalText = document.getElementById('modal-text');
+const modalButton = document.getElementById('modal-button');
 
+export { showModal };
 
-export function showModal(passed) {
+function showModal(passed, nextLevel) {
+    modalText.textContent = '';
+    modalButton.textContent = '';
     if (passed) {
         modalText.textContent = 'Level Completed!';
-        modalButton.textContent = 'NEXT LEVEL';
+        modalButton.textContent = 'NEXT LEVEL'; 
     }
 
     else {
         modalText.textContent = 'Level Failed!';
         modalButton.textContent = 'TRY AGAIN';
     }
-    modal.classList.add('visible');
-    modal.classList.remove('hidden');
+    modal.style.display = "grid";
+    
+    modalButton.addEventListener('click', function() {
+        hideModal();
+        if (typeof nextLevel === 'function') {
+            nextLevel();
+        }
+    });
 }
-
-export function hideModal() {
-    modal.classList.remove('visible');
-    // Ensure the modal is hidden after the transition
-    window.setTimeout(function() {
-        modal.classList.add('hidden');
-    }, 300);
+function hideModal() {
+    modal.style.display = "none";
 }
-
-modalButton.addEventListener('click', function() {
-    hideModal();
-})
