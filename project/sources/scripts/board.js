@@ -251,4 +251,4 @@ function changeBoard(cell, type) {
 
 
 
-export { BOARD, changeBoard, loadLevel, drawBoard };
+export { BOARD, changeBoard, loadLevel, drawBoard, buildHand, createCard };
