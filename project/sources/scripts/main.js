@@ -1,8 +1,8 @@
 import DragAndDropManager from './drag_drop.js';
+import Modal from './transition.js';
 
 import { ROWS, COLS, DEBUG, CELL_STATES, FLOWER_TYPES, LEVELS, WIN, LOSE, } from './constants.js';
 import { loadLevel } from './board.js';
-import { showModal } from './transition.js';
 
 //Run the init() function when the page has loaded
 window.addEventListener('DOMContentLoaded', init);
@@ -15,6 +15,7 @@ let highestLevelReached;
 let undoCounter;
 let resetCounter;
 let dndManager;
+let levelModal;
 
 function buildGrid() {
     const container = document.getElementById('grid-container');
@@ -70,6 +71,8 @@ function init() {
     handCells = document.querySelectorAll('#hand-container .hand-cell');
     gridCells = document.querySelectorAll('#grid-container .grid-cell');
     dndManager = new DragAndDropManager(handCells, gridCells);
+
+    levelModal = new Modal('.modal', '#modal-text', '#modal-button');   
 }
 
 //Throttles function to reduce lag from running too quickly
@@ -188,7 +191,7 @@ function checkGameStatus() {
                 // corrupt left + no cards = lose
                 //handleLevelFailed();
                 // calls showModal with WIN and a callback to handleLevelPassed after the transition button is clicked
-                showModal(LOSE, handleLevelFailed);
+                levelModal.show(LOSE, handleLevelFailed);
                 return;
             }
         }
@@ -196,7 +199,7 @@ function checkGameStatus() {
 
     // no corrupt left
     // calls showModal with WIN and a callback to handleLevelPassed after the transition button is clicked
-    showModal(WIN, handleLevelPassed);
+    levelModal.show(WIN, handleLevelPassed);
     //handleLevelPassed();
     return;
 }
