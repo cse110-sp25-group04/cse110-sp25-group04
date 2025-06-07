@@ -255,6 +255,8 @@ class DragAndDropManager {
             snappingCard.style.left = '';
             snappingCard.style.top = '';
             snappingCard.style.position = '';
+            snappingCard.style.width = '';
+            snappingCard.style.height = '';
 
             this.resetState();
         }.bind(this), { once: true });
