@@ -33,6 +33,7 @@ background-image: radial-gradient(#beefae,#c5f1b6, #cbf2be, #abd79d);
 #menu a {
   font-size: 2rem;
   color: #b4853e;
+  font-family: 'Times New Roman', Times, serif;
 }
 #start-button {
   margin-top: 2em;
@@ -79,6 +80,86 @@ background-image: radial-gradient(#beefae,#c5f1b6, #cbf2be, #abd79d);
   z-index: -1;
   background-repeat: no-repeat;
   pointer-events: none;
+}
+.flower, .flower:after, .flower:before {
+  content: '';
+  position: absolute;
+  top: -650px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    url('../assets/flower-blue.png'),
+    url('../assets/flower-orange.png'),
+    url('../assets/flower-transparent.png'),
+    url('../assets/flower-orange.png'),
+    url('../assets/flower-transparent.png'),
+    url('../assets/flower-orange.png'),
+    url('../assets/flower-blue.png'),
+    url('../assets/flower-transparent.png'),
+    url('../assets/flower-blue.png'),
+    url('../assets/flower-orange.png'),
+    url('../assets/flower-blue.png'),
+    url('../assets/flower-blue.png'),
+    url('../assets/flower-orange.png'),
+    url('../assets/flower-transparent.png'),
+    url('../assets/flower-orange.png'),
+    url('../assets/flower-transparent.png'),
+    url('../assets/flower-orange.png'),
+    url('../assets/flower-blue.png'),
+    url('../assets/flower-transparent.png'),
+    url('../assets/flower-blue.png'),
+    url('../assets/flower-orange.png'),
+    url('../assets/flower-blue.png');
+  background-size: 1vw;
+  background-repeat: no-repeat;
+  background-position:
+  left 50% top 10%,
+  left 66% top 18%,
+  left 82% top 30%,
+  left 75% top 42%,
+  left 60% top 50%,
+  left 45% top 58%,
+  left 32% top 66%,
+  left 20% top 74%,
+  left 24% top 82%,
+  left 39% top 88%,
+  left 54% top 92%,
+  left 70% top 87%,
+  left 85% top 78%,
+  left 90% top 68%,
+  left 77% top 56%,
+  left 61% top 45%,
+  left 46% top 38%,
+  left 30% top 32%,
+  left 15% top 22%,
+  left 23% top 14%;
+  pointer-events: none;
+  transform: rotate(180deg);
+  animation: leafAnim 3s linear infinite;
+  animation-iteration-count: infinite;
+}
+.flower:after {
+  margin: left -250px;
+  opacity: 0.5;
+  filter: blur(10px);
+  animation-direction: reverse;
+  animation-duration: 6s;
+}
+.flower:before {
+  margin: left -550px;
+  opacity: 0.7;
+  filter: blur(10px);
+  animation-direction: reverse;
+  animation-duration: 9s;
+}
+@keyframes leafAnim {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(650px);
+  }
 }
 
 #grid-container {
