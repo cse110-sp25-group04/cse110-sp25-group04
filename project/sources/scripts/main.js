@@ -209,17 +209,15 @@ function checkGameStatus() {
             }
             else {
                 // corrupt left + no cards = lose
-                //handleLevelFailed();
-                // calls showModal with WIN and a callback to handleLevelPassed after the transition button is clicked
+                // calls show() with LOSE and a callback to handleLevelFailed after the transition button is clicked
                 levelModal.show(LOSE, handleLevelFailed);
                 return;
             }
         }
     }
     // no corrupt left
-    // calls showModal with WIN and a callback to handleLevelPassed after the transition button is clicked
+    // calls show() with WIN and a callback to handleLevelPassed after the transition button is clicked
     levelModal.show(WIN, handleLevelPassed);
-    //handleLevelPassed();
     return;
 }
 
@@ -227,7 +225,6 @@ function checkGameStatus() {
  * Called when level has passed, moves to next level 
  */
 function handleLevelPassed() {
-    //alert('Level Passed');
     if(levelCounter >= LEVELS.length-1) {
         alert('Completed all existing levels, congrats!');
         return; 
@@ -245,7 +242,6 @@ function handleLevelPassed() {
  * Called when level has failed, reloads current level
  */
 function handleLevelFailed() {
-    //alert('Level Failed');
     // reload level
     loadLevel(levelCounter);
     if (dndManager) { dndManager.moveHistory = []; }
