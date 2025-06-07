@@ -6,7 +6,9 @@
   <title>Fixed Grid</title>
   <link rel="stylesheet" href="sources/styles/style.css">
   <link rel="icon" type="image/x-icon" href="branding/Trophy.png">
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
   <script src="sources/scripts/main.js" type="module"></script>
+
 </head>
 <body>
   <div id="controls">
@@ -21,9 +23,10 @@
 
   <div id="hand-container"></div>
 
+  <canvas id="confetti-canvas"></canvas>
   <div class="modal">
     <div class="modal-content">
-      <h2 id="modal-text">Level Status</h2>
+      <p id="modal-text">Level Status</p>
       <button id="modal-button">Next</button>
     </div>
   </div>
