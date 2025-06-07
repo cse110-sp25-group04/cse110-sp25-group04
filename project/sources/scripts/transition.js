@@ -2,11 +2,13 @@
 const modal = document.querySelector('.modal');
 const modalText = document.getElementById('modal-text');
 const modalButton = document.getElementById('modal-button');
+let nextHandler = null;
 
 export { showModal };
 
 function showModal(passed, nextLevel) {
     modalText.textContent = '';
+    nextHandler = nextLevel;
     modalButton.textContent = '';
     if (passed) {
         modalText.textContent = 'Level Completed!';
@@ -21,9 +23,11 @@ function showModal(passed, nextLevel) {
     
     modalButton.addEventListener('click', function() {
         hideModal();
-        if (typeof nextLevel === 'function') {
-            nextLevel();
+        if (nextHandler) {
+            nextHandler();
+            nextHandler = null; // reset nextHandler to prevent multiple calls
         }
+
     });
 }
 function hideModal() {
