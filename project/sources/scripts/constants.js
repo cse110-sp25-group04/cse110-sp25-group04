@@ -49,7 +49,7 @@ export const FLOWER_TYPES = {
  * 
  * @type {HTMLAudioElement}
  */
-export const FAIL_AUDIO = new Audio('/project/sources/assets/error.mp3');
+export const FAIL_AUDIO = new Audio('/cse110-sp25-group04/sources/assets/error.mp3');
 
 /**
  * Level configuration
