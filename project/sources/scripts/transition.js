@@ -11,11 +11,12 @@ class Modal {
         this.modalButton = document.querySelector(buttonSelector);
         this.nextHandler = null;
 
+        let self = this;
         this.modalButton.addEventListener('click', function () {
-            this.hide();
-            if (this.nextHandler) {
-                this.nextHandler();
-                this.nextHandler = null; // reset nextHandler to prevent multiple calls
+            self.hide();
+            if (self.nextHandler) {
+                self.nextHandler();
+                self.nextHandler = null; // reset nextHandler to prevent multiple calls
             }
         });
     }
