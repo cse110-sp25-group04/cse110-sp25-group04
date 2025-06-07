@@ -2,9 +2,20 @@ import { changeBoard, BOARD, drawBoard } from './board.js';
 import { checkGameStatus } from './main.js';
 import { DEBUG, CELL_STATES, FLOWER_TYPES, FAIL_AUDIO, } from './constants.js';
 
+/**
+ * @class DragAndDropManager
+ * @description
+ * Hanles dragging for flower cards from hand to grid,
+ * handles visuals, undo history, and failure audio
+ */
 class DragAndDropManager {
+    /**
+     * 
+     * @param {HTMLElement[]} handCells Array of hand elements
+     * @param {HTMLElement[]} gridCells Array of grid cell elements
+     */
     constructor(handCells, gridCells) {
-        // Properties (was global vars)
+        // Drag State
         this.draggedElement = null;
         this.initialMouseX = 0;
         this.initialMouseY = 0;
@@ -17,7 +28,7 @@ class DragAndDropManager {
         this.animationFrameId = null;
         this.isTransitioning = false;
 
-        // Card move history
+        // Card move history for undo
         this.moveHistory = [];
 
         // Store drop targets
@@ -31,15 +42,14 @@ class DragAndDropManager {
         this.handleMouseUp = this.handleMouseUp.bind(this);
         this.updatePositionAndCheckTargets = this.updatePositionAndCheckTargets.bind(this);
 
-        // Set up event listener
+        // Set up event listener for drag start
         document.addEventListener('mousedown', this.handleMouseDown);
     }
 
     /**
-     * Function to handle when dragging an element across the board
-     * 
-     * @param {*} event 
-     * @returns n/a
+     * @method handleMouseDown
+     * @description handle when dragging an element across the board
+     * @param {MouseEvent} event 
      */
     handleMouseDown(event) {
         if (event.button !== 0 || this.isTransitioning) return;
@@ -62,6 +72,11 @@ class DragAndDropManager {
         this.animationFrameId = requestAnimationFrame(this.updatePositionAndCheckTargets);
     }
 
+    /**
+     * @method handleMouseMove
+     * @description Track cursor movements and position updates
+     * @param {MouseEvent} event 
+     */
     handleMouseMove(event) {
         this.latestMouseX = event.clientX;
         this.latestMouseY = event.clientY;
@@ -71,9 +86,8 @@ class DragAndDropManager {
     }
 
     /**
-     * Function to update the targets elements while dragging a card
-     * 
-     * @returns n/a
+     * @method updatePositionAndCheckTargets
+     * @description Move the dragged card and highlight the cell under its center
      */
     updatePositionAndCheckTargets() {
         if (!this.draggedElement) {
@@ -131,9 +145,8 @@ class DragAndDropManager {
     }
 
     /**
-     * Function to handle the functionality when dropping an element on the page.
-     * 
-     * @returns n/a
+     * @method handleMouseUp
+     * @description Drop card and apply placement rules or snap back on failure of placement
      */
     handleMouseUp() {
         if (!this.draggedElement) return;
@@ -148,17 +161,19 @@ class DragAndDropManager {
         if (this.currentDropTarget) {
             this.currentDropTarget.classList.remove('drag-over');
         }
-        //if the card is outside the board
+        
+        // No valid drop target
         if (this.currentDropTarget === null) {
             this.#failAudio();
             this.handleTransition();
             return;
         }
 
+        // Valid placement only on GRASS 
         const invalidGrid = !this.currentDropTarget.querySelector('.card') || this.currentDropTarget === this.originalParentCell;
         if (this.currentDropTarget && (invalidGrid)
             && this.currentDropTarget.dataset.cellState === CELL_STATES.GRASS) {
-            //removes card from parent cell and updates state of parent
+            // Remove from old cell
             if (this.originalParentCell && this.originalParentCell !== this.currentDropTarget) {
                 this.originalParentCell.removeChild(this.draggedElement);
                 this.originalParentCell.classList.remove('has-card');
@@ -170,7 +185,10 @@ class DragAndDropManager {
         }
     }
 
-    //helper function to reset state
+    /**
+     * @method resetState
+     * @description Clear drag properties
+     */
     resetState() {
         this.draggedElement = null;
         this.originalParentCell = null;
@@ -178,7 +196,11 @@ class DragAndDropManager {
         this.animationFrameId = null;
     }
 
-    //update mouse positions
+    /**
+     * @private
+     * @method #updateMouse
+     * @description Record cursor coordinates
+     */
     #updateMouse(event) {
         this.initialMouseX = event.clientX;
         this.initialMouseY = event.clientY;
@@ -186,7 +208,11 @@ class DragAndDropManager {
         this.latestMouseY = event.clientY;
     }
 
-    //add card to gridcell
+    /**
+     * @private
+     * @method #addChild
+     * @description Place card into target cell and update board & history
+     */
     #addChild() {
         this.currentDropTarget.appendChild(this.draggedElement);
         this.draggedElement.style.left = '';
@@ -205,13 +231,15 @@ class DragAndDropManager {
             history: updatedBoard
         });
 
-        // HACK: without this settimeout the card animation doesn't finish before the alert
+        // Delay of animation
         setTimeout(checkGameStatus, 1);
-        // check for win whenever card is placed
-
     }
 
-    //maintain styling of elements
+    /**
+     * @private
+     * @method #updateStyle
+     * @description Update card and parent cell
+     */
     #updateStyle() {
         const rect = this.draggedElement.getBoundingClientRect();
         this.initialElementLeft = rect.left;
@@ -227,7 +255,10 @@ class DragAndDropManager {
         this.draggedElement.style.height = `${initialElementHeight}px`;
     }
 
-    //handles the snapping back transition animation
+    /**
+     * @method handleTransition
+     * @description Animate card snap back to original cell 
+     */
     handleTransition() {
         this.draggedElement.classList.add('snapping-back');
         this.isTransitioning = true;
@@ -262,11 +293,15 @@ class DragAndDropManager {
         }.bind(this), { once: true });
     }
 
+    /**
+     * @method undo
+     * @description Revert last placement of card, restores board and moves card back
+     */
     undo() {
         if (this.moveHistory.length === 0) { return; }
         const lastMove = this.moveHistory.pop();
 
-        // revert Board back to corrupt and update DOM
+        // Revert Board back to corrupt and update DOM
         lastMove.history.forEach(function (coordinates) {
             let x = coordinates.x;
             let y = coordinates.y;
@@ -276,14 +311,18 @@ class DragAndDropManager {
 
         drawBoard();
 
-        // move the card back
+        // Move the card back
         lastMove.targetCell.removeChild(lastMove.card);
         lastMove.targetCell.classList.remove('has-card');
         lastMove.originalParent.appendChild(lastMove.card);
         lastMove.originalParent.classList.add('has-card');
     }
 
-    //function to play fail audio when card is placed somewhere invalid
+    /**
+     * @private
+     * @method #failAudio
+     * @description Play error sound on invalid placements of cards
+     */
     #failAudio() {
         FAIL_AUDIO.play();
     }
