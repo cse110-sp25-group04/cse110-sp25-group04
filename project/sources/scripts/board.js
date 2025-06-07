@@ -248,4 +248,4 @@ function changeBoard(cell, type) {
     return history;
 }
 
-export { BOARD, changeBoard, loadLevel, drawBoard };
+export { BOARD, changeBoard, loadLevel, drawBoard, buildHand, createCard };
