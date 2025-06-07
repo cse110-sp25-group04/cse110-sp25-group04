@@ -1,10 +1,10 @@
 
-const modal = document.querySelector('.modal');
-const modalText = document.getElementById('modal-text');
-const modalButton = document.getElementById('modal-button');
+let modal = document.querySelector('.modal');
+let modalText = document.getElementById('modal-text');
+let modalButton = document.getElementById('modal-button');
 let nextHandler = null;
 
-const confettiCanvas = document.getElementById('confetti-canvas');   
+let confettiCanvas = document.getElementById('confetti-canvas');   
 const confettiCall = confetti.create(confettiCanvas, {
     resize: true,
     useWorker: true
@@ -30,9 +30,9 @@ function showModal(passed, nextLevel) {
         modalText.textContent = 'Level Failed!';
         modalButton.textContent = 'TRY AGAIN';
     }
-    modal.style.display = "grid";
+    modal.style.display = 'grid';
     
-    modalButton.addEventListener('click', function() {
+    modalButton.addEventListener('click', function () {
         hideModal();
         if (nextHandler) {
             nextHandler();
@@ -42,5 +42,5 @@ function showModal(passed, nextLevel) {
     });
 }
 function hideModal() {
-    modal.style.display = "none";
+    modal.style.display = 'none';
 }
