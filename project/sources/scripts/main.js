@@ -3,10 +3,10 @@ import DragAndDropManager from './drag_drop.js';
 import { ROWS, COLS, DEBUG, CELL_STATES, FLOWER_TYPES, LEVELS,} from './constants.js';
 import { loadLevel } from './board.js';
 
-//Run the init() function when the page has loaded
+// Run the init() function when the page has loaded
 window.addEventListener('DOMContentLoaded', init);
 
-//declare variables
+// Global state
 let handCells;
 let gridCells;
 let levelCounter;
@@ -15,6 +15,11 @@ let undoCounter;
 let resetCounter;
 let dndManager;
 
+
+/**
+ * Builds the grid layout based on ROWS and COLS
+ * Initializes each cell with default ROCK state
+ */
 function buildGrid() {
     const container = document.getElementById('grid-container');
     container.innerHTML = '';
@@ -31,18 +36,19 @@ function buildGrid() {
     }
 }
 
-//Starts the program
+/**
+ * Initializes game state, builds grid, loads level,
+ * sets up listeners and DragAndDropManager.
+ */
 function init() {
-    // build the grid cells
     buildGrid();
 
-    // get the level from localStorage
+    // Get the level from localStorage
     levelCounter = getLevelNumber();
     loadLevel(levelCounter);
-
     highestLevelReached = getHighestLevelReached();
 
-    //get undo and reset counters from localStorage
+    // Get undo and reset counters from localStorage
     undoCounter = localStorage.getItem('undo-counter');
     if (undoCounter === null) {
         undoCounter = 0;
@@ -61,17 +67,21 @@ function init() {
         resetCounter = Number(resetCounter);
     }
 
-    // creates listeners for previous/next/reset
+    // Create listeners
     createControlListeners();
 
-    // Add mouse down listener to the document to start dragging on any card
-    // document.addEventListener('mousedown', handleMouseDown);
     handCells = document.querySelectorAll('#hand-container .hand-cell');
     gridCells = document.querySelectorAll('#grid-container .grid-cell');
     dndManager = new DragAndDropManager(handCells, gridCells);
 }
 
-//Throttles function to reduce lag from running too quickly
+/**
+ * Throttles function to reduce lag from running too quickly
+ * 
+ * @param {Function} func: The function to throttle
+ * @param {number} limit: Time to wait before allowing next call
+ * @returns {Function} A throttled version
+ */
 function throttle(func, limit) {
     let inThrottle;
     return function () {
@@ -88,6 +98,9 @@ function throttle(func, limit) {
     };
 }
 
+/**
+ * Adds event listeners for control buttons: previous, next, reset, reset localStorage, undo
+ */
 function createControlListeners() {
     // Add previous/next level button listeners
     const prevButton = document.getElementById('previous-level');
@@ -131,6 +144,11 @@ function createControlListeners() {
     });
 }
 
+/**
+ * Gets level number from local storage
+ * 
+ * @returns {number} level number 
+ */
 function getLevelNumber() {
     if (localStorage.getItem('level-number')) {
         return Number(localStorage.getItem('level-number'));
@@ -141,6 +159,11 @@ function getLevelNumber() {
     }
 }
 
+/**
+ * Gets highest level reached from local storage
+ * 
+ * @returns {number} highest level number reached
+ */
 function getHighestLevelReached() {
     if (localStorage.getItem('highest-level')) {
         return Number(localStorage.getItem('highest-level'));
@@ -151,17 +174,15 @@ function getHighestLevelReached() {
     }
 }
 
-// Is this the right place for these functions?
-
-
-// Function to handle win check
+/**
+ * Checks game board and hand to determine if the level passed or failed
+ */
 export { checkGameStatus };
 function checkGameStatus() {
 
     let handCells = document.querySelectorAll('#hand-container .hand-cell');
     let gridCells = document.querySelectorAll('#grid-container .grid-cell');
 
-    // if there is still purple and user's hand is empty we can have a loss screen or offer a reset as they have failed the puzzle
     let hasCards = false;
     for (const h of handCells) {
         if (h.classList.contains('has-card') === true) {
@@ -173,30 +194,28 @@ function checkGameStatus() {
         }
     }
 
-    // check if there is corrupt left
+    // Check if CORRUPT is left
     for (const g of gridCells) {
         if (g.dataset.cellState === CELL_STATES.CORRUPT) {
             if (DEBUG) {
                 console.log('Purple Tile Detected');
             }
             if (hasCards) {
-                // corrupt left + cards = keep going
                 return;
             }
             else {
-                // corrupt left + no cards = lose
                 handleLevelFailed();
                 return;
             }
         }
     }
-
-    // no corrupt left
     handleLevelPassed();
     return;
 }
 
-// Handle level success
+/**
+ * Called when level has passed, moves to next level 
+ */
 function handleLevelPassed() {
     alert('Level Passed');
     if(levelCounter >= LEVELS.length-1) {
@@ -207,13 +226,13 @@ function handleLevelPassed() {
     loadLevel(levelCounter);
     if (dndManager) { dndManager.moveHistory = []; }
     
-    // only update highestLevelReached here (no cheating!)
-    // check localstorage value + new levelcounter
     highestLevelReached = Math.max(getHighestLevelReached(), levelCounter);
     localStorage.setItem('highest-level', highestLevelReached);
 }
 
-// Handle level failure
+/**
+ * Called when level has failed, reloads current level
+ */
 function handleLevelFailed() {
     alert('Level Failed');
     // reload level

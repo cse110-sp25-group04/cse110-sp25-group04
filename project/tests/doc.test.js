@@ -15,6 +15,10 @@ function randomInt(min, max, seed) {
     return 0;    
 }
 
+test('placeholder test', () => {
+    expect(true).toBe(true);
+});
+
 /**
  * This function has no params or return type
  */
