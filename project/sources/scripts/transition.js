@@ -4,6 +4,12 @@ const modalText = document.getElementById('modal-text');
 const modalButton = document.getElementById('modal-button');
 let nextHandler = null;
 
+const confettiCanvas = document.getElementById('confetti-canvas');   
+const confettiCall = confetti.create(confettiCanvas, {
+    resize: true,
+    useWorker: true
+});
+
 export { showModal };
 
 function showModal(passed, nextLevel) {
@@ -13,6 +19,11 @@ function showModal(passed, nextLevel) {
     if (passed) {
         modalText.textContent = 'Level Completed!';
         modalButton.textContent = 'NEXT LEVEL'; 
+        confettiCall({
+            particleCount: 1200,
+            spread: 200,
+            origin: { y: 0.6 },
+        });
     }
 
     else {
