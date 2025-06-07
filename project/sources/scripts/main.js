@@ -1,6 +1,6 @@
 import DragAndDropManager from './drag_drop.js';
 
-import { ROWS, COLS, DEBUG, CELL_STATES, FLOWER_TYPES, LEVELS, WIN, LOSE } from './constants.js';
+import { ROWS, COLS, DEBUG, CELL_STATES, FLOWER_TYPES, LEVELS, WIN, LOSE, } from './constants.js';
 import { loadLevel } from './board.js';
 import { showModal } from './transition.js';
 
@@ -162,6 +162,7 @@ function checkGameStatus() {
             else {
                 // corrupt left + no cards = lose
                 //handleLevelFailed();
+                // calls showModal with WIN and a callback to handleLevelPassed after the transition button is clicked
                 showModal(LOSE, handleLevelFailed);
                 return;
             }
@@ -169,6 +170,7 @@ function checkGameStatus() {
     }
 
     // no corrupt left
+    // calls showModal with WIN and a callback to handleLevelPassed after the transition button is clicked
     showModal(WIN, handleLevelPassed);
     //handleLevelPassed();
     return;
@@ -179,6 +181,7 @@ function handleLevelPassed() {
     //alert('Level Passed');
     if(levelCounter >= LEVELS.length-1) {
         alert('Completed all existing levels, congrats!');
+        return; 
     };
     levelCounter += 1;
     localStorage.setItem('level-number', levelCounter);
@@ -197,6 +200,4 @@ function handleLevelFailed() {
     // reload level
     loadLevel(levelCounter);
     if (dndManager) { dndManager.moveHistory = []; }
-
-    showModal(LOSE);
 }
