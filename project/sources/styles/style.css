@@ -235,3 +235,8 @@ img {
   padding-top: 4px;
   padding-bottom: 4px;
 }
+
+#modal-button:hover {
+  background: #4a6b41;
+  cursor: pointer;
+}
