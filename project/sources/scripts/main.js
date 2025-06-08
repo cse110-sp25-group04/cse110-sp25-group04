@@ -233,6 +233,9 @@ function handleLevelPassed() {
     levelCounter += 1;
     localStorage.setItem('level-number', levelCounter);
     loadLevel(levelCounter);
+
+    updateLevelDisplay();
+
     if (dndManager) { dndManager.moveHistory = []; }
     
     highestLevelReached = Math.max(getHighestLevelReached(), levelCounter);
@@ -245,6 +248,7 @@ function handleLevelPassed() {
 function handleLevelFailed() {
     // reload level
     loadLevel(levelCounter);
+    updateLevelDisplay();
     if (dndManager) { dndManager.moveHistory = []; }
 }
 
