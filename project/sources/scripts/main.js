@@ -151,7 +151,7 @@ function createControlListeners() {
  */
 function getLevelNumber() {
     if (localStorage.getItem('level-number')) {
-        return Number(localStorage.getItem('level-number'));
+        return Number(localStorage.getItem('level-number')) % LEVELS.length;
     }
     else {
         localStorage.setItem('level-number', 0);
