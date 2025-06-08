@@ -77,13 +77,21 @@ export const LEVELS = [
     },
     // Level 3
     {
+        LAYOUT:[['R', 'R', 'R', 'R', 'R', 'R'], 
+            ['C', 'R', 'C', 'R', 'C', 'R'], 
+            ['R', 'G', 'R', 'C', 'G', 'C'], 
+            ['C', 'R', 'C', 'R', 'C', 'R']],
+        CARDS: ['CROSS', 'PLUS']
+    },
+    // Level 4
+    {
         LAYOUT:[['R', 'R', 'C', 'C', 'R', 'R'], 
             ['R', 'C', 'R', 'R', 'C', 'R'], 
             ['C', 'G', 'C', 'C', 'R', 'R'], 
             ['R', 'C', 'C', 'R', 'C', 'R']],
         CARDS: ['PLUS', 'PLUS', 'PLUS', 'CROSS', 'CROSS']
     },
-    // Level 4
+    // Level 5
     {
         LAYOUT:[['C', 'C', 'G', 'R', 'C', 'C'], 
             ['C', 'R', 'C', 'C', 'R', 'C'], 
@@ -91,7 +99,7 @@ export const LEVELS = [
             ['R', 'R', 'R', 'R', 'R', 'R']],
         CARDS: ['PLUS', 'PLUS', 'PLUS', 'PLUS', 'CROSS', 'CROSS', 'CROSS']
     },
-    // Level 5
+    // Level 6
     {
         LAYOUT:[['R', 'R', 'R', 'R', 'R', 'R'], 
             ['R', 'R', 'C', 'C', 'C', 'R'], 
@@ -99,7 +107,7 @@ export const LEVELS = [
             ['R', 'R', 'C', 'C', 'C', 'R']],
         CARDS: ['SQUARE']
     },
-    // Level 6
+    // Level 7
     {
         LAYOUT:[['R', 'G', 'R', 'R', 'R', 'R'], 
             ['R', 'R', 'C', 'C', 'C', 'R'], 
@@ -107,7 +115,7 @@ export const LEVELS = [
             ['R', 'R', 'C', 'C', 'C', 'R']],
         CARDS: ['CROSS', 'CROSS', 'SQUARE']
     },
-    // Level 7
+    // Level 8
     {
         LAYOUT:[['R', 'R', 'C', 'R', 'R', 'R'],
             ['R', 'C', 'C', 'C', 'R', 'C'], 
@@ -115,7 +123,7 @@ export const LEVELS = [
             ['G', 'C', 'R', 'R', 'C', 'C']],
         CARDS: ['PLUS', 'CROSS', 'CROSS', 'SQUARE', 'SQUARE']
     },
-    // Level 8
+    // Level 9
     {
         LAYOUT:[['R', 'R', 'C', 'R', 'C', 'R'], 
             ['R', 'C', 'R', 'R', 'R', 'C'], 
@@ -123,7 +131,7 @@ export const LEVELS = [
             ['R', 'C', 'R', 'R', 'R', 'C']],
         CARDS: ['KNIGHT']
     },
-    // Level 9
+    // Level 10
     {
         LAYOUT:[['C', 'C', 'C', 'C', 'C', 'R'], 
             ['C', 'R', 'C', 'C', 'C', 'R'], 
@@ -131,7 +139,7 @@ export const LEVELS = [
             ['C', 'C', 'C', 'C', 'C', 'G']],
         CARDS: ['CROSS', 'SQUARE', 'KNIGHT', 'KNIGHT', 'KNIGHT', 'KNIGHT']
     },
-    // Level 10
+    // Level 11
     {
         LAYOUT:[['C', 'C', 'R', 'C', 'C', 'R'], 
             ['C', 'R', 'C', 'C', 'C', 'R'], 
@@ -139,7 +147,7 @@ export const LEVELS = [
             ['C', 'R', 'C', 'R', 'C', 'R']],
         CARDS: ['PLUS','KNIGHT','KNIGHT','KNIGHT','KNIGHT','KNIGHT']
     },
-    // Level 11
+    // Level 12
     {
         LAYOUT:[['C', 'C', 'R', 'C', 'C', 'C'], 
             ['C', 'C', 'C', 'C', 'C', 'R'], 
@@ -147,12 +155,20 @@ export const LEVELS = [
             ['G', 'C', 'C', 'C', 'C', 'R']],
         CARDS: ['KNIGHT', 'KNIGHT', 'KNIGHT', 'KNIGHT', 'KNIGHT', 'KNIGHT']
     },
-    // Level 12
+    // Level 13
     {
         LAYOUT:[['R', 'C', 'C', 'C', 'R', 'C'], 
             ['C', 'C', 'C', 'C', 'C', 'C'], 
             ['R', 'C', 'C', 'C', 'R', 'C'], 
             ['C', 'G', 'C', 'R', 'C', 'R']],
         CARDS: ['KNIGHT', 'KNIGHT', 'KNIGHT', 'KNIGHT', 'KNIGHT', 'KNIGHT']
+    },
+    // Level 14
+    {
+        LAYOUT:[['G', 'R', 'C', 'R', 'C', 'R'], 
+            ['C', 'C', 'C', 'R', 'C', 'R'], 
+            ['C', 'C', 'C', 'R', 'C', 'R'], 
+            ['C', 'R', 'C', 'R', 'C', 'R']],
+        CARDS: ['KNIGHT', 'KNIGHT', 'KNIGHT', 'CROSS', 'CROSS', 'PLUS']
     }
 ];
