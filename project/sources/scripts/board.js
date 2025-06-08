@@ -18,11 +18,20 @@ function drawBoard() {
     for (let r = 0; r < ROWS; r++) {
         for (let c = 0; c < COLS; c++) {
             // we will have something like BOARD[r][c] = CELL_STATES.GRASS;
-            const cell = document.getElementById(`${c}-${r}`);              
+            const cell = document.getElementById(`${c}-${r}`);
+            
+            /**
+             * HOOK: This is where grid cells can be styled.
+             * To style certain types of cells, put the styling in the switch statement.
+             * Note that this styling is permanent, even when flowers are placed on top of this, the style will stay.
+             * However if a flower is placed on top of the card, it won't pass the if(!cell.querySelector('.card')) check
+             * If you want to style the grid cell underneath a flower then you can make an else statement.
+             * Alternatively you can remove the if check and add the logic to the CELL_STATES.FLOWER case (preferable)
+             * The current code is a basic example of this, as it makes each of the cells a simple color based on its type.
+             */ 
             cell.dataset.cellState = BOARD[r][c];
             // don't need to do recoloring logic if a card isn't there
             if (!cell.querySelector('.card')) {
-                // styling logic can be applied here
                 switch(BOARD[r][c]) {
                 case CELL_STATES.CORRUPT:
                     cell.style.backgroundColor = 'purple';
@@ -150,6 +159,12 @@ function createCard(text) {
     }
     const card = document.createElement('div');
     card.classList.add('card');
+
+    // HOOK: This is where flower cards in the player's hand can be styled.
+    // IMPORTANT NOTE: this styling will stay forever on the card. 
+    // This hook is best suited for adding permanent card art and styling rather than effects when placing the card.
+    // Uncomment the code below for an example of how styling the card here affects the game.
+    // card.style.backgroundColor = 'black';
     card.textContent = text;
     card.dataset.type = text;
 
