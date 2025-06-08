@@ -49,6 +49,7 @@ function init() {
     levelCounter = getLevelNumber();
     loadLevel(levelCounter);
     highestLevelReached = getHighestLevelReached();
+    updateLevelDisplay();
 
     // Get undo and reset counters from localStorage
     undoCounter = localStorage.getItem('undo-counter');
@@ -117,6 +118,7 @@ function createControlListeners() {
         levelCounter -= 1;
         localStorage.setItem('level-number', levelCounter);
         loadLevel(levelCounter);
+        updateLevelDisplay();
         if (dndManager) { dndManager.moveHistory = []; }
     });
 
@@ -125,6 +127,7 @@ function createControlListeners() {
         levelCounter += 1;
         localStorage.setItem('level-number', levelCounter);
         loadLevel(levelCounter);
+        updateLevelDisplay();
         if (dndManager) { dndManager.moveHistory = []; }
     });
 
@@ -243,4 +246,12 @@ function handleLevelFailed() {
     // reload level
     loadLevel(levelCounter);
     if (dndManager) { dndManager.moveHistory = []; }
+}
+
+/**
+ * Update level display in html
+ */
+function updateLevelDisplay() {
+  const span = document.getElementById('level-display');
+  span.textContent = `Level: ${levelCounter + 1}`;
 }
