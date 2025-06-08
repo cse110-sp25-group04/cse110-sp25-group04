@@ -17,8 +17,6 @@ Good Luck, and have fun saving the land of Cardova!
 ```
 ![gameGif](https://github.com/user-attachments/assets/89d91c40-2dfb-4762-be6b-2928ce864673)
 
-Images:
-
 ### Check out our project:
 
 https://cse110-sp25-group04.github.io/cse110-sp25-group04/
@@ -31,6 +29,18 @@ https://youtu.be/jWYKGHW4QVU
 
 https://github.com/cse110-sp25-group04/cse110-sp25-group04/blob/main/admin/team.md
 
-## Check out our art board:
+### Check out our art board:
 
 https://miro.com/app/board/uXjVI44JcyM=/?share_link_id=705948852757
+
+## Supporting Platforms:
+
+- Find in detail in **/admin/specs/**
+
+## To Make Changes:
+
+- Go to the **/project/** directory
+- JavaScript: **/project/sources/scripts**
+- CSS: **/project/sources/styles**
+- HTML: In file **/project/index.html**
+- Art & Assets: **/project/sources/assets/**
