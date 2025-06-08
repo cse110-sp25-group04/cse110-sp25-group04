@@ -118,7 +118,7 @@ function createControlListeners() {
     });
 
     nextButton.addEventListener('click', function () {
-        if(levelCounter >= highestLevelReached) return;
+        if(levelCounter >= highestLevelReached || levelCounter >= LEVELS.size()) return;
         levelCounter += 1;
         localStorage.setItem('level-number', levelCounter);
         loadLevel(levelCounter);
