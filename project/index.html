@@ -9,6 +9,20 @@
   <script src="sources/scripts/main.js" type="module"></script>
 </head>
 <body>
+  <!-- Main game layout -->
+  <div id="board-layout">
+    <div id="grid-container"></div>
+    <div id="hand-container"></div>
+  <!--Menu Section-->
+  <div id="menu">
+    <div class="flower"></div>
+    <h1><strong>CARDEN</strong></h1>
+    <a href="https://github.com/cse110-sp25-group04/cse110-sp25-group04" id="team-link" target = "_blank">BY TEAM 4 THE WIN</a>
+    <button id="start-button">Start</button>
+    <div class="flower-strip"></div>
+  </div>
+  <!--Game Section-->
+  <div id = "game" hidden>
   <!-- Control buttons for navigating and board state-->
   <nav class="title">
     <div class="nav-left">
@@ -25,13 +39,12 @@
       <button id="next-level">Next Level</button>
     </div>
   </nav>
-
-  <!-- Main game layout -->
-  <div id="board-layout">
-    <div id="grid-container"></div>
-    <div id="hand-container"></div>
+    <!-- Main game layout -->
+    <div id="board-layout">
+      <div id="grid-container"></div>
+      <div id="hand-container"></div>
+    </div>
   </div>
-
   <div class="modal">
     <div class="modal-content">
       <p id="modal-text">Level Status</p>
