@@ -1,6 +1,7 @@
 import DragAndDropManager from './drag_drop.js';
+import Modal from './transition.js';
 
-import { ROWS, COLS, DEBUG, CELL_STATES, FLOWER_TYPES, LEVELS,} from './constants.js';
+import { ROWS, COLS, DEBUG, CELL_STATES, FLOWER_TYPES, LEVELS, WIN, LOSE, } from './constants.js';
 import { loadLevel } from './board.js';
 
 // Run the init() function when the page has loaded
@@ -14,6 +15,7 @@ let highestLevelReached;
 let undoCounter;
 let resetCounter;
 let dndManager;
+let levelModal;
 
 
 /**
@@ -73,6 +75,8 @@ function init() {
     handCells = document.querySelectorAll('#hand-container .hand-cell');
     gridCells = document.querySelectorAll('#grid-container .grid-cell');
     dndManager = new DragAndDropManager(handCells, gridCells);
+
+    levelModal = new Modal('.modal', '#modal-text', '#modal-button');   
 }
 
 /**
@@ -204,12 +208,16 @@ function checkGameStatus() {
                 return;
             }
             else {
-                handleLevelFailed();
+                // corrupt left + no cards = lose
+                // calls show() with LOSE and a callback to handleLevelFailed after the transition button is clicked
+                levelModal.show(LOSE, handleLevelFailed);
                 return;
             }
         }
     }
-    handleLevelPassed();
+    // no corrupt left
+    // calls show() with WIN and a callback to handleLevelPassed after the transition button is clicked
+    levelModal.show(WIN, handleLevelPassed);
     return;
 }
 
@@ -217,7 +225,6 @@ function checkGameStatus() {
  * Called when level has passed, moves to next level 
  */
 function handleLevelPassed() {
-    alert('Level Passed');
     if(levelCounter >= LEVELS.length-1) {
         alert('Completed all existing levels, congrats!');
         levelCounter = 0;
@@ -225,6 +232,7 @@ function handleLevelPassed() {
         highestLevelReached = 0;
         localStorage.setItem('highest-level', '0');
     };
+  
     levelCounter += 1;
     localStorage.setItem('level-number', levelCounter);
     loadLevel(levelCounter);
@@ -238,7 +246,6 @@ function handleLevelPassed() {
  * Called when level has failed, reloads current level
  */
 function handleLevelFailed() {
-    alert('Level Failed');
     // reload level
     loadLevel(levelCounter);
     if (dndManager) { dndManager.moveHistory = []; }
