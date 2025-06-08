@@ -8,14 +8,14 @@ More detail is in comments at the file:
 
 ## Overview
 
-drag_drop 199: style flower placed on board
+board 25: style grid cells (can be based on the cell type)
 
-board 23: style grid cells (can be based on the cell type)
+board 165: style all flowers (when placed in hand)
 
-board 163: style all flowers (when placed in hand)
+drag_drop 228: style flower placed on board
 
-drag_drop 296: style flowers put back in hand by undo
+drag_drop 331: style flowers put back in hand by undo
 
-drag_drop 302: play audio on successful card drop
+drag_drop 337: play audio on successful card drop
 
-drag_drop 307: play audio on failed card drop
+drag_drop 343: play audio on failed card drop
