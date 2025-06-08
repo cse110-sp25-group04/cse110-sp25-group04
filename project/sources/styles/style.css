@@ -23,6 +23,76 @@ body {
 }
 
 /*---------------------------------------
+  Navbar Layout
+----------------------------------------*/
+
+nav {
+  display: flex; 
+  align-items: center;
+  background-color: #abbd7b;
+  opacity: 75%;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  /* margin-bottom: 5px; */
+}
+
+.title .nav-right {
+  margin-left: auto;
+}
+
+#previous-level {
+  border-radius: 10px;
+  border: none;
+  padding: 8px;
+  color: white;
+  font-size: 18px;
+  font-family: 'Noto Sans', sans-serif;
+  position: relative;
+  margin: relative;
+  background-color: #5a7b51;
+  left: 20%;
+}
+
+#reset {
+  border-radius: 10px;
+  border: none;
+  padding: 8px;
+  color: white;
+  font-size: 18px;
+  font-family: 'Noto Sans', sans-serif;
+  position: relative;
+  margin: relative;
+  background-color: #5a7b51;
+  left: 25%;
+}
+
+#undo {
+  border-radius: 10px;
+  border: none;
+  padding: 8px;
+  color: white;
+  font-size: 18px;
+  font-family: 'Noto Sans', sans-serif;
+  position: relative;
+  margin: relative;
+  background-color: #5a7b51;
+  right: 25%;
+}
+
+#next-level {
+  border-radius: 10px;
+  border: none;
+  padding: 8px;
+  color: white;
+  font-size: 18px;
+  font-family: 'Noto Sans', sans-serif;
+  position: relative;
+  margin: relative;
+  background-color: #5a7b51;
+  right: 20%;
+}
+
+/*---------------------------------------
   Board Layout 
 ----------------------------------------*/
 
@@ -49,7 +119,7 @@ body {
   width: 100%;
   max-width: calc(var(--grid-cols) * var(--card-max-width));
   box-sizing: border-box;
-  margin: 20px auto;
+  margin: 10px auto;
 }
 
 /* Individual Grid Cell */

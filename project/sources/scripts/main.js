@@ -110,7 +110,6 @@ function createControlListeners() {
     const prevButton = document.getElementById('previous-level');
     const nextButton = document.getElementById('next-level');
     const resetButton = document.getElementById('reset');
-    const resetLSButton = document.getElementById('reset-local-storage');
     const undoButton = document.getElementById('undo');
 
     prevButton.addEventListener('click', function () {
@@ -134,11 +133,6 @@ function createControlListeners() {
         if (dndManager) { dndManager.moveHistory = []; }
         resetCounter += 1;
         localStorage.setItem('reset-counter', resetCounter);
-    });
-
-    resetLSButton.addEventListener('click', function () {
-        localStorage.clear();
-        if (dndManager) { dndManager.moveHistory = []; }
     });
 
     undoButton.addEventListener('click', () => {
