@@ -162,11 +162,13 @@ function createCard(text) {
     const card = document.createElement('div');
     card.classList.add('card');
 
-    // HOOK: This is where flower cards in the player's hand can be styled.
-    // IMPORTANT NOTE: this styling will stay forever on the card. 
-    // This hook is best suited for adding permanent card art and styling rather than effects when placing the card.
-    // Uncomment the code below for an example of how styling the card here affects the game.
-    // card.style.backgroundColor = 'black';
+    /**
+    /* HOOK: This is where flower cards in the player's hand can be styled.
+    /* IMPORTANT NOTE: this styling will stay forever on the card. 
+    /* This hook is best suited for adding permanent card art and styling rather than effects when placing the card.
+    /* Uncomment the code below for an example of how styling the card here affects the game.
+    /* card.style.backgroundColor = 'black';
+    */
     card.textContent = text;
     card.dataset.type = text;
 
