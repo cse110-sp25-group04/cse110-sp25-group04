@@ -122,7 +122,7 @@ function createControlListeners() {
     });
 
     nextButton.addEventListener('click', function () {
-        if(levelCounter >= highestLevelReached) return;
+        if(levelCounter >= highestLevelReached || levelCounter >= LEVELS.length) return;
         levelCounter += 1;
         localStorage.setItem('level-number', levelCounter);
         loadLevel(levelCounter);
@@ -155,7 +155,7 @@ function createControlListeners() {
  */
 function getLevelNumber() {
     if (localStorage.getItem('level-number')) {
-        return Number(localStorage.getItem('level-number'));
+        return Number(localStorage.getItem('level-number')) % LEVELS.length;
     }
     else {
         localStorage.setItem('level-number', 0);
@@ -170,7 +170,7 @@ function getLevelNumber() {
  */
 function getHighestLevelReached() {
     if (localStorage.getItem('highest-level')) {
-        return Number(localStorage.getItem('highest-level'));
+        return Number(localStorage.getItem('highest-level')) % LEVELS.length;
     }
     else {
         localStorage.setItem('highest-level', 0);
@@ -227,8 +227,12 @@ function checkGameStatus() {
 function handleLevelPassed() {
     if(levelCounter >= LEVELS.length-1) {
         alert('Completed all existing levels, congrats!');
-        return; 
+        levelCounter = 0;
+        localStorage.setItem('level-number', '0');
+        highestLevelReached = 0;
+        localStorage.setItem('highest-level', '0');
     };
+  
     levelCounter += 1;
     localStorage.setItem('level-number', levelCounter);
     loadLevel(levelCounter);
