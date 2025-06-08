@@ -250,12 +250,12 @@ function handleLevelFailed() {
     loadLevel(levelCounter);
     if (dndManager) { dndManager.moveHistory = []; }
 }
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', function() {
     const menuEl = document.getElementById('menu');
     const gameEl = document.getElementById('game');
     const startBtn = document.getElementById('start-button');
 
-    startBtn.addEventListener('click', () => {
+    startBtn.addEventListener('click', function() {
         // hide menu, reveal game
         menuEl.hidden = true;
         gameEl.hidden = false;
