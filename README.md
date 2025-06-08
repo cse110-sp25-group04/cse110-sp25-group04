@@ -11,7 +11,7 @@ You may notice the cute flowers that are in your hand, play them, but be careful
 Place the flowers on grass and let them clear away the purple pests.
 Use your flowers carefully and use their powers together to purify the realm.
 
-If you run out of flowers, no worries, the dryards will let you try again!
+If you run out of flowers, no worries, the dryads will let you try again!
 
 Good Luck, and have fun saving the land of Cardova!
 ```
