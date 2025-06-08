@@ -224,7 +224,17 @@ class DragAndDropManager {
         this.draggedElement.style.height = '';
         this.currentDropTarget.classList.add('has-card');
 
+        /**
+         * HOOK: This is where flowers that are placed on board by the user can be styled
+         * IMPORTANT NOTE: These are the same cards that will be styled when they are put in the user's hand
+         * So this should only be used if you want to add some special emphasis or effect for cards when placed
+         * If you do add an effect here make sure to roll back the effect in the undo card hook.
+         * This is because a card can be placed, then taken off with undo, then placed again. Just be careful.
+         * Uncomment the line below for an example in your local build
+         * this.draggedElement.style.backgroundColor = 'black'
+         */
         const type = this.draggedElement.dataset.type;
+
         const updatedBoard = changeBoard(this.currentDropTarget, type);
         this.moveHistory.push({
             card: this.draggedElement,
@@ -316,9 +326,21 @@ class DragAndDropManager {
         lastMove.targetCell.classList.remove('has-card');
         lastMove.originalParent.appendChild(lastMove.card);
         lastMove.originalParent.classList.add('has-card');
+
+        /**
+         * HOOK: This is where cards that have been returned to your hand by an undo can be styled.
+         * Uncomment the below for an example.
+         */
+        // lastMove.card.styled.backgroundColor = 'black';
+
+        /**
+         * HOOK: Can add successful card placement audio here!
+         */
+
     }
 
     /**
+     * HOOK: function to play fail audio when card is placed somewhere invalid
      * Play error sound on invalid placements of cards
      */
     #failAudio() {
