@@ -252,6 +252,6 @@ function handleLevelFailed() {
  * Update level display in html
  */
 function updateLevelDisplay() {
-  const span = document.getElementById('level-display');
-  span.textContent = `Level: ${levelCounter + 1}`;
+    const span = document.getElementById('level-display');
+    span.textContent = `Level: ${levelCounter + 1}`;
 }
