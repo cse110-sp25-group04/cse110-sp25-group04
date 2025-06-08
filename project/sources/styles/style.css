@@ -109,8 +109,7 @@ background-image: radial-gradient(#beefae,#c5f1b6, #cbf2be, #abd79d);
     url('../assets/flower-blue.png'),
     url('../assets/flower-transparent.png'),
     url('../assets/flower-blue.png'),
-    url('../assets/flower-orange.png'),
-    url('../assets/flower-blue.png');
+    url('../assets/flower-orange.png');
   background-size: 1vw;
   background-repeat: no-repeat;
   background-position:
@@ -135,9 +134,11 @@ background-image: radial-gradient(#beefae,#c5f1b6, #cbf2be, #abd79d);
   left 15% top 22%,
   left 23% top 14%;
   pointer-events: none;
-  transform: rotate(180deg);
+  /* transform: rotate(180deg); */
   animation: leafAnim 3s linear infinite;
+  animation-timing-function: linear;
   animation-iteration-count: infinite;
+  animation-fill-mode: forwards;
 }
 .flower:after {
   margin: left -250px;
@@ -155,10 +156,12 @@ background-image: radial-gradient(#beefae,#c5f1b6, #cbf2be, #abd79d);
 }
 @keyframes leafAnim {
   0% {
-    transform: translateY(0);
+    transform: translateY(0px);
+    /* background-position-y: 0; */
   }
   100% {
-    transform: translateY(650px);
+    transform: translateY(750px);
+    /* background-position-y: 650px; */
   }
 }
 
