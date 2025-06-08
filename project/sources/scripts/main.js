@@ -254,11 +254,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const menuEl = document.getElementById('menu');
     const gameEl = document.getElementById('game');
     const startBtn = document.getElementById('start-button');
-  
+
     startBtn.addEventListener('click', () => {
-      // hide menu, reveal game
-      menuEl.hidden = true;
-      gameEl.hidden = false;
-      initGame();
+        // hide menu, reveal game
+        menuEl.hidden = true;
+        gameEl.hidden = false;
+        initGame();
     });
 });
