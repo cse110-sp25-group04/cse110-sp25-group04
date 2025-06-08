@@ -298,9 +298,13 @@ class DragAndDropManager {
          */
         // lastMove.card.styled.backgroundColor = 'black';
 
+        /**
+         * HOOK: Can add successful card placement audio here!
+         */
+
     }
 
-    //function to play fail audio when card is placed somewhere invalid
+    //HOOK: function to play fail audio when card is placed somewhere invalid
     #failAudio() {
         FAIL_AUDIO.play();
     }
