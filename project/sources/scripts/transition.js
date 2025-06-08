@@ -1,3 +1,4 @@
+
 /**
  * @param {string} modalSelector - The HTML selector for the modal element. (.modal)
  * @param {string} textSelector - The HTML selector for the text element inside the modal. (#modal-text)
