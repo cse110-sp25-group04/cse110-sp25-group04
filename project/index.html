@@ -19,20 +19,29 @@
   </div>
   <!--Game Section-->
   <div id = "game" hidden>
-      <!-- Control buttons for navigating and board state-->
-    <div id="controls">
-      <button id="previous-level">Previous Level</button>
-      <button id="next-level">Next Level</button>
-      <button id="reset">Reset</button>
-      <button id="reset-local-storage">Reset Local Storage</button>
-      <button id="undo">Undo</button>
-    </div>
+    <!-- Control buttons for navigating and board state-->
+    <nav class="title">
+      <div class="nav-left">
+        <button id="previous-level">Previous Level</button>
+        <button id="reset">Reset Level</button>
+      </div>
+      <div class="nav-center">
+        <span id="level-display">Level: 1</span>
+        <h1><strong>CARDEN</strong></h1>  
+        <a href="https://github.com/cse110-sp25-group04/cse110-sp25-group04" id="team-link2" target = "_blank">Team 4</a>
+      </div>
+      <div class="nav-right">
+        <button id="undo">Undo Move</button>
+        <button id="next-level">Next Level</button>
+      </div>
+    </nav>
     <!-- Main game layout -->
     <div id="board-layout">
       <div id="grid-container"></div>
       <div id="hand-container"></div>
     </div>
   </div>
+  <!-- Pop-ups -->
   <div class="modal">
     <div class="modal-content">
       <p id="modal-text">Level Status</p>

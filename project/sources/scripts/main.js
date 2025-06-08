@@ -49,6 +49,7 @@ function init() {
     levelCounter = getLevelNumber();
     loadLevel(levelCounter);
     highestLevelReached = getHighestLevelReached();
+    updateLevelDisplay();
 
     // Get undo and reset counters from localStorage
     undoCounter = localStorage.getItem('undo-counter');
@@ -110,7 +111,6 @@ function createControlListeners() {
     const prevButton = document.getElementById('previous-level');
     const nextButton = document.getElementById('next-level');
     const resetButton = document.getElementById('reset');
-    const resetLSButton = document.getElementById('reset-local-storage');
     const undoButton = document.getElementById('undo');
 
     prevButton.addEventListener('click', function () {
@@ -118,6 +118,7 @@ function createControlListeners() {
         levelCounter -= 1;
         localStorage.setItem('level-number', levelCounter);
         loadLevel(levelCounter);
+        updateLevelDisplay();
         if (dndManager) { dndManager.moveHistory = []; }
     });
 
@@ -126,6 +127,7 @@ function createControlListeners() {
         levelCounter += 1;
         localStorage.setItem('level-number', levelCounter);
         loadLevel(levelCounter);
+        updateLevelDisplay();
         if (dndManager) { dndManager.moveHistory = []; }
     });
 
@@ -134,11 +136,6 @@ function createControlListeners() {
         if (dndManager) { dndManager.moveHistory = []; }
         resetCounter += 1;
         localStorage.setItem('reset-counter', resetCounter);
-    });
-
-    resetLSButton.addEventListener('click', function () {
-        localStorage.clear();
-        if (dndManager) { dndManager.moveHistory = []; }
     });
 
     undoButton.addEventListener('click', () => {
@@ -236,6 +233,9 @@ function handleLevelPassed() {
     levelCounter += 1;
     localStorage.setItem('level-number', levelCounter);
     loadLevel(levelCounter);
+
+    updateLevelDisplay();
+
     if (dndManager) { dndManager.moveHistory = []; }
     
     highestLevelReached = Math.max(getHighestLevelReached(), levelCounter);
@@ -248,8 +248,10 @@ function handleLevelPassed() {
 function handleLevelFailed() {
     // reload level
     loadLevel(levelCounter);
+    updateLevelDisplay();
     if (dndManager) { dndManager.moveHistory = []; }
 }
+
 document.addEventListener('DOMContentLoaded', function () {
     const menuEl = document.getElementById('menu');
     const gameEl = document.getElementById('game');
@@ -262,3 +264,11 @@ document.addEventListener('DOMContentLoaded', function () {
         initGame();
     });
 });
+
+/**
+ * Update level display in html
+ */
+function updateLevelDisplay() {
+    const span = document.getElementById('level-display');
+    span.textContent = `Level: ${levelCounter + 1}`;
+}
