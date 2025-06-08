@@ -29,7 +29,7 @@ body {
 nav {
   display: flex; 
   align-items: center;
-  background-color: #abbd7b;
+  background-color: #AAC598;
   opacity: 75%;
   padding-top: 6px;
   padding-bottom: 6px;
@@ -67,14 +67,14 @@ nav button:active {
 }
 
 #level-display {
-  color: #BA8E23;
+  color: #8D4F15;
   font-family: 'Times New Roman', Times, serif;
 }
 
 .title .nav-center a {
-  color: #BA8E23;
+  color: #8D4F15;
   font-family: 'Times New Roman', Times, serif;
-}
+} 
 
 #previous-level {
   border-radius: 10px;
