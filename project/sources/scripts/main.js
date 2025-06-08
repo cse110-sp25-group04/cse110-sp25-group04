@@ -166,7 +166,7 @@ function getLevelNumber() {
  */
 function getHighestLevelReached() {
     if (localStorage.getItem('highest-level')) {
-        return Number(localStorage.getItem('highest-level'));
+        return Number(localStorage.getItem('highest-level')) % LEVELS.length;
     }
     else {
         localStorage.setItem('highest-level', 0);
