@@ -1,12 +1,13 @@
 import DragAndDropManager from './drag_drop.js';
+import Modal from './transition.js';
 
-import { ROWS, COLS, DEBUG, CELL_STATES, FLOWER_TYPES, LEVELS,} from './constants.js';
+import { ROWS, COLS, DEBUG, CELL_STATES, FLOWER_TYPES, LEVELS, WIN, LOSE, } from './constants.js';
 import { loadLevel } from './board.js';
 
-//Run the init() function when the page has loaded
+// Run the init() function when the page has loaded
 window.addEventListener('DOMContentLoaded', init);
 
-//declare variables
+// Global state
 let handCells;
 let gridCells;
 let levelCounter;
@@ -14,7 +15,13 @@ let highestLevelReached;
 let undoCounter;
 let resetCounter;
 let dndManager;
+let levelModal;
 
+
+/**
+ * Builds the grid layout based on ROWS and COLS
+ * Initializes each cell with default ROCK state
+ */
 function buildGrid() {
     const container = document.getElementById('grid-container');
     container.innerHTML = '';
@@ -31,18 +38,20 @@ function buildGrid() {
     }
 }
 
-//Starts the program
+/**
+ * Initializes game state, builds grid, loads level,
+ * sets up listeners and DragAndDropManager.
+ */
 function init() {
-    // build the grid cells
     buildGrid();
 
-    // get the level from localStorage
+    // Get the level from localStorage
     levelCounter = getLevelNumber();
     loadLevel(levelCounter);
-
     highestLevelReached = getHighestLevelReached();
+    updateLevelDisplay();
 
-    //get undo and reset counters from localStorage
+    // Get undo and reset counters from localStorage
     undoCounter = localStorage.getItem('undo-counter');
     if (undoCounter === null) {
         undoCounter = 0;
@@ -61,17 +70,23 @@ function init() {
         resetCounter = Number(resetCounter);
     }
 
-    // creates listeners for previous/next/reset
+    // Create listeners
     createControlListeners();
 
-    // Add mouse down listener to the document to start dragging on any card
-    // document.addEventListener('mousedown', handleMouseDown);
     handCells = document.querySelectorAll('#hand-container .hand-cell');
     gridCells = document.querySelectorAll('#grid-container .grid-cell');
     dndManager = new DragAndDropManager(handCells, gridCells);
+
+    levelModal = new Modal('.modal', '#modal-text', '#modal-button');   
 }
 
-//Throttles function to reduce lag from running too quickly
+/**
+ * Throttles function to reduce lag from running too quickly
+ * 
+ * @param {Function} func: The function to throttle
+ * @param {number} limit: Time to wait before allowing next call
+ * @returns {Function} A throttled version
+ */
 function throttle(func, limit) {
     let inThrottle;
     return function () {
@@ -88,12 +103,14 @@ function throttle(func, limit) {
     };
 }
 
+/**
+ * Adds event listeners for control buttons: previous, next, reset, reset localStorage, undo
+ */
 function createControlListeners() {
     // Add previous/next level button listeners
     const prevButton = document.getElementById('previous-level');
     const nextButton = document.getElementById('next-level');
     const resetButton = document.getElementById('reset');
-    const resetLSButton = document.getElementById('reset-local-storage');
     const undoButton = document.getElementById('undo');
 
     prevButton.addEventListener('click', function () {
@@ -101,14 +118,16 @@ function createControlListeners() {
         levelCounter -= 1;
         localStorage.setItem('level-number', levelCounter);
         loadLevel(levelCounter);
+        updateLevelDisplay();
         if (dndManager) { dndManager.moveHistory = []; }
     });
 
     nextButton.addEventListener('click', function () {
-        if(levelCounter >= highestLevelReached) return;
+        if(levelCounter >= highestLevelReached || levelCounter >= LEVELS.length) return;
         levelCounter += 1;
         localStorage.setItem('level-number', levelCounter);
         loadLevel(levelCounter);
+        updateLevelDisplay();
         if (dndManager) { dndManager.moveHistory = []; }
     });
 
@@ -119,11 +138,6 @@ function createControlListeners() {
         localStorage.setItem('reset-counter', resetCounter);
     });
 
-    resetLSButton.addEventListener('click', function () {
-        localStorage.clear();
-        if (dndManager) { dndManager.moveHistory = []; }
-    });
-
     undoButton.addEventListener('click', () => {
         if (dndManager) { dndManager.undo(); }
         undoCounter += 1;
@@ -131,9 +145,14 @@ function createControlListeners() {
     });
 }
 
+/**
+ * Gets level number from local storage
+ * 
+ * @returns {number} level number 
+ */
 function getLevelNumber() {
     if (localStorage.getItem('level-number')) {
-        return Number(localStorage.getItem('level-number'));
+        return Number(localStorage.getItem('level-number')) % LEVELS.length;
     }
     else {
         localStorage.setItem('level-number', 0);
@@ -141,9 +160,14 @@ function getLevelNumber() {
     }
 }
 
+/**
+ * Gets highest level reached from local storage
+ * 
+ * @returns {number} highest level number reached
+ */
 function getHighestLevelReached() {
     if (localStorage.getItem('highest-level')) {
-        return Number(localStorage.getItem('highest-level'));
+        return Number(localStorage.getItem('highest-level')) % LEVELS.length;
     }
     else {
         localStorage.setItem('highest-level', 0);
@@ -151,17 +175,15 @@ function getHighestLevelReached() {
     }
 }
 
-// Is this the right place for these functions?
-
-
-// Function to handle win check
+/**
+ * Checks game board and hand to determine if the level passed or failed
+ */
 export { checkGameStatus };
 function checkGameStatus() {
 
     let handCells = document.querySelectorAll('#hand-container .hand-cell');
     let gridCells = document.querySelectorAll('#grid-container .grid-cell');
 
-    // if there is still purple and user's hand is empty we can have a loss screen or offer a reset as they have failed the puzzle
     let hasCards = false;
     for (const h of handCells) {
         if (h.classList.contains('has-card') === true) {
@@ -173,50 +195,80 @@ function checkGameStatus() {
         }
     }
 
-    // check if there is corrupt left
+    // Check if CORRUPT is left
     for (const g of gridCells) {
         if (g.dataset.cellState === CELL_STATES.CORRUPT) {
             if (DEBUG) {
                 console.log('Purple Tile Detected');
             }
             if (hasCards) {
-                // corrupt left + cards = keep going
                 return;
             }
             else {
                 // corrupt left + no cards = lose
-                handleLevelFailed();
+                // calls show() with LOSE and a callback to handleLevelFailed after the transition button is clicked
+                levelModal.show(LOSE, handleLevelFailed);
                 return;
             }
         }
     }
-
     // no corrupt left
-    handleLevelPassed();
+    // calls show() with WIN and a callback to handleLevelPassed after the transition button is clicked
+    levelModal.show(WIN, handleLevelPassed);
     return;
 }
 
-// Handle level success
+/**
+ * Called when level has passed, moves to next level 
+ */
 function handleLevelPassed() {
-    alert('Level Passed');
     if(levelCounter >= LEVELS.length-1) {
         alert('Completed all existing levels, congrats!');
+        levelCounter = 0;
+        localStorage.setItem('level-number', '0');
+        highestLevelReached = 0;
+        localStorage.setItem('highest-level', '0');
     };
+  
     levelCounter += 1;
     localStorage.setItem('level-number', levelCounter);
     loadLevel(levelCounter);
+
+    updateLevelDisplay();
+
     if (dndManager) { dndManager.moveHistory = []; }
     
-    // only update highestLevelReached here (no cheating!)
-    // check localstorage value + new levelcounter
     highestLevelReached = Math.max(getHighestLevelReached(), levelCounter);
     localStorage.setItem('highest-level', highestLevelReached);
 }
 
-// Handle level failure
+/**
+ * Called when level has failed, reloads current level
+ */
 function handleLevelFailed() {
-    alert('Level Failed');
     // reload level
     loadLevel(levelCounter);
+    updateLevelDisplay();
     if (dndManager) { dndManager.moveHistory = []; }
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    const menuEl = document.getElementById('menu');
+    const gameEl = document.getElementById('game');
+    const startBtn = document.getElementById('start-button');
+
+    startBtn.addEventListener('click', function () {
+        // hide menu, reveal game
+        menuEl.hidden = true;
+        gameEl.hidden = false;
+        initGame();
+    });
+});
+
+/**
+ * Update level display in html
+ */
+function updateLevelDisplay() {
+    const span = document.getElementById('level-display');
+    span.textContent = `Level: ${levelCounter + 1}`;
 }

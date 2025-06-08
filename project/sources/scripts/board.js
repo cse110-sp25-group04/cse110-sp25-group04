@@ -1,8 +1,8 @@
 import { ROWS, COLS, DEBUG, CELL_STATES, FLOWER_TYPES, LEVELS } from './constants.js';
 
-
-//initalizes the 2d array board to be null
-// TODO: use level loading to initialize the board - Arul
+/**
+ * 2D array matching ROWSxCOLS, intializes as NULL 
+ */
 const BOARD = [];
 for (let i = 0; i < ROWS; i++) {
     BOARD[i] = [];
@@ -12,11 +12,12 @@ for (let i = 0; i < ROWS; i++) {
 }
 
 /**
- * Draw board based on internal representation 
+ * Syncs cell's DOM with interal board array, BOARD[r][c] 
  */
 function drawBoard() {
     for (let r = 0; r < ROWS; r++) {
         for (let c = 0; c < COLS; c++) {
+          
             // we will have something like BOARD[r][c] = CELL_STATES.GRASS;
             const cell = document.getElementById(`${c}-${r}`);
             
@@ -29,8 +30,10 @@ function drawBoard() {
              * Alternatively you can remove the if check and add the logic to the CELL_STATES.FLOWER case (preferable)
              * The current code is a basic example of this, as it makes each of the cells a simple color based on its type.
              */ 
+          
             cell.dataset.cellState = BOARD[r][c];
-            // don't need to do recoloring logic if a card isn't there
+
+            // Only recolor empty cells
             if (!cell.querySelector('.card')) {
                 switch(BOARD[r][c]) {
                 case CELL_STATES.CORRUPT:
@@ -43,7 +46,6 @@ function drawBoard() {
                     cell.style.backgroundColor = 'gray';
                     break;
                 case CELL_STATES.FLOWER:
-                    // this case shouldn't be reached if a card isn't there
                     if (DEBUG) {
                         console.log(`Unreachable cell type reached at (${r},${c}).`);
                     }
@@ -60,10 +62,9 @@ function drawBoard() {
 }
 
 /**
- * Remove/reset existing cards on board
+ * Remove all card elements from the grid
  */
 function clearBoard() {
-    // HACK: just set innerhtml because i am lazy =)
     let gridCells = document.getElementById('grid-container').children;
     for (let i = 0; i < gridCells.length; i++) {
         gridCells[i].innerHTML = '';
@@ -73,10 +74,9 @@ function clearBoard() {
 }
 
 /**
- * Remove/reset existing cards in hand
+ * Removes all card elements from the hands
  */
 function clearCards() {
-    // HACK: just set innerhtml because i am lazy =)
     let handCells = document.querySelectorAll('.hand-cell');
     for (let h of handCells) {
         h.innerHTML = '';
@@ -85,25 +85,25 @@ function clearCards() {
 }
 
 /**
- * Loads a new level
+ * Populate BOARD then rebuild the DOM grid, clear and recreate
+ * hand cards for levels
  * 
- * @param {number} levelNumber: a number representing the level to be loaded
+ * @param {number} levelNumber - Index of the level to load.
  */
 function loadLevel(levelNumber) {
-    // let's get the object that represents the level
     const levelObj = LEVELS[levelNumber];
     const levelBoard = levelObj.LAYOUT;
     console.log(levelBoard);
     const levelCards = levelObj.CARDS;
     const numCards = levelCards.length;
 
-    //generate the hand
+    // Generate the hand
     buildHand(numCards);
 
-    // update internal representation
+    // Update internal representation
     for (let r = 0; r < ROWS; r++) {
         for (let c = 0; c < COLS; c++) {
-            // load in correct value for each cell
+            // Load in correct value for each cell
             switch (levelBoard[r][c]) {
             case 'C':
                 BOARD[r][c] = CELL_STATES.CORRUPT;
@@ -129,14 +129,14 @@ function loadLevel(levelNumber) {
         }
     }
     
-    // update the board visuals
+    // Update the board visuals
     clearBoard();
     drawBoard();
     
-    // remove existing cards
+    // Remove existing cards
     clearCards();
     
-    // load the cards (format: cardname=PLUS)
+    // Load the cards (format: cardname=PLUS)
     for (let cardname of levelCards) {
         if(FLOWER_TYPES[cardname]) {
             createCard(FLOWER_TYPES[cardname]);
@@ -146,11 +146,13 @@ function loadLevel(levelNumber) {
         }
     }
 }
+
 /**
  * Creates a card in hand with a given string as the cardname
  * This cardname will determine the type of card and what actions it can do.
  * 
- * @param {String} cardname: a string with the new card's name 
+ * @param {string} text a string with the new card's name 
+ * @returns {HTMLElement} The newly created card element
  */
 function createCard(text) {
     let handCells = document.querySelectorAll('#hand-container .hand-cell');
@@ -168,7 +170,7 @@ function createCard(text) {
     card.textContent = text;
     card.dataset.type = text;
 
-    //finds first empty hand cell to add card to
+    // Finds first empty hand cell to add card to
     for (let h of handCells) {
         if (h.classList.contains('has-card')) {
             if (DEBUG) {
@@ -187,21 +189,21 @@ function createCard(text) {
 }
 
 /**
- * Generates the players hand dynamically given number of cards for level.
+ * Generates the players hand dynamically given number of cards for level
  * 
- * @param {Number} num: a number of handcells to generate
+ * @param {number} num a number of handcells to generate
  */
 function buildHand(num) {
     
     const handContainer = document.getElementById('hand-container');
     handContainer.innerHTML = '';
-    //ensures hand container is correct size
+    // Ensures hand container is correct size
     handContainer.style.gridTemplateColumns = `repeat(${num}, 1fr)`;
     handContainer.style.maxWidth = `calc(${num} * var(--card-max-width))`;
     if (DEBUG) {
         console.log('CREATING HAND');
     }
-    // creates a hand cell for each card
+    // Creates a hand cell for each card
     for (let i = 0; i < num; i++) {
         const handCell = document.createElement('div');
         handCell.classList.add('hand-cell');
@@ -213,14 +215,15 @@ function buildHand(num) {
  * Applies the effect of a played card on the board at position given by cell
  * using the given type.
  * 
- * @param {String} cell: a string with representation 'x-y'
- * @param {String} type: a character representing the type of card
+ * @param {String} cell a string with representation 'x-y'
+ * @param {String} type a character representing the type of card
+ * @returns {Array<{x: number, y: number}>} Array of new positions
  */
 function changeBoard(cell, type) {
     const [x, y] = cell.id.split('-').map(Number);
 
     let offsets = [];
-    // switch statement for readability
+    // Switch statement for readability
     switch(type) {
     case FLOWER_TYPES.PLUS:
         offsets = [[1,0], [-1,0], [0,1], [0,-1]];
@@ -242,15 +245,15 @@ function changeBoard(cell, type) {
 
     const history = [];
     for (let [dx,dy] of offsets) {
-        //calculate the new position for x and y
+        // Calculate the new position for x and y
         const nx = x + dx, ny = y + dy;
 
-        //if the new position is out of bounds, continue
+        // If the new position is out of bounds, continue
         if (nx < 0 || nx >= COLS || ny < 0 || ny >= ROWS) {
             continue;
         }
 
-        //target new position and change color
+        // Target new position and change color
         // nx is column, ny is row
         const cell = document.getElementById(`${nx}-${ny}`);
         if (!cell.querySelector('.card') && BOARD[ny][nx] == CELL_STATES.CORRUPT) {
@@ -259,11 +262,9 @@ function changeBoard(cell, type) {
             history.push({x: nx, y: ny});
         }
     };
-    drawBoard();
 
+    drawBoard();
     return history;
 }
 
-
-
-export { BOARD, changeBoard, loadLevel, drawBoard };
+export { BOARD, changeBoard, loadLevel, drawBoard, buildHand, createCard };
