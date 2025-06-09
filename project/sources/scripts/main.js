@@ -1,7 +1,7 @@
 import DragAndDropManager from './drag_drop.js';
 import Modal from './transition.js';
 
-import { ROWS, COLS, DEBUG, CELL_STATES, FLOWER_TYPES, LEVELS, WIN, LOSE, } from './constants.js';
+import { ROWS, COLS, DEBUG, CELL_STATES, FLOWER_TYPES, LEVELS, WIN, LOSE, LOSS_SOUND, SUCCESS } from './constants.js';
 import { loadLevel } from './board.js';
 
 // Run the init() function when the page has loaded
@@ -207,6 +207,7 @@ function checkGameStatus() {
             else {
                 // corrupt left + no cards = lose
                 // calls show() with LOSE and a callback to handleLevelFailed after the transition button is clicked
+                LOSS_SOUND.play();
                 levelModal.show(LOSE, handleLevelFailed);
                 return;
             }
@@ -214,6 +215,7 @@ function checkGameStatus() {
     }
     // no corrupt left
     // calls show() with WIN and a callback to handleLevelPassed after the transition button is clicked
+    SUCCESS.play();
     levelModal.show(WIN, handleLevelPassed);
     return;
 }
@@ -228,6 +230,9 @@ function handleLevelPassed() {
         localStorage.setItem('level-number', '0');
         highestLevelReached = 0;
         localStorage.setItem('highest-level', '0');
+        loadLevel(levelCounter);
+        updateLevelDisplay();
+        return;
     };
   
     levelCounter += 1;

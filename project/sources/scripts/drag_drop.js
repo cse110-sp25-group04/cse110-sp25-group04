@@ -1,6 +1,6 @@
 import { changeBoard, BOARD, drawBoard } from './board.js';
 import { checkGameStatus } from './main.js';
-import { DEBUG, CELL_STATES, FLOWER_TYPES, FAIL_AUDIO, } from './constants.js';
+import { DEBUG, CELL_STATES, FLOWER_TYPES, FAIL_AUDIO, CARD_GRAB, CARD_PLACE } from './constants.js';
 
 /**
  * Hanles dragging for flower cards from hand to grid,
@@ -55,6 +55,7 @@ class DragAndDropManager {
      */
     handleMouseDown(event) {
         if (event.button !== 0 || this.isTransitioning) return;
+        
         this.draggedElement = event.target.closest('.card');
         const notValidDrag = !this.draggedElement || (this.draggedElement.parentElement && this.draggedElement.parentElement.classList.contains('grid-cell'));
         if (notValidDrag) {
@@ -62,7 +63,7 @@ class DragAndDropManager {
         }
 
         event.preventDefault();
-
+        CARD_GRAB.play();
         this.#updateMouse(event);
 
         //maintain styling
@@ -172,7 +173,7 @@ class DragAndDropManager {
             this.handleTransition();
             return;
         }
-
+        CARD_PLACE.play();
         // Valid placement only on GRASS 
         const invalidGrid = !this.currentDropTarget.querySelector('.card') || this.currentDropTarget === this.originalParentCell;
         if (this.currentDropTarget && (invalidGrid)
