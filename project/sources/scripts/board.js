@@ -1,4 +1,4 @@
-import { ROWS, COLS, DEBUG, CELL_STATES, FLOWER_TYPES, LEVELS } from './constants.js';
+import { ROWS, COLS, DEBUG, CELL_STATES, FLOWER_TYPES, LEVELS, FLOWER_IMAGES } from './constants.js';
 
 /**
  * 2D array matching ROWSxCOLS, intializes as NULL 
@@ -169,6 +169,23 @@ function createCard(text) {
     /* Uncomment the code below for an example of how styling the card here affects the game.
     /* card.style.backgroundColor = 'black';
     */
+    switch(text) {
+        case '+' :
+            card.style.backgroundImage = `url('${FLOWER_IMAGES.PLUS}')`;
+            break;
+        case 'x':
+            card.style.backgroundImage = `url('${FLOWER_IMAGES.CROSS}')`;
+            break;
+        case '■':
+            card.style.backgroundImage = `url('${FLOWER_IMAGES.SQUARE}')`;
+            break;
+        case 'N':
+            card.style.backgroundImage = `url('${FLOWER_IMAGES.KNIGHT}')`;
+            break;
+    }
+    card.style.backgroundSize = 'cover';
+    card.style.backgroundPosition = 'center';
+    card.style.color = 'transparent';
     card.textContent = text;
     card.dataset.type = text;
 
