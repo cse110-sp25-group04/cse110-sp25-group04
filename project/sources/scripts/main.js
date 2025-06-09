@@ -261,7 +261,6 @@ document.addEventListener('DOMContentLoaded', function () {
         // hide menu, reveal game
         menuEl.hidden = true;
         gameEl.hidden = false;
-        initGame();
     });
 });
 
