@@ -15,7 +15,8 @@ If you run out of flowers, no worries, the dryads will let you try again!
 
 Good Luck, and have fun saving the land of Cardova!
 ```
-![gameGif](https://github.com/user-attachments/assets/89d91c40-2dfb-4762-be6b-2928ce864673)
+![gameGif](https://github.com/user-attachments/assets/cdf7675d-0929-4290-9665-70a4a74c0298)
+
 
 ### Check out our project:
 
