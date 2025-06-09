@@ -215,6 +215,7 @@ function checkGameStatus() {
     }
     // no corrupt left
     // calls show() with WIN and a callback to handleLevelPassed after the transition button is clicked
+    SUCCESS.volume = 0.2;
     SUCCESS.play();
     levelModal.show(WIN, handleLevelPassed);
     return;
