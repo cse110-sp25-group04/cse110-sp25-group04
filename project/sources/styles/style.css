@@ -144,6 +144,9 @@ nav button:active {
 }
 #menu h1 {
   font-size: 6rem;
+  color: #ffffff;
+  text-shadow: 5px 5px 2px #abbd7b;
+  font-family: 'Times New Roman', Times, serif;
 }
   
 #menu a {
@@ -188,7 +191,7 @@ nav button:active {
   display: none;
 }
 .flower-strip {
-  background-image: url('../assets/flower-background.png');
+  background-image: url('../assets/background/flower-background.png');
   position: fixed;
   background-position: center bottom;
   height: 100%;
@@ -205,27 +208,27 @@ nav button:active {
   right: 0;
   bottom: 0;
   background-image:
-    url('../assets/flower-blue.png'),
-    url('../assets/flower-orange.png'),
-    url('../assets/flower-transparent.png'),
-    url('../assets/flower-orange.png'),
-    url('../assets/flower-transparent.png'),
-    url('../assets/flower-orange.png'),
-    url('../assets/flower-blue.png'),
-    url('../assets/flower-transparent.png'),
-    url('../assets/flower-blue.png'),
-    url('../assets/flower-orange.png'),
-    url('../assets/flower-blue.png'),
-    url('../assets/flower-blue.png'),
-    url('../assets/flower-orange.png'),
-    url('../assets/flower-transparent.png'),
-    url('../assets/flower-orange.png'),
-    url('../assets/flower-transparent.png'),
-    url('../assets/flower-orange.png'),
-    url('../assets/flower-blue.png'),
-    url('../assets/flower-transparent.png'),
-    url('../assets/flower-blue.png'),
-    url('../assets/flower-orange.png');
+    url('../assets/background/flower-blue.png'),
+    url('../assets/background/flower-orange.png'),
+    url('../assets/background/flower-transparent.png'),
+    url('../assets/background/flower-orange.png'),
+    url('../assets/background/flower-transparent.png'),
+    url('../assets/background/flower-orange.png'),
+    url('../assets/background/flower-blue.png'),
+    url('../assets/background/flower-transparent.png'),
+    url('../assets/background/flower-blue.png'),
+    url('../assets/background/flower-orange.png'),
+    url('../assets/background/flower-blue.png'),
+    url('../assets/background/flower-blue.png'),
+    url('../assets/background/flower-orange.png'),
+    url('../assets/background/flower-transparent.png'),
+    url('../assets/background/flower-orange.png'),
+    url('../assets/background/flower-transparent.png'),
+    url('../assets/background/flower-orange.png'),
+    url('../assets/background/flower-blue.png'),
+    url('../assets/background/flower-transparent.png'),
+    url('../assets/background/flower-blue.png'),
+    url('../assets/background/flower-orange.png');
   background-size: 1vw;
   background-repeat: no-repeat;
   background-position:
