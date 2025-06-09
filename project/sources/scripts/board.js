@@ -46,6 +46,7 @@ function drawBoard() {
                     cell.style.backgroundImage = 'url("sources/assets/cards/rock-card.png")';
                     cell.style.backgroundPosition = 'center';
                     cell.style.backgroundSize = 'cover';
+                    // cell.style.backgroundColor = 'grey';
                     break;
                 case CELL_STATES.FLOWER:
                     if (DEBUG) {
@@ -71,6 +72,9 @@ function clearBoard() {
     for (let i = 0; i < gridCells.length; i++) {
         gridCells[i].innerHTML = '';
         gridCells[i].classList.remove('has-card');
+        gridCells[i].style.removeProperty('background-image');
+        gridCells[i].style.removeProperty('background-position');
+        gridCells[i].style.removeProperty('background-size');
     }
 
 }
