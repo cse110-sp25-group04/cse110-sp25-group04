@@ -176,18 +176,18 @@ function createCard(text) {
     /* card.style.backgroundColor = 'black';
     */
     switch(text) {
-        case '+' :
-            card.style.backgroundImage = `url('${FLOWER_IMAGES.PLUS}')`;
-            break;
-        case 'x':
-            card.style.backgroundImage = `url('${FLOWER_IMAGES.CROSS}')`;
-            break;
-        case '■':
-            card.style.backgroundImage = `url('${FLOWER_IMAGES.SQUARE}')`;
-            break;
-        case 'N':
-            card.style.backgroundImage = `url('${FLOWER_IMAGES.KNIGHT}')`;
-            break;
+    case '+' :
+        card.style.backgroundImage = `url('${FLOWER_IMAGES.PLUS}')`;
+        break;
+    case 'x':
+        card.style.backgroundImage = `url('${FLOWER_IMAGES.CROSS}')`;
+        break;
+    case '■':
+        card.style.backgroundImage = `url('${FLOWER_IMAGES.SQUARE}')`;
+        break;
+    case 'N':
+        card.style.backgroundImage = `url('${FLOWER_IMAGES.KNIGHT}')`;
+        break;
     }
     card.style.backgroundSize = 'cover';
     card.style.backgroundPosition = 'center';
