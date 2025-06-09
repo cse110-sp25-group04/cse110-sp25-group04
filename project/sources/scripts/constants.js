@@ -4,7 +4,7 @@
  * 
  * @type {boolean}
  */
-export const DEBUG = true;
+export const DEBUG = false;
 
 /**
  * Board dimensions
