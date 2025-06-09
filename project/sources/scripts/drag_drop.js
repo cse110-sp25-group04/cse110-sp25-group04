@@ -173,7 +173,7 @@ class DragAndDropManager {
             this.handleTransition();
             return;
         }
-        CARD_PLACE.play();
+    
         // Valid placement only on GRASS 
         const invalidGrid = !this.currentDropTarget.querySelector('.card') || this.currentDropTarget === this.originalParentCell;
         if (this.currentDropTarget && (invalidGrid)
@@ -217,6 +217,7 @@ class DragAndDropManager {
      * Place card into target cell and update board & history
      */
     #addChild() {
+        CARD_PLACE.play();
         this.currentDropTarget.appendChild(this.draggedElement);
         this.draggedElement.style.left = '';
         this.draggedElement.style.top = '';
