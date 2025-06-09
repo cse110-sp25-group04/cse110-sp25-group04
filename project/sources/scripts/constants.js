@@ -57,11 +57,15 @@ export const FLOWER_IMAGES = {
 };
 
 /**
- * Audio for failure events plays when player fails a level
+ * Audio for Different Game Events
  * 
  * @type {HTMLAudioElement}
  */
 export const FAIL_AUDIO = new Audio('sources/assets/sound-effects/error.mp3');
+export const CARD_GRAB = new Audio('sources/assets/sound-effects/card-grab.mp3');
+export const CARD_PLACE = new Audio('sources/assets/sound-effects/card-place.mp3');
+export const LOSS_SOUND = new Audio('sources/assets/sound-effects/loss-sound.mp3');
+export const SUCCESS = new Audio('sources/assets/sound-effects/success.mp3');
 
 // Level conditions
 export const WIN = true;
