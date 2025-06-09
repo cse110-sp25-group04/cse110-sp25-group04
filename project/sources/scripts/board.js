@@ -1,4 +1,4 @@
-import { ROWS, COLS, DEBUG, CELL_STATES, FLOWER_TYPES, LEVELS, FLOWER_IMAGES } from './constants.js';
+import { ROWS, COLS, DEBUG, CELL_STATES, FLOWER_TYPES, LEVELS, FLOWER_IMAGES, GRID_IMAGES } from './constants.js';
 
 /**
  * 2D array matching ROWSxCOLS, intializes as NULL 
@@ -37,13 +37,19 @@ function drawBoard() {
             if (!cell.querySelector('.card')) {
                 switch(BOARD[r][c]) {
                 case CELL_STATES.CORRUPT:
+                    cell.style.backgroundImage = `url('${GRID_IMAGES.CORRUPT}')`;
+                    cell.style.backgroundPosition = 'center';
+                    cell.style.backgroundSize = 'cover';
                     cell.style.backgroundColor = 'purple';
                     break;
                 case CELL_STATES.GRASS:
+                    cell.style.backgroundImage = `url('${GRID_IMAGES.GRASS}')`;
+                    cell.style.backgroundPosition = 'center';
+                    cell.style.backgroundSize = 'cover';
                     cell.style.backgroundColor = 'green';
                     break;
                 case CELL_STATES.ROCK:
-                    cell.style.backgroundImage = 'url("sources/assets/cards/rock-card.png")';
+                    cell.style.backgroundImage = `url('${GRID_IMAGES.ROCK}')`;
                     cell.style.backgroundPosition = 'center';
                     cell.style.backgroundSize = 'cover';
                     cell.style.backgroundColor = 'gray';

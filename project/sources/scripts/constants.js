@@ -57,6 +57,17 @@ export const FLOWER_IMAGES = {
 };
 
 /**
+ * Image paths for each flower type
+ * 
+ * @enum {string}
+ */
+export const GRID_IMAGES = {
+    ROCK: 'sources/assets/cards/rock-card.png',
+    GRASS: 'sources/assets/cards/grass.jpg',
+    CORRUPT: 'sources/assets/cards/corrupt.jpg'
+};
+
+/**
  * Audio for Different Game Events
  * 
  * @type {HTMLAudioElement}
