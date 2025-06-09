@@ -43,7 +43,9 @@ function drawBoard() {
                     cell.style.backgroundColor = 'green';
                     break;
                 case CELL_STATES.ROCK:
-                    cell.style.backgroundColor = 'gray';
+                    cell.style.backgroundImage = 'url("sources/assets/cards/rock-card.png")';
+                    cell.style.backgroundPosition = 'center';
+                    cell.style.backgroundSize = 'cover';
                     break;
                 case CELL_STATES.FLOWER:
                     if (DEBUG) {
