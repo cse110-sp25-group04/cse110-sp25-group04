@@ -45,6 +45,18 @@ export const FLOWER_TYPES = {
 };
 
 /**
+ * Image paths for each flower type
+ * 
+ * @enum {string}
+ */
+export const FLOWER_IMAGES = {
+    PLUS: 'sources/assets/cards/plus-flower.png',
+    CROSS: 'sources/assets/cards/x-flower.png',
+    SQUARE: 'sources/assets/cards/block-flower.png',
+    KNIGHT: 'sources/assets/cards/n-flower.png'
+};
+
+/**
  * Audio for failure events plays when player fails a level
  * 
  * @type {HTMLAudioElement}

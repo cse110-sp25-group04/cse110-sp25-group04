@@ -1,4 +1,4 @@
-import { ROWS, COLS, DEBUG, CELL_STATES, FLOWER_TYPES, LEVELS } from './constants.js';
+import { ROWS, COLS, DEBUG, CELL_STATES, FLOWER_TYPES, LEVELS, FLOWER_IMAGES } from './constants.js';
 
 /**
  * 2D array matching ROWSxCOLS, intializes as NULL 
@@ -43,7 +43,10 @@ function drawBoard() {
                     cell.style.backgroundColor = 'green';
                     break;
                 case CELL_STATES.ROCK:
-                    cell.style.backgroundColor = 'gray';
+                    cell.style.backgroundImage = 'url("sources/assets/cards/rock-card.png")';
+                    cell.style.backgroundPosition = 'center';
+                    cell.style.backgroundSize = 'cover';
+                    cell.style.backgroundColor = 'grey';
                     break;
                 case CELL_STATES.FLOWER:
                     if (DEBUG) {
@@ -54,7 +57,7 @@ function drawBoard() {
                     if (DEBUG) {
                         console.log('Unknown cell type in internal representation: ' + BOARD[r][c]);
                     }
-                    break;       
+                    break;
                 }
             }
         }
@@ -69,6 +72,9 @@ function clearBoard() {
     for (let i = 0; i < gridCells.length; i++) {
         gridCells[i].innerHTML = '';
         gridCells[i].classList.remove('has-card');
+        gridCells[i].style.removeProperty('background-image');
+        gridCells[i].style.removeProperty('background-position');
+        gridCells[i].style.removeProperty('background-size');
     }
 
 }
@@ -169,6 +175,23 @@ function createCard(text) {
     /* Uncomment the code below for an example of how styling the card here affects the game.
     /* card.style.backgroundColor = 'black';
     */
+    switch(text) {
+    case '+' :
+        card.style.backgroundImage = `url('${FLOWER_IMAGES.PLUS}')`;
+        break;
+    case 'x':
+        card.style.backgroundImage = `url('${FLOWER_IMAGES.CROSS}')`;
+        break;
+    case '■':
+        card.style.backgroundImage = `url('${FLOWER_IMAGES.SQUARE}')`;
+        break;
+    case 'N':
+        card.style.backgroundImage = `url('${FLOWER_IMAGES.KNIGHT}')`;
+        break;
+    }
+    card.style.backgroundSize = 'cover';
+    card.style.backgroundPosition = 'center';
+    card.style.color = 'transparent';
     card.textContent = text;
     card.dataset.type = text;
 
