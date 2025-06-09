@@ -37,7 +37,7 @@ https://miro.com/app/board/uXjVI44JcyM=/?share_link_id=705948852757
 
 ### Check out our JSDoc documentation:
 
-[[Project JSDoc](project/docs/index.html)](https://cse110-sp25-group04.github.io/cse110-sp25-group04/docs/index.html)
+https://cse110-sp25-group04.github.io/cse110-sp25-group04/project/docs/index.html
 
 
 ## Supporting Platforms:
