@@ -90,7 +90,7 @@ We deploy two things:
 
 ```bash
 $ npm test
-$ npm run docs
+$ npm run doc
 $ npm run lint:js
 ```
 ![CI/CD Pipeline Diagram](./phase1.png)
