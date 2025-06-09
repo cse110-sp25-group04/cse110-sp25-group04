@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: main.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: main.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import DragAndDropManager from './drag_drop.js';
+import Modal from './transition.js';
+
+import { ROWS, COLS, DEBUG, CELL_STATES, FLOWER_TYPES, LEVELS, WIN, LOSE, LOSS_SOUND, SUCCESS } from './constants.js';
+import { loadLevel } from './board.js';
+
+// Run the init() function when the page has loaded
+window.addEventListener('DOMContentLoaded', init);
+
+// Global state
+let handCells;
+let gridCells;
+let levelCounter;
+let highestLevelReached;
+let undoCounter;
+let resetCounter;
+let dndManager;
+let levelModal;
+
+
+/**
+ * Builds the grid layout based on ROWS and COLS
+ * Initializes each cell with default ROCK state
+ */
+function buildGrid() {
+    const container = document.getElementById('grid-container');
+    container.innerHTML = '';
+    for (let y = 0; y &lt; ROWS; y++) {
+        for (let x = 0; x &lt; COLS; x++) {
+            const cell = document.createElement('div');
+            cell.className = 'grid-cell';
+            cell.id = `${x}-${y}`;
+            cell.dataset.cellState = CELL_STATES.ROCK;
+            // dataset.cellState -> data-cell-state attribute
+            // for now just default cell state to rock until we do level loading stuff
+            container.appendChild(cell);
+        }
+    }
+}
+
+/**
+ * Initializes game state, builds grid, loads level,
+ * sets up listeners and DragAndDropManager.
+ */
+function init() {
+    buildGrid();
+
+    // Get the level from localStorage
+    levelCounter = getLevelNumber();
+    loadLevel(levelCounter);
+    highestLevelReached = getHighestLevelReached();
+    updateLevelDisplay();
+
+    // Get undo and reset counters from localStorage
+    undoCounter = localStorage.getItem('undo-counter');
+    if (undoCounter === null) {
+        undoCounter = 0;
+        localStorage.setItem('undo-counter', '0');
+    }
+    else {
+        undoCounter = Number(undoCounter);
+    }
+
+    resetCounter = localStorage.getItem('reset-counter');
+    if (resetCounter === null) {
+        resetCounter = 0;
+        localStorage.setItem('reset-counter', '0');
+    }
+    else {
+        resetCounter = Number(resetCounter);
+    }
+
+    // Create listeners
+    createControlListeners();
+
+    handCells = document.querySelectorAll('#hand-container .hand-cell');
+    gridCells = document.querySelectorAll('#grid-container .grid-cell');
+    dndManager = new DragAndDropManager(handCells, gridCells);
+
+    levelModal = new Modal('.modal', '#modal-text', '#modal-button');   
+}
+
+/**
+ * Throttles function to reduce lag from running too quickly
+ * 
+ * @param {Function} func: The function to throttle
+ * @param {number} limit: Time to wait before allowing next call
+ * @returns {Function} A throttled version
+ */
+function throttle(func, limit) {
+    let inThrottle;
+    return function () {
+        const args = arguments;
+        const context = this;
+        if (!inThrottle) {
+            //gets correct event and this from args and context respectively
+            func.apply(context, args);
+            inThrottle = true;
+            setTimeout (function () {
+                inThrottle = false;
+            }, limit);
+        }
+    };
+}
+
+/**
+ * Adds event listeners for control buttons: previous, next, reset, reset localStorage, undo
+ */
+function createControlListeners() {
+    // Add previous/next level button listeners
+    const prevButton = document.getElementById('previous-level');
+    const nextButton = document.getElementById('next-level');
+    const resetButton = document.getElementById('reset');
+    const undoButton = document.getElementById('undo');
+
+    prevButton.addEventListener('click', function () {
+        if(levelCounter &lt;= 0) return;
+        levelCounter -= 1;
+        localStorage.setItem('level-number', levelCounter);
+        loadLevel(levelCounter);
+        updateLevelDisplay();
+        if (dndManager) { dndManager.moveHistory = []; }
+    });
+
+    nextButton.addEventListener('click', function () {
+        if(levelCounter >= highestLevelReached || levelCounter >= LEVELS.length) return;
+        levelCounter += 1;
+        localStorage.setItem('level-number', levelCounter);
+        loadLevel(levelCounter);
+        updateLevelDisplay();
+        if (dndManager) { dndManager.moveHistory = []; }
+    });
+
+    resetButton.addEventListener('click', function () {
+        loadLevel(levelCounter);
+        if (dndManager) { dndManager.moveHistory = []; }
+        resetCounter += 1;
+        localStorage.setItem('reset-counter', resetCounter);
+    });
+
+    undoButton.addEventListener('click', () => {
+        if (dndManager) { dndManager.undo(); }
+        undoCounter += 1;
+        localStorage.setItem('undo-counter', undoCounter);
+    });
+}
+
+/**
+ * Gets level number from local storage
+ * 
+ * @returns {number} level number 
+ */
+function getLevelNumber() {
+    if (localStorage.getItem('level-number')) {
+        return Number(localStorage.getItem('level-number')) % LEVELS.length;
+    }
+    else {
+        localStorage.setItem('level-number', 0);
+        return 0;
+    }
+}
+
+/**
+ * Gets highest level reached from local storage
+ * 
+ * @returns {number} highest level number reached
+ */
+function getHighestLevelReached() {
+    if (localStorage.getItem('highest-level')) {
+        return Number(localStorage.getItem('highest-level')) % LEVELS.length;
+    }
+    else {
+        localStorage.setItem('highest-level', 0);
+        return 0;
+    }
+}
+
+/**
+ * Checks game board and hand to determine if the level passed or failed
+ */
+export { checkGameStatus };
+function checkGameStatus() {
+
+    let handCells = document.querySelectorAll('#hand-container .hand-cell');
+    let gridCells = document.querySelectorAll('#grid-container .grid-cell');
+
+    let hasCards = false;
+    for (const h of handCells) {
+        if (h.classList.contains('has-card') === true) {
+            if (DEBUG) {
+                console.log('Player has cards');
+            }
+            hasCards = true;
+            break;
+        }
+    }
+
+    // Check if CORRUPT is left
+    for (const g of gridCells) {
+        if (g.dataset.cellState === CELL_STATES.CORRUPT) {
+            if (DEBUG) {
+                console.log('Purple Tile Detected');
+            }
+            if (hasCards) {
+                return;
+            }
+            else {
+                // corrupt left + no cards = lose
+                // calls show() with LOSE and a callback to handleLevelFailed after the transition button is clicked
+                LOSS_SOUND.play();
+                levelModal.show(LOSE, handleLevelFailed);
+                return;
+            }
+        }
+    }
+    // no corrupt left
+    // calls show() with WIN and a callback to handleLevelPassed after the transition button is clicked
+    SUCCESS.volume = 0.2;
+    SUCCESS.play();
+    levelModal.show(WIN, handleLevelPassed);
+    return;
+}
+
+/**
+ * Called when level has passed, moves to next level 
+ */
+function handleLevelPassed() {
+    if(levelCounter >= LEVELS.length-1) {
+        alert('Completed all existing levels, congrats!');
+        levelCounter = 0;
+        localStorage.setItem('level-number', '0');
+        highestLevelReached = 0;
+        localStorage.setItem('highest-level', '0');
+        loadLevel(levelCounter);
+        updateLevelDisplay();
+        return;
+    };
+  
+    levelCounter += 1;
+    localStorage.setItem('level-number', levelCounter);
+    loadLevel(levelCounter);
+
+    updateLevelDisplay();
+
+    if (dndManager) { dndManager.moveHistory = []; }
+    
+    highestLevelReached = Math.max(getHighestLevelReached(), levelCounter);
+    localStorage.setItem('highest-level', highestLevelReached);
+}
+
+/**
+ * Called when level has failed, reloads current level
+ */
+function handleLevelFailed() {
+    // reload level
+    loadLevel(levelCounter);
+    updateLevelDisplay();
+    if (dndManager) { dndManager.moveHistory = []; }
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    const menuEl = document.getElementById('menu');
+    const gameEl = document.getElementById('game');
+    const startBtn = document.getElementById('start-button');
+
+    startBtn.addEventListener('click', function () {
+        // hide menu, reveal game
+        menuEl.hidden = true;
+        gameEl.hidden = false;
+    });
+});
+
+/**
+ * Update level display in html
+ */
+function updateLevelDisplay() {
+    const span = document.getElementById('level-display');
+    span.textContent = `Level: ${levelCounter + 1}`;
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="DragAndDropManager.html">DragAndDropManager</a></li><li><a href="Modal.html">Modal</a></li></ul><h3>Global</h3><ul><li><a href="global.html#BOARD">BOARD</a></li><li><a href="global.html#CELL_STATES">CELL_STATES</a></li><li><a href="global.html#DEBUG">DEBUG</a></li><li><a href="global.html#FAIL_AUDIO">FAIL_AUDIO</a></li><li><a href="global.html#FLOWER_IMAGES">FLOWER_IMAGES</a></li><li><a href="global.html#FLOWER_TYPES">FLOWER_TYPES</a></li><li><a href="global.html#GRID_IMAGES">GRID_IMAGES</a></li><li><a href="global.html#LEVELS">LEVELS</a></li><li><a href="global.html#ROWS">ROWS</a></li><li><a href="global.html#buildGrid">buildGrid</a></li><li><a href="global.html#buildHand">buildHand</a></li><li><a href="global.html#changeBoard">changeBoard</a></li><li><a href="global.html#clearBoard">clearBoard</a></li><li><a href="global.html#clearCards">clearCards</a></li><li><a href="global.html#createCard">createCard</a></li><li><a href="global.html#createControlListeners">createControlListeners</a></li><li><a href="global.html#drawBoard">drawBoard</a></li><li><a href="global.html#getHighestLevelReached">getHighestLevelReached</a></li><li><a href="global.html#getLevelNumber">getLevelNumber</a></li><li><a href="global.html#handleLevelFailed">handleLevelFailed</a></li><li><a href="global.html#handleLevelPassed">handleLevelPassed</a></li><li><a href="global.html#init">init</a></li><li><a href="global.html#loadLevel">loadLevel</a></li><li><a href="global.html#throttle">throttle</a></li><li><a href="global.html#updateLevelDisplay">updateLevelDisplay</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Sun Jun 08 2025 21:46:41 GMT-0700 (Pacific Daylight Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
