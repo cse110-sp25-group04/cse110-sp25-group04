@@ -105,7 +105,9 @@ function clearCards() {
 function loadLevel(levelNumber) {
     const levelObj = LEVELS[levelNumber];
     const levelBoard = levelObj.LAYOUT;
-    console.log(levelBoard);
+    if(DEBUG) {
+        console.log(levelBoard);
+    }
     const levelCards = levelObj.CARDS;
     const numCards = levelCards.length;
 
