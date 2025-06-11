@@ -22,6 +22,10 @@ Good Luck, and have fun saving the land of Cardova!
 
 https://cse110-sp25-group04.github.io/cse110-sp25-group04/
 
+### Check out our team video:
+
+https://www.youtube.com/watch?v=vc5_r0bkOdI
+
 ### Check out our progress demonstration:
 
 https://youtu.be/jWYKGHW4QVU
